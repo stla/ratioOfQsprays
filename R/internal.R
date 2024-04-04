@@ -10,16 +10,12 @@ isNonnegativeInteger <- function(x) {
   is.numeric(x) && length(x) == 1L && !is.na(x) && floor(x) == x && x != 0
 }
 
-# #' @importFrom qspray numberOfVariables
-numberOfVariables <- function(qspray) {
-  suppressWarnings(max(lengths(qspray@powers)))
-}
+#' @importFrom qspray numberOfVariables
+#' @noRd
 numberOfVariables2 <- function(roq) {
   max(
-    suppressWarnings(max(lengths(roq@numerator@powers))),
-    suppressWarnings(max(lengths(roq@denominator@powers)))
-    # qspray::numberOfVariables(roq@numerator),
-    # qspray::numberOfVariables(roq@denominator)
+    numberOfVariables(roq@numerator@powers),
+    numberOfVariables(roq@denominator@powers)
   )
 }
 
