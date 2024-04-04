@@ -11,7 +11,6 @@
 #' @return A \code{bigq} number if \code{values_im=NULL}, a pair of \code{bigq}
 #'   numbers otherwise: the real part and the imaginary part of the result.
 #' @export
-#' @importFrom methods formalArgs
 #' @importFrom qspray evalQspray
 #'
 #' @examples
@@ -47,6 +46,7 @@ evalRatioOfQsprays <- function(roq, values_re, values_im = NULL) {
 #'
 #' @return A \code{ratioOfQsprays} object.
 #' @export
+#' @importFrom qspray substituteQspray
 #'
 #' @examples
 #' library(ratioOfQsprays)
@@ -74,6 +74,7 @@ substituteRatioOfQsprays <- function(roq, values) {
 #'   R expression.
 #' @export
 #' @importFrom Ryacas yac_str as_r
+#' @importFrom methods formalArgs
 #'
 #' @examples
 #' library(ratioOfQsprays)
