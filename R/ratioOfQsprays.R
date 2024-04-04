@@ -195,7 +195,6 @@ ratioOfQsprays_arith_ratioOfQsprays <- function(e1, e2) {
     ))
   )
 }
-
 ratioOfQsprays_arith_qspray <- function(e1, e2) {
   switch(
     .Generic,
@@ -208,11 +207,18 @@ ratioOfQsprays_arith_qspray <- function(e1, e2) {
     ))
   )
 }
-
 qspray_arith_ratioOfQsprays <- function(e1, e2) {
-  ratioOfQsprays_arith_qspray(e2, e1)
+  switch(
+    .Generic,
+    "+" = as.ratioOfQsprays(e1) + e2,
+    "-" = as.ratioOfQsprays(e1) - e2,
+    "*" = as.ratioOfQsprays(e1) * e2,
+    "/" = as.ratioOfQsprays(e1) / e2,
+    stop(gettextf(
+      "Binary operator %s not defined for these two objects.", dQuote(.Generic)
+    ))
+  )
 }
-
 ratioOfQsprays_arith_character <- function(e1, e2) {
   switch(
     .Generic,
@@ -220,20 +226,19 @@ ratioOfQsprays_arith_character <- function(e1, e2) {
     "-" = e1 - as.ratioOfQsprays(e2),
     "*" = new(
       "ratioOfQsprays",
-      e1@numerator * e2,
-      e1@denominator
+      numerator   = e1@numerator * e2,
+      denominator = e1@denominator
     ),
     "/" = new(
       "ratioOfQsprays",
-      e1@numerator / e2,
-      e1@denominator
+      numerator   = e1@numerator / e2,
+      denominator = e1@denominator
     ),
     stop(gettextf(
       "Binary operator %s not defined for these two objects.", dQuote(.Generic)
     ))
   )
 }
-
 ratioOfQspraysPower <- function(ratioOfQsprays, n) {
   if(n == 0L) {
     as.ratioOfQsprays(1L)
@@ -242,7 +247,7 @@ ratioOfQspraysPower <- function(ratioOfQsprays, n) {
       new(
         "ratioOfQsprays",
         numerator   = ratioOfQsprays@numerator^n,
-        denominator = ratioOfQsprays@denominator
+        denominator = ratioOfQsprays@denominator^n
       )
     )
   } else {
@@ -250,12 +255,11 @@ ratioOfQspraysPower <- function(ratioOfQsprays, n) {
       new(
         "ratioOfQsprays",
         numerator   = ratioOfQsprays@denominator^(-n),
-        denominator = ratioOfQsprays@numerator
+        denominator = ratioOfQsprays@numerator^(-n)
       )
     )
   }
 }
-
 ratioOfQsprays_arith_gmp <- function(e1, e2) {
   switch(
     .Generic,
@@ -263,20 +267,19 @@ ratioOfQsprays_arith_gmp <- function(e1, e2) {
     "-" = e1 - as.ratioOfQsprays(e2),
     "*" = new(
       "ratioOfQsprays",
-      e1@numerator * e2,
-      e1@denominator
+      numerator = e1@numerator * e2,
+      denominator = e1@denominator
     ),
     "/" = new(
       "ratioOfQsprays",
-      e1@numerator / e2,
-      e1@denominator
+      numerator   = e1@numerator / e2,
+      denominator = e1@denominator
     ),
     stop(gettextf(
       "Binary operator %s not defined for these two objects.", dQuote(.Generic)
     ))
   )
 }
-
 ratioOfQsprays_arith_numeric <- function(e1, e2) {
   switch(
     .Generic,
@@ -284,13 +287,13 @@ ratioOfQsprays_arith_numeric <- function(e1, e2) {
     "-" = e1 - as.ratioOfQsprays(e2),
     "*" = new(
       "ratioOfQsprays",
-      e1@numerator * e2,
-      e1@denominator
+      numerator = e1@numerator * e2,
+      denominator = e1@denominator
     ),
     "/" = new(
       "ratioOfQsprays",
-      e1@numerator / e2,
-      e1@denominator
+      numerator   = e1@numerator / e2,
+      denominator = e1@denominator
     ),
     "^" = ratioOfQspraysPower(e1, e2),
     stop(gettextf(
@@ -298,17 +301,65 @@ ratioOfQsprays_arith_numeric <- function(e1, e2) {
     ))
   )
 }
-
 character_arith_ratioOfQsprays <- function(e1, e2) {
-  ratioOfQsprays_arith_character(e2, e1)
+  switch(
+    .Generic,
+    "+" = e2 + as.ratioOfQsprays(e1),
+    "-" = as.ratioOfQsprays(e1) - e2,
+    "*" = new(
+      "ratioOfQsprays",
+      numerator = e2@numerator * e1,
+      denominator = e2@denominator
+    ),
+    "/" = new(
+      "ratioOfQsprays",
+      numerator   = e2@denominator * e1,
+      denominator = e2@numerator
+    ),
+    stop(gettextf(
+      "Binary operator %s not defined for these two objects.", dQuote(.Generic)
+    ))
+  )
 }
-
 gmp_arith_ratioOfQsprays <- function(e1, e2) {
-  ratioOfQsprays_arith_gmp(e2, e1)
+  switch(
+    .Generic,
+    "+" = as.ratioOfQsprays(e1) + e2,
+    "-" = as.ratioOfQsprays(e1) - e2,
+    "*" = new(
+      "ratioOfQsprays",
+      numerator = e1 * e2@numerator ,
+      denominator = e2@denominator
+    ),
+    "/" = new(
+      "ratioOfQsprays",
+      numerator   = e1 * e2@denominator,
+      denominator = e2@numerator
+    ),
+    stop(gettextf(
+      "Binary operator %s not defined for these two objects.", dQuote(.Generic)
+    ))
+  )
 }
-
 numeric_arith_ratioOfQsprays <- function(e1, e2) {
-  ratioOfQsprays_arith_numeric(e2, e1)
+  switch(
+    .Generic,
+    "+" = as.ratioOfQsprays(e1) + e2,
+    "-" = as.ratioOfQsprays(e1) - e2,
+    "*" = new(
+      "ratioOfQsprays",
+      numerator = e1 * e2@numerator,
+      denominator = e2@denominator
+    ),
+    "/" = new(
+      "ratioOfQsprays",
+      numerator   = e1 * e2@denominator,
+      denominator = e2@numerator
+    ),
+    stop(gettextf(
+      "Binary operator %s not defined for these two objects.", dQuote(.Generic)
+    ))
+  )
 }
 
 setMethod(
@@ -316,66 +367,57 @@ setMethod(
   signature(e1 = "ratioOfQsprays", e2 = "ratioOfQsprays"),
   ratioOfQsprays_arith_ratioOfQsprays
 )
-
 setMethod(
   "Arith",
   signature(e1 = "ratioOfQsprays", e2 = "qspray"),
   ratioOfQsprays_arith_qspray
 )
-
 setMethod(
   "Arith",
   signature(e1 = "ratioOfQsprays", e2 = "character"),
   ratioOfQsprays_arith_character
 )
-
 setMethod(
   "Arith",
   signature(e1 = "ratioOfQsprays", e2 = "bigq"),
   ratioOfQsprays_arith_gmp
 )
-
 setMethod(
   "Arith",
   signature(e1 = "ratioOfQsprays", e2 = "bigz"),
   ratioOfQsprays_arith_gmp
 )
-
 setMethod(
   "Arith",
   signature(e1 = "qspray", e2 = "ratioOfQsprays"),
   qspray_arith_ratioOfQsprays
 )
-
 setMethod(
   "Arith",
   signature(e1 = "character", e2 = "ratioOfQsprays"),
   character_arith_ratioOfQsprays
 )
-
 setMethod(
   "Arith",
   signature(e1 = "bigq", e2 = "ratioOfQsprays"),
   gmp_arith_ratioOfQsprays
 )
-
 setMethod(
   "Arith",
   signature(e1 = "bigz", e2 = "ratioOfQsprays"),
   gmp_arith_ratioOfQsprays
 )
-
 setMethod(
   "Arith",
   signature(e1 = "ratioOfQsprays", e2 = "numeric"),
   ratioOfQsprays_arith_numeric
 )
-
 setMethod(
   "Arith",
   signature(e1 = "numeric", e2 = "ratioOfQsprays"),
   numeric_arith_ratioOfQsprays
 )
+
 
 setMethod(
   "Compare",
