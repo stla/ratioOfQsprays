@@ -22,6 +22,6 @@ library(ratioOfQsprays)
 x <- qlone(1)
 y <- qlone(2)
 roq <- (x + 2*y  + 3*x*y) / (x + 1)
-dRatioOfQsprays(qspray, c(1, 1))
+dRatioOfQsprays(roq, c(1, 1))
 derivRatioOfQsprays(derivRatioOfQsprays(roq, 1), 2)
 }

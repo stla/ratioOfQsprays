@@ -21,8 +21,8 @@ derivRatioOfQsprays <- function(roq, i, derivative = 1) {
   stopifnot(isPositiveInteger(derivative))
   f  <- roq@numerator
   g  <- roq@denominator
-  fp <- derivQspray(f)
-  gp <- derivQspray(g)
+  fp <- derivQspray(f, i)
+  gp <- derivQspray(g, i)
   (fp*g - f*gp) / g^2
 }
 
@@ -40,7 +40,7 @@ derivRatioOfQsprays <- function(roq, i, derivative = 1) {
 #' x <- qlone(1)
 #' y <- qlone(2)
 #' roq <- (x + 2*y  + 3*x*y) / (x + 1)
-#' dRatioOfQsprays(qspray, c(1, 1))
+#' dRatioOfQsprays(roq, c(1, 1))
 #' derivRatioOfQsprays(derivRatioOfQsprays(roq, 1), 2)
 dRatioOfQsprays <- function(roq, orders) {
   stopifnot(inherits(roq, "ratioOfQsprays"))
@@ -51,7 +51,9 @@ dRatioOfQsprays <- function(roq, orders) {
   if(length(orders) > numberOfVariables(roq)) {
     return(as.ratioOfQsprays(0L))
   }
-  n    <- as.integer(orders)
+  ns <- do.call(c, lapply(seq_along(as.integer(orders)), function(i) {
+    rep(i, orders[i])
+  }))
   f <- function(r, i) {
     if(i != 0L) {
       derivRatioOfQsprays(r, i)
@@ -59,7 +61,7 @@ dRatioOfQsprays <- function(roq, orders) {
       r
     }
   }
-  Reduce(f, n, init = roq)
+  Reduce(f, ns, init = roq)
 }
 
 #' @title Permute variables
