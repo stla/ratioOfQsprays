@@ -1,0 +1,17 @@
+Package: ratioOfQsprays
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person("Stéphane", "Laurent", , "laurent_step@outlook.fr", role = c("aut", "cre"))
+Description: What the package does (one paragraph).
+License: GPL-3
+URL: https://github.com/stla/ratioOfQsprays
+BugReports: https://github.com/stla/ratioOfQsprays/issues
+Depends:
+    qspray (>= 2.2.0)
+Imports: 
+    methods,
+    resultant,
+    gmp
+Encoding: UTF-8
+RoxygenNote: 7.3.1
