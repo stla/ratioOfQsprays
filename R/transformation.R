@@ -84,7 +84,7 @@ dRatioOfQsprays <- function(roq, orders) {
 #' z <- qlone(3)
 #' R <- f(x, y, z)
 #' permutation <- c(3, 1, 2)
-#' S <- permuteVariables(R, permutation)
+#' S <- permuteVariables2(R, permutation)
 #' S == f(z, x, y) # should be TRUE
 permuteVariables2 <- function(roq, permutation) {
   permuteVariables(roq@numerator, permutation) /
