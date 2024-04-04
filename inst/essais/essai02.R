@@ -1,0 +1,10 @@
+library(ratioOfQsprays)
+
+x <- qlone(1); y <- qlone(2); z <- qlone(3)
+roq <- (x^2/2 + y^2 + x*y - 1) / (x + 1)
+f <- as.function(roq)
+g <- as.function(roq, N = TRUE)
+f(2, "3/7")
+g(2, "3/7")
+f("x", "y")
+g("x", "y")
