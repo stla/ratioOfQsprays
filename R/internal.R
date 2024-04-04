@@ -14,8 +14,8 @@ isNonnegativeInteger <- function(x) {
 #' @noRd
 numberOfVariables2 <- function(roq) {
   max(
-    numberOfVariables(roq@numerator@powers),
-    numberOfVariables(roq@denominator@powers)
+    numberOfVariables(roq@numerator),
+    numberOfVariables(roq@denominator)
   )
 }
 
