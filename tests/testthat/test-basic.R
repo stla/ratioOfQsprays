@@ -7,7 +7,9 @@ test_that("simple expansion", {
 test_that("commutativity", {
   roq1 <- ROQ1()
   roq2 <- ROQ2()
-  expect_true(roq1*roq2 == roq2*roq1)  
+  expect_true(roq1*roq2*3 == 3*roq2*roq1)
+  x <- qlone(1)
+  expect_true(roq1*roq2*x == x*roq2*roq1)
 })
 
 test_that("associativity", {
@@ -21,7 +23,7 @@ test_that("distributivity", {
   roq1 <- ROQ1()
   roq2 <- ROQ2()
   roq3 <- ROQ3()
-  expect_true(roq1*(roq2+roq3) == roq1*roq2 + roq1*roq3)
+  expect_true(roq1*(roq2+roq3+3) == roq1*roq2 + roq1*roq3 + roq1*3)
 })
 
 test_that("equality", {
