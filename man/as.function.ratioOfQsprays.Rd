@@ -2,7 +2,7 @@
 % Please edit documentation in R/evaluation.R
 \name{as.function.ratioOfQsprays}
 \alias{as.function.ratioOfQsprays}
-\title{Multivariate polynomial as function}
+\title{Ratio of multivariate polynomials as function}
 \usage{
 \method{as.function}{ratioOfQsprays}(x, N = FALSE, ...)
 }

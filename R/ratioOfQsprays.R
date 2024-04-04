@@ -1,3 +1,4 @@
+#' @importFrom qspray qone as.qspray qsprayDivision isQone isQzero isConstantQspray getConstantTerm
 #' @importFrom resultant gcd
 #' @importFrom methods setMethod setClass new show
 #' @importFrom gmp as.bigq

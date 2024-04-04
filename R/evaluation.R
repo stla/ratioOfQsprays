@@ -12,6 +12,7 @@
 #'   numbers otherwise: the real part and the imaginary part of the result.
 #' @export
 #' @importFrom methods formalArgs
+#' @importFrom qspray evalQspray
 #'
 #' @examples
 #' x <- qlone(1); y <- qlone(2)
@@ -59,7 +60,7 @@ substituteRatioOfQsprays <- function(roq, values) {
     substituteQspray(roq@denominator, values)
 }
 
-#' @title Multivariate polynomial as function
+#' @title Ratio of multivariate polynomials as function
 #' @description Coerces a \code{ratioOfQsprays} polynomial into a function.
 #'
 #' @param x object of class \code{ratioOfQsprays}
