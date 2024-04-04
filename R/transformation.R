@@ -110,7 +110,7 @@ permuteVariables2 <- function(roq, permutation) {
 #' y <- qlone(2)
 #' z <- qlone(3)
 #' R <- f(x, y, z)
-#' S <- swapVariables(R, 2, 3)
+#' S <- swapVariables2(R, 2, 3)
 #' S == f(x, z, y) # should be TRUE
 swapVariables2 <- function(roq, i, j) {
   swapVariables(roq@numerator, i, j) /

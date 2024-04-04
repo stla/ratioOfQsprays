@@ -26,6 +26,6 @@ x <- qlone(1)
 y <- qlone(2)
 z <- qlone(3)
 R <- f(x, y, z)
-S <- swapVariables(R, 2, 3)
+S <- swapVariables2(R, 2, 3)
 S == f(x, z, y) # should be TRUE
 }
