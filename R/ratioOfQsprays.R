@@ -13,7 +13,7 @@ showRatioOfQsprays <- function(roq) {
   # if(roq@numerator == qzero()) {
   #   return("0")
   # }
-  if(roq@denominator == qone()) {
+  if(isQone(roq@denominator)) {
     sprintf(
       "[%s]",
       trimws(capture.output(show(roq@numerator)),   which = "right")
@@ -215,8 +215,16 @@ ratioOfQsprays_arith_character <- function(e1, e2) {
     .Generic,
     "+" = e1 + as.ratioOfQsprays(e2),
     "-" = e1 - as.ratioOfQsprays(e2),
-    "*" = e1 * as.ratioOfQsprays(e2),
-    "/" = e1 * as.ratioOfQsprays(paste0("1/", e2)),
+    "*" = new(
+      "ratioOfQsprays",
+      e1@numerator * e2,
+      e1@denominator
+    ),
+    "/" = new(
+      "ratioOfQsprays",
+      e1@numerator / e2,
+      e1@denominator
+    ),
     stop(gettextf(
       "Binary operator %s not defined for these two objects.", dQuote(.Generic)
     ))
@@ -250,8 +258,16 @@ ratioOfQsprays_arith_gmp <- function(e1, e2) {
     .Generic,
     "+" = e1 + as_ratioOfQsprays(e2),
     "-" = e1 - as_ratioOfQsprays(e2),
-    "*" = e1 * as_ratioOfQsprays(e2),
-    "/" = e1 * as_ratioOfQsprays(1L/e2),
+    "*" = new(
+      "ratioOfQsprays",
+      e1@numerator * e2,
+      e1@denominator
+    ),
+    "/" = new(
+      "ratioOfQsprays",
+      e1@numerator / e2,
+      e1@denominator
+    ),
     stop(gettextf(
       "Binary operator %s not defined for these two objects.", dQuote(.Generic)
     ))
@@ -263,8 +279,16 @@ ratioOfQsprays_arith_numeric <- function(e1, e2) {
     .Generic,
     "+" = e1 + as.ratioOfQsprays(e2),
     "-" = e1 - as.ratioOfQsprays(e2),
-    "*" = e1 * as.ratioOfQsprays(e2),
-    "/" = e1 / as.character(e2),
+    "*" = new(
+      "ratioOfQsprays",
+      e1@numerator * e2,
+      e1@denominator
+    ),
+    "/" = new(
+      "ratioOfQsprays",
+      e1@numerator / e2,
+      e1@denominator
+    ),
     "^" = ratioOfQspraysPower(e1, e2),
     stop(gettextf(
       "Binary operator %s not defined for these two objects.", dQuote(.Generic)
@@ -354,11 +378,11 @@ setMethod(
   "Compare",
   signature(e1 = "ratioOfQsprays", e2 = "ratioOfQsprays"),
   function(e1, e2) {
-    num <- (e1 - e2)@numerator
+    num <- e1@numerator*e2@denominator - e2@numerator*e1@denominator
     switch(
       .Generic,
-      "==" = num == qzero(),
-      "!=" = num != qzero(),
+      "==" = isQzero(num),
+      "!=" = !(isQzero(num)),
       stop(gettextf(
         "Comparison operator %s not defined for ratioOfQsprays objects.",
         dQuote(.Generic)
