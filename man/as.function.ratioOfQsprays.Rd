@@ -25,7 +25,8 @@ Coerces a \code{ratioOfQsprays} polynomial into a function.
 }
 \examples{
 library(ratioOfQsprays)
-roq <- (x^2 + y^2 + x*y*z - 1) / (x + 1)
+x <- qlone(1); y <- qlone(2)
+roq <- (x^2/2 + y^2 + x*y - 1) / (x + 1)
 f <- as.function(roq)
 g <- as.function(roq, N = TRUE)
 f(2, "3/7")

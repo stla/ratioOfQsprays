@@ -70,12 +70,12 @@ substituteRatioOfQsprays <- function(roq, values) {
 #'   if the result does not contain any variable, otherwise it returns a
 #'   R expression.
 #' @export
-#' @importFrom Ryacas yac_str
+#' @importFrom Ryacas yac_str as_r
 #'
 #' @examples
 #' library(ratioOfQsprays)
 #' x <- qlone(1); y <- qlone(2)
-#' roq <- (x^2/2 + y^2 + x*y*z - 1) / (x + 1)
+#' roq <- (x^2/2 + y^2 + x*y - 1) / (x + 1)
 #' f <- as.function(roq)
 #' g <- as.function(roq, N = TRUE)
 #' f(2, "3/7")
@@ -97,14 +97,26 @@ as.function.ratioOfQsprays <- function(x, N = FALSE, ...) {
     formals(fnum) <- formalsDen
   }
   vars <- formalArgs(fnum)
-  f <- function() {
-    do.call(function(...) {
-      yac_str(
-        sprintf("(%s)/(%s)", as.character(fnum(...)), as.character(fden(...)))
-      )
-    }, lapply(vars, function(xi) {
-      eval(parse(text = xi))
-    }))
+  if(N) {
+    f <- function() {
+      do.call(function(...) {
+        as_r(yac_str(
+          sprintf("(%s)/(%s)", as.character(fnum(...)), as.character(fden(...)))
+        ))
+      }, lapply(vars, function(xi) {
+        eval(parse(text = xi))
+      }))
+    }
+  } else {
+    f <- function() {
+      do.call(function(...) {
+        yac_str(
+          sprintf("(%s)/(%s)", as.character(fnum(...)), as.character(fden(...)))
+        )
+      }, lapply(vars, function(xi) {
+        eval(parse(text = xi))
+      }))
+    }
   }
   formals(f) <- formals(fnum)
   f
