@@ -56,8 +56,10 @@ evalRatioOfQsprays <- function(roq, values_re, values_im = NULL) {
 #' roq <- (x^2 + y^2 + x*y*z - 1) / (x + 1)
 #' substituteRatioOfQsprays(roq, c("2", NA, "3/2"))
 substituteRatioOfQsprays <- function(roq, values) {
-  substituteQspray(roq@numerator, values) /
-    substituteQspray(roq@denominator, values)
+  n1 <- suppressWarnings(max(lengths(roq@numerator@powers)))
+  n2 <- suppressWarnings(max(lengths(roq@numerator@powers)))
+  substituteQspray(roq@numerator, head(values, n1)) /
+    substituteQspray(roq@denominator, head(values, n2))
 }
 
 #' @title Ratio of multivariate polynomials as function
