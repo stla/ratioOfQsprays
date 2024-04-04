@@ -6,7 +6,7 @@ NULL
 
 setClass(
   "ratioOfQsprays",
-  slots = c(numerator = "qspray", denomiator = "qspray")
+  slots = c(numerator = "qspray", denominator = "qspray")
 )
 
 showRatioOfQsprays <- function(roq) {
@@ -132,8 +132,8 @@ simplifyRatioOfQsprays <- function(roq) {
   g <- gcd(num, den)
   new(
     "ratioOfQsprays",
-    numerator   = qsprayDivision(num, g),
-    denominator = qsprayDivision(den, g)
+    numerator   = qsprayDivision(num, g)[["Q"]],
+    denominator = qsprayDivision(den, g)[["Q"]]
   )
 }
 
@@ -168,8 +168,8 @@ ratioOfQsprays_arith_ratioOfQsprays <- function(e1, e2) {
     "/" = simplifyRatioOfQsprays(
       new(
         "ratioOfQsprays",
-        numerator   = den1 * den2,
-        denominator = num1 * num2
+        numerator   = num1 * den2,
+        denominator = den1 * num2
       )
     ),
     stop(gettextf(
