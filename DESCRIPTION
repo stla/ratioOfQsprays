@@ -10,7 +10,9 @@ BugReports: https://github.com/stla/ratioOfQsprays/issues
 Depends:
     qspray (>= 2.2.0)
 Imports: 
+    qspray (>= 2.2.0),
     methods,
+    utils,
     resultant,
     gmp,
     Ryacas

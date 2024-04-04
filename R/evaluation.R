@@ -11,6 +11,8 @@
 #' @return A \code{bigq} number if \code{values_im=NULL}, a pair of \code{bigq}
 #'   numbers otherwise: the real part and the imaginary part of the result.
 #' @export
+#' @importFrom methods formalArgs
+#'
 #' @examples
 #' x <- qlone(1); y <- qlone(2)
 #' roq <- (2*x + "1/2"*y) / (x^2 + y^2)
@@ -87,8 +89,8 @@ substituteRatioOfQsprays <- function(roq, values) {
 #' f("2 + 2*I", "Sqrt(2)")
 #' g("2 + 2*I", "Sqrt(2)")
 as.function.ratioOfQsprays <- function(x, N = FALSE, ...) {
-  fnum <- as.function(x@numerator, N)
-  fden <- as.function(x@denominator, N)
+  fnum <- as.function(x@numerator, N = FALSE)
+  fden <- as.function(x@denominator, N = FALSE)
   formalsNum <- formals(fnum)
   formalsDen <- formals(fden)
   if(length(formalsNum) > length(formalsDen)) {
@@ -101,7 +103,10 @@ as.function.ratioOfQsprays <- function(x, N = FALSE, ...) {
     f <- function() {
       do.call(function(...) {
         as_r(yac_str(
-          sprintf("(%s)/(%s)", as.character(fnum(...)), as.character(fden(...)))
+          sprintf(
+            "N((%s)/(%s))",
+            as.character(fnum(...)), as.character(fden(...))
+          )
         ))
       }, lapply(vars, function(xi) {
         eval(parse(text = xi))

@@ -9,6 +9,8 @@ setClass(
   slots = c(numerator = "qspray", denominator = "qspray")
 )
 
+#' @importFrom utils capture.output
+#' @noRd
 showRatioOfQsprays <- function(roq) {
   # if(roq@numerator == qzero()) {
   #   return("0")
@@ -256,8 +258,8 @@ ratioOfQspraysPower <- function(ratioOfQsprays, n) {
 ratioOfQsprays_arith_gmp <- function(e1, e2) {
   switch(
     .Generic,
-    "+" = e1 + as_ratioOfQsprays(e2),
-    "-" = e1 - as_ratioOfQsprays(e2),
+    "+" = e1 + as.ratioOfQsprays(e2),
+    "-" = e1 - as.ratioOfQsprays(e2),
     "*" = new(
       "ratioOfQsprays",
       e1@numerator * e2,
