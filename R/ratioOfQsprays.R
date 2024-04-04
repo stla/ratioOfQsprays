@@ -10,14 +10,21 @@ setClass(
 )
 
 showRatioOfQsprays <- function(roq) {
-  if(roq@numerator == qzero()) {
-    return("0")
+  # if(roq@numerator == qzero()) {
+  #   return("0")
+  # }
+  if(roq@denominator == qone()) {
+    sprintf(
+      "[%s]",
+      trimws(capture.output(show(roq@numerator)),   which = "right")
+    )
+  } else {
+    sprintf(
+      "[%s] / [%s]",
+      trimws(capture.output(show(roq@numerator)),   which = "right"),
+      trimws(capture.output(show(roq@denominator)), which = "right")
+    )
   }
-  sprintf(
-    "[%s] / [%s]",
-    trimws(capture.output(show(roq@numerator)),   which = "right"),
-    trimws(capture.output(show(roq@denominator)), which = "right")
-  )
 }
 
 setMethod(
@@ -130,10 +137,17 @@ simplifyRatioOfQsprays <- function(roq) {
   num <- roq@numerator
   den <- roq@denominator
   g <- gcd(num, den)
+  num <- qsprayDivision(num, g)[["Q"]]
+  den <- qsprayDivision(den, g)[["Q"]]
+  if(isConstantQspray(den)) {
+    k <- 1L / getConstantTerm(den)
+    num <- k * num
+    den <- k * den
+  }
   new(
     "ratioOfQsprays",
-    numerator   = qsprayDivision(num, g)[["Q"]],
-    denominator = qsprayDivision(den, g)[["Q"]]
+    numerator   = num,
+    denominator = den
   )
 }
 
