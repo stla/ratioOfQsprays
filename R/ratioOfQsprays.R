@@ -1,7 +1,6 @@
-#' @importFrom qspray qsprayDivision as.qspray qone qzero
 #' @importFrom resultant gcd
 #' @importFrom methods setMethod setClass new show
-#' @importFrom gmp as.bigq 
+#' @importFrom gmp as.bigq
 #' @include ratioOfQsprays.R
 NULL
 
@@ -11,18 +10,18 @@ setClass(
 )
 
 showRatioOfQsprays <- function(roq) {
-  if(roq@numerator == 0L) {
+  if(roq@numerator == qzero()) {
     return("0")
   }
   sprintf(
-    "[%s] / [%s]", 
-    trimws(capture.output(show(roq@numerator)),   which = "right"), 
+    "[%s] / [%s]",
+    trimws(capture.output(show(roq@numerator)),   which = "right"),
     trimws(capture.output(show(roq@denominator)), which = "right")
   )
 }
 
 setMethod(
-  "show", "ratioOfQsprays", 
+  "show", "ratioOfQsprays",
   function(object) {
     cat(showRatioOfQsprays(object), "\n")
   }
@@ -44,8 +43,8 @@ setGeneric(
 #' @docType methods
 #' @title Coercion to a 'ratioOfQsprays' object
 #'
-#' @param x a \code{ratioOfQsprays} object, a \code{qspray} object, or an 
-#'   object yielding a quoted integer or a quoted fraction after an application 
+#' @param x a \code{ratioOfQsprays} object, a \code{qspray} object, or an
+#'   object yielding a quoted integer or a quoted fraction after an application
 #'   of \code{as.character}
 #'
 #' @return A \code{ratioOfQsprays} object.
@@ -111,17 +110,17 @@ setMethod(
 #' @param e2 nothing
 #' @return A \code{ratioOfQsprays} object.
 setMethod(
-  "+", 
-  signature(e1 = "ratioOfQsprays", e2 = "missing"), 
+  "+",
+  signature(e1 = "ratioOfQsprays", e2 = "missing"),
   function(e1, e2) e1
 )
 #' @rdname ratioOfQsprays-unary
 setMethod(
-  "-", 
-  signature(e1 = "ratioOfQsprays", e2 = "missing"), 
+  "-",
+  signature(e1 = "ratioOfQsprays", e2 = "missing"),
   function(e1, e2) {
     new(
-      "ratioOfQsprays", 
+      "ratioOfQsprays",
       powers = e1@powers, coeffs = as.character(-as.bigq(e1@coeffs))
     )
   }
@@ -174,7 +173,7 @@ ratioOfQsprays_arith_ratioOfQsprays <- function(e1, e2) {
       )
     ),
     stop(gettextf(
-      "Binary operator %s not defined for ratioOfQsprays objects.", 
+      "Binary operator %s not defined for ratioOfQsprays objects.",
       dQuote(.Generic)
     ))
   )
@@ -272,68 +271,68 @@ numeric_arith_ratioOfQsprays <- function(e1, e2) {
 }
 
 setMethod(
-  "Arith", 
-  signature(e1 = "ratioOfQsprays", e2 = "ratioOfQsprays"), 
+  "Arith",
+  signature(e1 = "ratioOfQsprays", e2 = "ratioOfQsprays"),
   ratioOfQsprays_arith_ratioOfQsprays
 )
 
 setMethod(
-  "Arith", 
-  signature(e1 = "ratioOfQsprays", e2 = "qspray"), 
+  "Arith",
+  signature(e1 = "ratioOfQsprays", e2 = "qspray"),
   ratioOfQsprays_arith_qspray
 )
 
 setMethod(
-  "Arith", 
-  signature(e1 = "ratioOfQsprays", e2 = "character"), 
+  "Arith",
+  signature(e1 = "ratioOfQsprays", e2 = "character"),
   ratioOfQsprays_arith_character
 )
 
 setMethod(
-  "Arith", 
-  signature(e1 = "ratioOfQsprays", e2 = "bigq"), 
+  "Arith",
+  signature(e1 = "ratioOfQsprays", e2 = "bigq"),
   ratioOfQsprays_arith_gmp
 )
 
 setMethod(
-  "Arith", 
-  signature(e1 = "ratioOfQsprays", e2 = "bigz"), 
+  "Arith",
+  signature(e1 = "ratioOfQsprays", e2 = "bigz"),
   ratioOfQsprays_arith_gmp
 )
 
 setMethod(
-  "Arith", 
-  signature(e1 = "qspray", e2 = "ratioOfQsprays"), 
+  "Arith",
+  signature(e1 = "qspray", e2 = "ratioOfQsprays"),
   qspray_arith_ratioOfQsprays
 )
 
 setMethod(
-  "Arith", 
-  signature(e1 = "character", e2 = "ratioOfQsprays"), 
+  "Arith",
+  signature(e1 = "character", e2 = "ratioOfQsprays"),
   character_arith_ratioOfQsprays
 )
 
 setMethod(
-  "Arith", 
-  signature(e1 = "bigq", e2 = "ratioOfQsprays"), 
+  "Arith",
+  signature(e1 = "bigq", e2 = "ratioOfQsprays"),
   gmp_arith_ratioOfQsprays
 )
 
 setMethod(
-  "Arith", 
-  signature(e1 = "bigz", e2 = "ratioOfQsprays"), 
+  "Arith",
+  signature(e1 = "bigz", e2 = "ratioOfQsprays"),
   gmp_arith_ratioOfQsprays
 )
 
 setMethod(
-  "Arith", 
-  signature(e1 = "ratioOfQsprays", e2 = "numeric"), 
+  "Arith",
+  signature(e1 = "ratioOfQsprays", e2 = "numeric"),
   ratioOfQsprays_arith_numeric
 )
 
 setMethod(
-  "Arith", 
-  signature(e1 = "numeric", e2 = "ratioOfQsprays"), 
+  "Arith",
+  signature(e1 = "numeric", e2 = "ratioOfQsprays"),
   numeric_arith_ratioOfQsprays
 )
 
@@ -347,7 +346,158 @@ setMethod(
       "==" = num == qzero(),
       "!=" = num != qzero(),
       stop(gettextf(
-        "Comparison operator %s not defined for qspray objects.", dQuote(.Generic)
+        "Comparison operator %s not defined for ratioOfQsprays objects.",
+        dQuote(.Generic)
+      ))
+    )
+  }
+)
+setMethod(
+  "Compare",
+  signature(e1 = "ratioOfQsprays", e2 = "qspray"),
+  function(e1, e2) {
+    switch(
+      .Generic,
+      "==" = e1 == as.ratioOfQsprays(e2),
+      "!=" = e1 != as.ratioOfQsprays(e2),
+      stop(gettextf(
+        "Comparison operator %s not defined for these two objects.",
+        dQuote(.Generic)
+      ))
+    )
+  }
+)
+setMethod(
+  "Compare",
+  signature(e1 = "ratioOfQsprays", e2 = "character"),
+  function(e1, e2) {
+    switch(
+      .Generic,
+      "==" = e1 == as.ratioOfQsprays(e2),
+      "!=" = e1 != as.ratioOfQsprays(e2),
+      stop(gettextf(
+        "Comparison operator %s not defined for these two objects.",
+        dQuote(.Generic)
+      ))
+    )
+  }
+)
+setMethod(
+  "Compare",
+  signature(e1 = "ratioOfQsprays", e2 = "numeric"),
+  function(e1, e2) {
+    switch(
+      .Generic,
+      "==" = e1 == as.ratioOfQsprays(e2),
+      "!=" = e1 != as.ratioOfQsprays(e2),
+      stop(gettextf(
+        "Comparison operator %s not defined for these two objects.",
+        dQuote(.Generic)
+      ))
+    )
+  }
+)
+setMethod(
+  "Compare",
+  signature(e1 = "ratioOfQsprays", e2 = "bigz"),
+  function(e1, e2) {
+    switch(
+      .Generic,
+      "==" = e1 == as.ratioOfQsprays(e2),
+      "!=" = e1 != as.ratioOfQsprays(e2),
+      stop(gettextf(
+        "Comparison operator %s not defined for these two objects.",
+        dQuote(.Generic)
+      ))
+    )
+  }
+)
+setMethod(
+  "Compare",
+  signature(e1 = "ratioOfQsprays", e2 = "bigq"),
+  function(e1, e2) {
+    switch(
+      .Generic,
+      "==" = e1 == as.ratioOfQsprays(e2),
+      "!=" = e1 != as.ratioOfQsprays(e2),
+      stop(gettextf(
+        "Comparison operator %s not defined for these two objects.",
+        dQuote(.Generic)
+      ))
+    )
+  }
+)
+setMethod(
+  "Compare",
+  signature(e1 = "qspray", e2 = "ratioOfQsprays"),
+  function(e1, e2) {
+    switch(
+      .Generic,
+      "==" = as.ratioOfQsprays(e1) == e2,
+      "!=" = as.ratioOfQsprays(e1) != e2,
+      stop(gettextf(
+        "Comparison operator %s not defined for these two objects.",
+        dQuote(.Generic)
+      ))
+    )
+  }
+)
+setMethod(
+  "Compare",
+  signature(e1 = "character", e2 = "ratioOfQsprays"),
+  function(e1, e2) {
+    switch(
+      .Generic,
+      "==" = as.ratioOfQsprays(e1) == e2,
+      "!=" = as.ratioOfQsprays(e1) != e2,
+      stop(gettextf(
+        "Comparison operator %s not defined for these two objects.",
+        dQuote(.Generic)
+      ))
+    )
+  }
+)
+setMethod(
+  "Compare",
+  signature(e1 = "numeric", e2 = "ratioOfQsprays"),
+  function(e1, e2) {
+    switch(
+      .Generic,
+      "==" = as.ratioOfQsprays(e1) == e2,
+      "!=" = as.ratioOfQsprays(e1) != e2,
+      stop(gettextf(
+        "Comparison operator %s not defined for these two objects.",
+        dQuote(.Generic)
+      ))
+    )
+  }
+)
+setMethod(
+  "Compare",
+  signature(e1 = "bigz", e2 = "ratioOfQsprays"),
+  function(e1, e2) {
+    switch(
+      .Generic,
+      "==" = as.ratioOfQsprays(e1) == e2,
+      "!=" = as.ratioOfQsprays(e1) != e2,
+      stop(gettextf(
+        "Comparison operator %s not defined for these two objects.",
+        dQuote(.Generic)
+      ))
+    )
+  }
+)
+setMethod(
+  "Compare",
+  signature(e1 = "bigq", e2 = "ratioOfQsprays"),
+  function(e1, e2) {
+    switch(
+      .Generic,
+      "==" = as.ratioOfQsprays(e1) == e2,
+      "!=" = as.ratioOfQsprays(e1) != e2,
+      stop(gettextf(
+        "Comparison operator %s not defined for these two objects.",
+        dQuote(.Generic)
       ))
     )
   }
