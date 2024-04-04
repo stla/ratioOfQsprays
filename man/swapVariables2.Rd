@@ -7,9 +7,9 @@
 swapVariables2(roq, i, j)
 }
 \arguments{
-\item{i, j}{indices of the variables to be swapped}
+\item{roq}{a \code{ratioOfQsprays} object}
 
-\item{qspray}{a \code{ratioOfQsprays} object}
+\item{i, j}{indices of the variables to be swapped}
 }
 \value{
 A \code{ratioOfQsprays} object.

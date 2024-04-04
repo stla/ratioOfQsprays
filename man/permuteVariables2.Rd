@@ -7,9 +7,9 @@
 permuteVariables2(roq, permutation)
 }
 \arguments{
-\item{permutation}{a permutation}
+\item{roq}{a \code{ratioOfQsprays} object}
 
-\item{qspray}{a \code{ratioOfQsprays} object}
+\item{permutation}{a permutation}
 }
 \value{
 A \code{ratioOfQsprays} object.
@@ -27,6 +27,6 @@ y <- qlone(2)
 z <- qlone(3)
 R <- f(x, y, z)
 permutation <- c(3, 1, 2)
-S <- permuteVariables(P, permutation)
+S <- permuteVariables(R, permutation)
 S == f(z, x, y) # should be TRUE
 }

@@ -1,7 +1,7 @@
 #' @title Partial derivative
 #' @description Partial derivative of a \code{ratioOfQsprays}.
 #'
-#' @param qspray object of class \code{ratioOfQsprays}
+#' @param roq object of class \code{ratioOfQsprays}
 #' @param i integer, the dimension to differentiate with respect to
 #' @param derivative integer, how many times to differentiate
 #'
@@ -29,7 +29,7 @@ derivRatioOfQsprays <- function(roq, i, derivative = 1) {
 #' @title Partial differentiation
 #' @description Partial differentiation of a ratioOfQsprays polynomial.
 #'
-#' @param qspray object of class \code{ratioOfQsprays}
+#' @param roq object of class \code{ratioOfQsprays}
 #' @param orders integer vector, the orders of the differentiation
 #'
 #' @return A \code{ratioOfQsprays} object.
@@ -67,11 +67,12 @@ dRatioOfQsprays <- function(roq, orders) {
 #' @title Permute variables
 #' @description Permute the variables of a \code{ratioOfQsprays} polynomial.
 #'
-#' @param qspray a \code{ratioOfQsprays} object
+#' @param roq a \code{ratioOfQsprays} object
 #' @param permutation a permutation
 #'
 #' @return A \code{ratioOfQsprays} object.
 #' @export
+#' @importFrom qspray permuteVariables
 #'
 #' @examples
 #' library(ratioOfQsprays)
@@ -83,7 +84,7 @@ dRatioOfQsprays <- function(roq, orders) {
 #' z <- qlone(3)
 #' R <- f(x, y, z)
 #' permutation <- c(3, 1, 2)
-#' S <- permuteVariables(P, permutation)
+#' S <- permuteVariables(R, permutation)
 #' S == f(z, x, y) # should be TRUE
 permuteVariables2 <- function(roq, permutation) {
   permuteVariables(roq@numerator, permutation) /
@@ -93,7 +94,7 @@ permuteVariables2 <- function(roq, permutation) {
 #' @title Swap variables
 #' @description Swap two variables of a \code{ratioOfQsprays}.
 #'
-#' @param qspray a \code{ratioOfQsprays} object
+#' @param roq a \code{ratioOfQsprays} object
 #' @param i,j indices of the variables to be swapped
 #'
 #' @return A \code{ratioOfQsprays} object.

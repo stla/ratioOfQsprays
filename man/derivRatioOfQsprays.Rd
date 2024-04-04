@@ -7,11 +7,11 @@
 derivRatioOfQsprays(roq, i, derivative = 1)
 }
 \arguments{
+\item{roq}{object of class \code{ratioOfQsprays}}
+
 \item{i}{integer, the dimension to differentiate with respect to}
 
 \item{derivative}{integer, how many times to differentiate}
-
-\item{qspray}{object of class \code{ratioOfQsprays}}
 }
 \value{
 A \code{ratioOfQsprays} object.

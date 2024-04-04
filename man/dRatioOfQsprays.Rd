@@ -7,9 +7,9 @@
 dRatioOfQsprays(roq, orders)
 }
 \arguments{
-\item{orders}{integer vector, the orders of the differentiation}
+\item{roq}{object of class \code{ratioOfQsprays}}
 
-\item{qspray}{object of class \code{ratioOfQsprays}}
+\item{orders}{integer vector, the orders of the differentiation}
 }
 \value{
 A \code{ratioOfQsprays} object.
