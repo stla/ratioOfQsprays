@@ -23,3 +23,13 @@ test_that("distributivity", {
   roq3 <- ROQ3()
   expect_true(roq1*(roq2+roq3) == roq1*roq2 + roq1*roq3)
 })
+
+test_that("equality", {
+  roq1 <- ROQ1()
+  expect_true(4*roq1/(2*roq1) == 2L)
+  expect_true(4*roq1/(2*roq1) == as.character(2L))
+  expect_true(4*roq1/(2*roq1) == gmp::as.bigq(2L))
+  expect_true(4*roq1/(2*roq1) == as.qspray(2L))
+  expect_true(4*roq1/(2*roq1) == as.ratioOfQsprays(2L))
+})
+
