@@ -76,7 +76,7 @@ namespace RATIOOFQSPRAYS {
     	numerator   = numerator * ROQ2.denominator + denominator * ROQ2.numerator;
     	denominator = denominator * ROQ2.denominator;
     	RatioOfQsprays ROQ(numerator, denominator);
-    	ROQ.simplify();
+//    	ROQ.simplify();
     	return ROQ;
     }
 
