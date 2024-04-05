@@ -148,21 +148,22 @@ namespace RATIOOFQSPRAYS {
     }
 
     static Qspray<gmpq> callGCD(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
-      int d1 = 0;
-      qspray S1 = Q1.get();
-      for(const auto& term : S1) {
-        int n = term.first.size();
-        if(n > d1) {
-          d1 = n;
-        }
-      }
-      int d2 = 0;
-      qspray S2 = Q2.get();
-      for(const auto& term : S2) {
-        int n = term.first.size();
-        if(n > d2) {
-          d2 = n;
-        }
+      int d1 = Q1.numberOfVariables();
+      int d2 = Q2.numberOfVariables();
+      // qspray S1 = Q1.get();
+      // for(const auto& term : S1) {
+      //   int n = term.first.size();
+      //   if(n > d1) {
+      //     d1 = n;
+      //   }
+      // }
+      // int d2 = 0;
+      // qspray S2 = Q2.get();
+      // for(const auto& term : S2) {
+      //   int n = term.first.size();
+      //   if(n > d2) {
+      //     d2 = n;
+      //   }
       }
       const int X = std::max<int>(1, std::max<int>(d1, d2));
       if(X == 1) {
