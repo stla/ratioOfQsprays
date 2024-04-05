@@ -421,6 +421,14 @@ static SymbolicQspray makeSymbolicQspray(
   return SymbolicQspray(S);
 }
 
+static Rcpp::List SymbolicQspray_add(
+  const Rcpp::List& Powers1, const Rcpp::List& Coeffs1,
+  const Rcpp::List& Powers2, const Rcpp::List& Coeffs2
+) {
+  SymbolicQspray sqspray1 = makeSymbolicQspray(Powers1, Coeffs1);
+  SymbolicQspray sqspray2 = makeSymbolicQspray(Powers2, Coeffs2);
+  return returnSymbolicQspray(sqspray1 + sqspray2);
+}
 
 
 #endif
