@@ -14,44 +14,37 @@
 #include "qspray.h"
 
 typedef CGAL::Polynomial_type_generator<CGAL::Gmpq,1>::Type Poly1;
-typedef CGAL::Polynomial_traits_d<Poly1>                     PT1;
+typedef CGAL::Polynomial_traits_d<Poly1>                    PT1;
 typedef std::pair<CGAL::Exponent_vector, PT1::Innermost_coefficient_type> Monomial1;
-typedef CGAL::Polynomial_type_generator<CGAL::Gmpq, 2>::Type Poly2;
-typedef CGAL::Polynomial_traits_d<Poly2>                     PT2;
+typedef CGAL::Polynomial_type_generator<CGAL::Gmpq,2>::Type Poly2;
+typedef CGAL::Polynomial_traits_d<Poly2>                    PT2;
 typedef std::pair<CGAL::Exponent_vector, PT2::Innermost_coefficient_type> Monomial2;
-typedef CGAL::Polynomial_type_generator<CGAL::Gmpq, 3>::Type Poly3;
-typedef CGAL::Polynomial_traits_d<Poly3>                     PT3;
+typedef CGAL::Polynomial_type_generator<CGAL::Gmpq,3>::Type Poly3;
+typedef CGAL::Polynomial_traits_d<Poly3>                    PT3;
 typedef std::pair<CGAL::Exponent_vector, PT3::Innermost_coefficient_type> Monomial3;
-typedef CGAL::Polynomial_type_generator<CGAL::Gmpq, 4>::Type Poly4;
-typedef CGAL::Polynomial_traits_d<Poly4>                     PT4;
+typedef CGAL::Polynomial_type_generator<CGAL::Gmpq,4>::Type Poly4;
+typedef CGAL::Polynomial_traits_d<Poly4>                    PT4;
 typedef std::pair<CGAL::Exponent_vector, PT4::Innermost_coefficient_type> Monomial4;
-typedef CGAL::Polynomial_type_generator<CGAL::Gmpq, 5>::Type Poly5;
-typedef CGAL::Polynomial_traits_d<Poly5>                     PT5;
+typedef CGAL::Polynomial_type_generator<CGAL::Gmpq,5>::Type Poly5;
+typedef CGAL::Polynomial_traits_d<Poly5>                    PT5;
 typedef std::pair<CGAL::Exponent_vector, PT5::Innermost_coefficient_type> Monomial5;
-typedef CGAL::Polynomial_type_generator<CGAL::Gmpq, 6>::Type Poly6;
-typedef CGAL::Polynomial_traits_d<Poly6>                     PT6;
+typedef CGAL::Polynomial_type_generator<CGAL::Gmpq,6>::Type Poly6;
+typedef CGAL::Polynomial_traits_d<Poly6>                    PT6;
 typedef std::pair<CGAL::Exponent_vector, PT6::Innermost_coefficient_type> Monomial6;
-typedef CGAL::Polynomial_type_generator<CGAL::Gmpq, 7>::Type Poly7;
-typedef CGAL::Polynomial_traits_d<Poly7>                     PT7;
+typedef CGAL::Polynomial_type_generator<CGAL::Gmpq,7>::Type Poly7;
+typedef CGAL::Polynomial_traits_d<Poly7>                    PT7;
 typedef std::pair<CGAL::Exponent_vector, PT7::Innermost_coefficient_type> Monomial7;
-typedef CGAL::Polynomial_type_generator<CGAL::Gmpq, 8>::Type Poly8;
-typedef CGAL::Polynomial_traits_d<Poly8>                     PT8;
+typedef CGAL::Polynomial_type_generator<CGAL::Gmpq,8>::Type Poly8;
+typedef CGAL::Polynomial_traits_d<Poly8>                    PT8;
 typedef std::pair<CGAL::Exponent_vector, PT8::Innermost_coefficient_type> Monomial8;
-typedef CGAL::Polynomial_type_generator<CGAL::Gmpq, 9>::Type Poly9;
-typedef CGAL::Polynomial_traits_d<Poly9>                     PT9;
+typedef CGAL::Polynomial_type_generator<CGAL::Gmpq,9>::Type Poly9;
+typedef CGAL::Polynomial_traits_d<Poly9>                    PT9;
 typedef std::pair<CGAL::Exponent_vector, PT9::Innermost_coefficient_type> Monomial9;
 
 
 // ---------------------------------------------------------------------------//
 using namespace QSPRAY;
 
-static Qspray<gmpq> gcdQsprays(const Qspray<gmpq>& Q1, const Qspray<gmpq>& Q2) {
-  return scalarQspray<gmpq>(1);
-}
-
-static Qspray<gmpq> QuotientOfQsprays(Qspray<gmpq>& A, Qspray<gmpq>& B) {
-  return qsprayDivision(A, B).first;
-}
 
 namespace RATIOOFQSPRAYS {
 
@@ -74,12 +67,17 @@ namespace RATIOOFQSPRAYS {
       return snumer + "/" + sdenom;
     }
 
+    // -------------------------------------------------------------------------- //
     template <typename PolyX, typename PTX, typename MonomialX>
     static Qspray<gmpq> getGCD(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
+      // CGAL polynomial constructor
+      typename PTX::Construct_polynomial constructPolynomial;
+      // converts the first Qspray to a CGAL polynomial
       typename std::list<MonomialX> terms1;
       qspray S1 = Q1.get();
       for(const auto& term : S1) {
-        powers expnts = QSPRAY::utils::growPowers(term.first, term.first.size(), 4);
+        powers expnts = 
+          QSPRAY::utils::growPowers(term.first, term.first.size(), 4);
         terms1.push_back(
           std::make_pair(
             CGAL::Exponent_vector(expnts.begin(), expnts.end()),
@@ -87,10 +85,13 @@ namespace RATIOOFQSPRAYS {
           )
         );
       }
+      PolyX P1 = constructPolynomial(terms1.begin(), terms1.end()); 
+      // converts the second Qspray to a CGAL polynomial
       typename std::list<MonomialX> terms2;
       qspray S2 = Q2.get();
       for(const auto& term : S2) {
-        powers expnts = QSPRAY::utils::growPowers(term.first, term.first.size(), 4);
+        powers expnts = 
+          QSPRAY::utils::growPowers(term.first, term.first.size(), 4);
         terms2.push_back(
           std::make_pair(
             CGAL::Exponent_vector(expnts.begin(), expnts.end()),
@@ -98,25 +99,22 @@ namespace RATIOOFQSPRAYS {
           )
         );
       }
-      // polynomials
-      typename PTX::Construct_polynomial constructPolynomial;
-      // first polynomial
-      PolyX P1 = constructPolynomial(terms1.begin(), terms1.end()); 
-      // second polynomial
       PolyX P2 = constructPolynomial(terms2.begin(), terms2.end());  
-      // GCD
+      // take the CGAL GCD up to a constant factor
       typename PTX::Gcd_up_to_constant_factor gcd_utcf;
-      // typename PTX::Gcd gcd;
+      // (to get the 'ordinary' GCD we woule use typename PTX::Gcd gcd)
       PolyX D = gcd_utcf(P1, P2);
+      // extract the monomials of the GCD
       std::list<MonomialX> monomials;
       typename PTX::Monomial_representation mrepr;
       mrepr(D, std::back_inserter(monomials));
+      // now make the Qspray corresponding to the GCD
       qspray S;
-      typename std::list<MonomialX>::iterator it_monoms;
-      for(it_monoms = monomials.begin(); it_monoms != monomials.end(); it_monoms++) {
-        CGAL::Exponent_vector exponents = (*it_monoms).first;
+      typename std::list<MonomialX>::iterator itmns;
+      for(itmons = monomials.begin(); itmons != monomials.end(); itmons++) {
+        CGAL::Exponent_vector exponents = (*itmons).first;
         powers expnts(exponents.begin(), exponents.end());
-        gmpq coeff(Gmpq2str((*it_monoms).second));
+        gmpq coeff(Gmpq2str((*itmons).second));
         S[expnts] = coeff;
       }
       return Qspray<gmpq>(S);
@@ -139,6 +137,15 @@ namespace RATIOOFQSPRAYS {
     }
     static Qspray<gmpq> getGCD6(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
       return getGCD<Poly6, PT6, Monomial6>(Q1, Q2);
+    }
+    static Qspray<gmpq> getGCD6(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
+      return getGCD<Poly7, PT7, Monomial7>(Q1, Q2);
+    }
+    static Qspray<gmpq> getGCD6(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
+      return getGCD<Poly8, PT8, Monomial8>(Q1, Q2);
+    }
+    static Qspray<gmpq> getGCD6(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
+      return getGCD<Poly9, PT9, Monomial9>(Q1, Q2);
     }
 
     static Qspray<gmpq> callGCD(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
@@ -171,13 +178,23 @@ namespace RATIOOFQSPRAYS {
         return getGCD5(Q1, Q2);
       } else if (X == 6) {
         return getGCD6(Q1, Q2);
+      } else if (X == 7) {
+        return getGCD7(Q1, Q2);
+      } else if (X == 8) {
+        return getGCD8(Q1, Q2);
+      } else if (X == 9) {
+        return getGCD9(Q1, Q2);
       } else {
-        Rcpp::stop("");
+        Rcpp::stop("Cannot deal with more than nine variables.");
       }
     }
 
-  template<typename T>
-  static void simplify(Qspray<T> &A, Qspray<T> &B) {
+    static Qspray<gmpq> QuotientOfQsprays(Qspray<gmpq>& A, Qspray<gmpq>& B) {
+      return qsprayDivision(A, B).first;
+    }
+
+    template<typename T>
+    static void simplifyFraction(Qspray<T> &A, Qspray<T> &B) {
       Qspray<T> G = callGCD(A, B);
       G.clean();
       A = QuotientOfQsprays(A, G);
@@ -191,6 +208,8 @@ namespace RATIOOFQSPRAYS {
 
   } // end of namespace RATIOOFQSPRAYS::utils
 
+
+  // ------------------------------------------------------------------------ //
   template<typename T>
   class RatioOfQsprays {
 
@@ -232,9 +251,9 @@ namespace RATIOOFQSPRAYS {
     }
 
     RatioOfQsprays<T> operator+=(const RatioOfQsprays<T>& ROQ2) {
-    	numerator = numerator * ROQ2.denominator + denominator * ROQ2.numerator;
+    	numerator    = numerator * ROQ2.denominator + denominator * ROQ2.numerator;
     	denominator *= ROQ2.denominator;
-      utils::simplify(numerator, denominator);
+      utils::simplifyFraction(numerator, denominator);
     	RatioOfQsprays ROQ(numerator, denominator);
     	return ROQ;
     }
@@ -246,9 +265,9 @@ namespace RATIOOFQSPRAYS {
     }
 
     RatioOfQsprays<T> operator-=(const RatioOfQsprays<T>& ROQ2) {
-      numerator   = numerator * ROQ2.denominator - denominator * ROQ2.numerator;
+      numerator    = numerator * ROQ2.denominator - denominator * ROQ2.numerator;
       denominator *= ROQ2.denominator;
-      utils::simplify(numerator, denominator);
+      utils::simplifyFraction(numerator, denominator);
       RatioOfQsprays ROQ(numerator, denominator);
       return ROQ;
     }
@@ -262,7 +281,7 @@ namespace RATIOOFQSPRAYS {
     RatioOfQsprays<T> operator*=(const RatioOfQsprays<T>& ROQ2) {
       numerator   *= ROQ2.numerator;
       denominator *= ROQ2.denominator;
-      utils::simplify(numerator, denominator);
+      utils::simplifyFraction(numerator, denominator);
       RatioOfQsprays ROQ(numerator, denominator);
       return ROQ;
     }
@@ -276,7 +295,7 @@ namespace RATIOOFQSPRAYS {
     RatioOfQsprays<T> operator/=(const RatioOfQsprays<T>& ROQ2) {
       numerator   *= ROQ2.denominator;
       denominator *= ROQ2.numerator;
-      utils::simplify(denominator, numerator);
+      utils::simplifyFraction(denominator, numerator);
       RatioOfQsprays ROQ(numerator, denominator);
       return ROQ;
     }
@@ -311,7 +330,7 @@ namespace RATIOOFQSPRAYS {
 
   };
 
-  // -------------------------------------------------------------------------- //
+  // ------------------------------------------------------------------------ //
   static Rcpp::List returnRatioOfQsprays(RatioOfQsprays<gmpq> ROQ) {
     return Rcpp::List::create(
       Rcpp::Named("numerator")   = returnQspray(ROQ.getNumerator()),
@@ -319,7 +338,7 @@ namespace RATIOOFQSPRAYS {
     );
   }
 
-  // -------------------------------------------------------------------------- //
+  // ------------------------------------------------------------------------ //
   static RatioOfQsprays<gmpq> makeRatioOfQsprays(
     const Rcpp::List& Numerator, 
     const Rcpp::List& Denominator
