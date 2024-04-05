@@ -109,7 +109,7 @@ namespace RATIOOFQSPRAYS {
       mrepr(D, std::back_inserter(monomials));
       // now make the Qspray corresponding to the GCD
       qspray S;
-      typename std::list<MonomialX>::iterator itmns;
+      typename std::list<MonomialX>::iterator itmons;
       for(itmons = monomials.begin(); itmons != monomials.end(); itmons++) {
         CGAL::Exponent_vector exponents = (*itmons).first;
         powers expnts(exponents.begin(), exponents.end());
@@ -137,13 +137,13 @@ namespace RATIOOFQSPRAYS {
     static Qspray<gmpq> getGCD6(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
       return getGCD<Poly6, PT6, Monomial6>(Q1, Q2);
     }
-    static Qspray<gmpq> getGCD6(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
+    static Qspray<gmpq> getGCD7(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
       return getGCD<Poly7, PT7, Monomial7>(Q1, Q2);
     }
-    static Qspray<gmpq> getGCD6(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
+    static Qspray<gmpq> getGCD8(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
       return getGCD<Poly8, PT8, Monomial8>(Q1, Q2);
     }
-    static Qspray<gmpq> getGCD6(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
+    static Qspray<gmpq> getGCD9(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
       return getGCD<Poly9, PT9, Monomial9>(Q1, Q2);
     }
 
@@ -164,7 +164,7 @@ namespace RATIOOFQSPRAYS {
       //   if(n > d2) {
       //     d2 = n;
       //   }
-      }
+      // }
       const int X = std::max<int>(1, std::max<int>(d1, d2));
       if(X == 1) {
         return getGCD1(Q1, Q2);
