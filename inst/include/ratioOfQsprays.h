@@ -224,15 +224,13 @@ namespace RATIOOFQSPRAYS {
     void simplify() {
     	Qspray<T> G = RATIOOFQSPRAYS::utils::callGCD(numerator, denominator);
       G.clean();
-      std::cout << "num \n"; 
     	numerator   = QuotientOfQsprays(numerator, G);
-      std::cout << "den \n"; 
     	denominator = QuotientOfQsprays(denominator, G);
-      // if(denominator.isConstant()) {
-      //   Qspray<T> d = scalarQspray<T>(T(1) / denominator.constantTerm());
-      //   numerator   *= d;
-      //   denominator *= d;
-      // }
+      if(denominator.isConstant()) {
+        Qspray<T> d = scalarQspray<T>(T(1) / denominator.constantTerm());
+        numerator   *= d;
+        denominator *= d;
+      }
     }
 
     RatioOfQsprays<T> operator+=(const RatioOfQsprays<T>& ROQ2) {
@@ -267,7 +265,7 @@ namespace RATIOOFQSPRAYS {
       numerator   = numerator * ROQ2.numerator;
       denominator = denominator * ROQ2.denominator;
       RatioOfQsprays ROQ(numerator, denominator);
-      //ROQ.simplify();
+      ROQ.simplify();
       return ROQ;
     }
 
