@@ -22,7 +22,7 @@ showRatioOfQsprays <- function(roq) {
     )
   } else {
     sprintf(
-      "[ %s ]  %/%  [ %s ]",
+      "[ %s ]  %%/%%  [ %s ]",
       trimws(capture.output(show(roq@numerator)),   which = "right"),
       trimws(capture.output(show(roq@denominator)), which = "right")
     )

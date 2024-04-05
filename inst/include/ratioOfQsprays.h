@@ -200,9 +200,9 @@ namespace RATIOOFQSPRAYS {
       A = QuotientOfQsprays(A, G);
       B = QuotientOfQsprays(B, G);
       if(B.isConstant()) {
-        Qspray<T> d = scalarQspray<T>(T(1) / B.constantTerm());
-        A *= d;
-        B *= d;
+        T lambda = T(1) / B.constantTerm();
+        A.scale(lambda);
+        B.scale(lambda);
       }
     }
 
