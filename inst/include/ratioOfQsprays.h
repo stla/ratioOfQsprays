@@ -175,11 +175,9 @@ namespace RATIOOFQSPRAYS {
       }
     }
 
-  } // end of namespace RATIOOFQSPRAYS::utils
-
   template<typename T>
   static void simplify(Qspray<T> &A, Qspray<T> &B) {
-      Qspray<T> G = RATIOOFQSPRAYS::utils::callGCD(A, B);
+      Qspray<T> G = callGCD(A, B);
       G.clean();
       A = QuotientOfQsprays(A, G);
       B = QuotientOfQsprays(B, G);
@@ -190,13 +188,13 @@ namespace RATIOOFQSPRAYS {
       }
     }
 
+  } // end of namespace RATIOOFQSPRAYS::utils
+
   template<typename T>
   class RatioOfQsprays {
 
     Qspray<T> numerator;
     Qspray<T> denominator;
-    // std::shared_ptr<Qspray<T>> A;
-    // std::shared_ptr<Qspray<T>> B;
     int       dimension;
 
   public:
@@ -204,16 +202,12 @@ namespace RATIOOFQSPRAYS {
     RatioOfQsprays()
       : numerator(scalarQspray<T>(T(0))), 
         denominator(scalarQspray<T>(T(1))),
-        // A(&numerator),
-        // B(&denominator),
         dimension(0)
         {}
 
     RatioOfQsprays(Qspray<T> numerator_, Qspray<T> denominator_) 
       : numerator(numerator_), 
         denominator(denominator_),
-        // A(&numerator),
-        // B(&denominator),
         dimension(
           std::max<int>(
             numerator_.numberOfVariables(), denominator_.numberOfVariables()
@@ -224,8 +218,6 @@ namespace RATIOOFQSPRAYS {
     RatioOfQsprays(int k)
       : numerator(scalarQspray<T>(T(k))), 
         denominator(scalarQspray<T>(T(1))),
-        // A(&numerator),
-        // B(&denominator),
         dimension(0)
         {}
     
@@ -240,8 +232,8 @@ namespace RATIOOFQSPRAYS {
 
     RatioOfQsprays<T> operator+=(const RatioOfQsprays<T>& ROQ2) {
     	numerator = numerator * ROQ2.denominator + denominator * ROQ2.numerator;
-    	denominator = denominator * ROQ2.denominator;
-      simplify(numerator, denominator);
+    	denominator *= ROQ2.denominator;
+      utils::simplify(numerator, denominator);
     	RatioOfQsprays ROQ(numerator, denominator);
     	return ROQ;
     }
@@ -254,7 +246,8 @@ namespace RATIOOFQSPRAYS {
 
     RatioOfQsprays<T> operator-=(const RatioOfQsprays<T>& ROQ2) {
       numerator   = numerator * ROQ2.denominator - denominator * ROQ2.numerator;
-      denominator = denominator * ROQ2.denominator;
+      denominator *= ROQ2.denominator;
+      utils::simplify(numerator, denominator);
       RatioOfQsprays ROQ(numerator, denominator);
       return ROQ;
     }
@@ -266,9 +259,9 @@ namespace RATIOOFQSPRAYS {
     }
 
     RatioOfQsprays<T> operator*=(const RatioOfQsprays<T>& ROQ2) {
-      numerator   = numerator * ROQ2.numerator;
-      denominator = denominator * ROQ2.denominator;
-      simplify(numerator, denominator);
+      numerator   *= ROQ2.numerator;
+      denominator *= ROQ2.denominator;
+      utils::simplify(numerator, denominator);
       RatioOfQsprays ROQ(numerator, denominator);
       return ROQ;
     }
@@ -280,9 +273,9 @@ namespace RATIOOFQSPRAYS {
     }
 
     RatioOfQsprays<T> operator/=(const RatioOfQsprays<T>& ROQ2) {
-      numerator   = numerator * ROQ2.denominator;
-      denominator = denominator * ROQ2.numerator;
-      simplify(denominator, numerator);
+      numerator   *= ROQ2.denominator;
+      denominator *= ROQ2.numerator;
+      utils::simplify(denominator, numerator);
       RatioOfQsprays ROQ(numerator, denominator);
       return ROQ;
     }
