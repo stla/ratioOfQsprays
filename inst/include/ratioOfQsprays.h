@@ -107,10 +107,6 @@ namespace RATIOOFQSPRAYS {
       // GCD
       typename PTX::Gcd gcd;
       PolyX D = gcd(P1, P2);
-
-      Rcpp::Rcout << "GCD:\n";
-      std::cout << D;
-
       std::list<MonomialX> monomials;
       typename PTX::Monomial_representation mrepr;
       mrepr(D, std::back_inserter(monomials));
@@ -182,10 +178,25 @@ namespace RATIOOFQSPRAYS {
   } // end of namespace RATIOOFQSPRAYS::utils
 
   template<typename T>
+  static void simplify(Qspray<T> &A, Qspray<T> &B) {
+      Qspray<T> G = RATIOOFQSPRAYS::utils::callGCD(A, B);
+      G.clean();
+      A = QuotientOfQsprays(A, G);
+      B = QuotientOfQsprays(B, G);
+      if(B.isConstant()) {
+        Qspray<T> d = scalarQspray<T>(T(1) / B.constantTerm());
+        A *= d;
+        B *= d;
+      }
+    }
+
+  template<typename T>
   class RatioOfQsprays {
 
     Qspray<T> numerator;
     Qspray<T> denominator;
+    // std::shared_ptr<Qspray<T>> A;
+    // std::shared_ptr<Qspray<T>> B;
     int       dimension;
 
   public:
@@ -193,12 +204,16 @@ namespace RATIOOFQSPRAYS {
     RatioOfQsprays()
       : numerator(scalarQspray<T>(T(0))), 
         denominator(scalarQspray<T>(T(1))),
+        // A(&numerator),
+        // B(&denominator),
         dimension(0)
         {}
 
     RatioOfQsprays(Qspray<T> numerator_, Qspray<T> denominator_) 
       : numerator(numerator_), 
         denominator(denominator_),
+        // A(&numerator),
+        // B(&denominator),
         dimension(
           std::max<int>(
             numerator_.numberOfVariables(), denominator_.numberOfVariables()
@@ -209,6 +224,8 @@ namespace RATIOOFQSPRAYS {
     RatioOfQsprays(int k)
       : numerator(scalarQspray<T>(T(k))), 
         denominator(scalarQspray<T>(T(1))),
+        // A(&numerator),
+        // B(&denominator),
         dimension(0)
         {}
     
@@ -221,23 +238,11 @@ namespace RATIOOFQSPRAYS {
       return denominator;
     }
 
-    void simplify() {
-    	Qspray<T> G = RATIOOFQSPRAYS::utils::callGCD(numerator, denominator);
-      G.clean();
-    	numerator   = QuotientOfQsprays(numerator, G);
-    	denominator = QuotientOfQsprays(denominator, G);
-      if(denominator.isConstant()) {
-        Qspray<T> d = scalarQspray<T>(T(1) / denominator.constantTerm());
-        numerator   *= d;
-        denominator *= d;
-      }
-    }
-
     RatioOfQsprays<T> operator+=(const RatioOfQsprays<T>& ROQ2) {
-    	numerator   = numerator * ROQ2.denominator + denominator * ROQ2.numerator;
+    	numerator = numerator * ROQ2.denominator + denominator * ROQ2.numerator;
     	denominator = denominator * ROQ2.denominator;
+      simplify(numerator, denominator);
     	RatioOfQsprays ROQ(numerator, denominator);
-    	ROQ.simplify();
     	return ROQ;
     }
 
@@ -251,7 +256,6 @@ namespace RATIOOFQSPRAYS {
       numerator   = numerator * ROQ2.denominator - denominator * ROQ2.numerator;
       denominator = denominator * ROQ2.denominator;
       RatioOfQsprays ROQ(numerator, denominator);
-      ROQ.simplify();
       return ROQ;
     }
 
@@ -264,8 +268,8 @@ namespace RATIOOFQSPRAYS {
     RatioOfQsprays<T> operator*=(const RatioOfQsprays<T>& ROQ2) {
       numerator   = numerator * ROQ2.numerator;
       denominator = denominator * ROQ2.denominator;
+      simplify(numerator, denominator);
       RatioOfQsprays ROQ(numerator, denominator);
-      ROQ.simplify();
       return ROQ;
     }
 
@@ -278,8 +282,8 @@ namespace RATIOOFQSPRAYS {
     RatioOfQsprays<T> operator/=(const RatioOfQsprays<T>& ROQ2) {
       numerator   = numerator * ROQ2.denominator;
       denominator = denominator * ROQ2.numerator;
+      simplify(denominator, numerator);
       RatioOfQsprays ROQ(numerator, denominator);
-      ROQ.simplify();
       return ROQ;
     }
 

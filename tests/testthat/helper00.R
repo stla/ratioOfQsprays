@@ -24,7 +24,7 @@ ROQ4 <- function() {
   w <- qlone(4)
   new(
     "ratioOfQsprays",
-    numerator = x^4 + 5*y + z - 1,
+    numerator = x + 1,
     denominator = x + 1
   )
   #(x^4 + 5*y + z - 1) / (x + 1 + w)
