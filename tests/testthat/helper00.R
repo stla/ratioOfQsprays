@@ -29,6 +29,3 @@ ROQ4 <- function() {
   )
   #(x^4 + 5*y + z - 1) / (x + 1 + w)
 }
-
-library(ratioOfQsprays)
-r = ROQ4()

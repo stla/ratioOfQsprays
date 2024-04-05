@@ -3,7 +3,7 @@
 
 #include "../inst/include/ratioOfQsprays.h"
 #include <RcppArmadillo.h>
-//#include <Rcpp.h>
+#include <Rcpp.h>
 
 using namespace Rcpp;
 
