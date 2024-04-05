@@ -105,8 +105,9 @@ namespace RATIOOFQSPRAYS {
       // second polynomial
       PolyX P2 = constructPolynomial(terms2.begin(), terms2.end());  
       // GCD
-      typename PTX::Gcd gcd;
-      PolyX D = gcd(P1, P2);
+      typename PTX::Gcd_up_to_constant_factor gcd_utcf;
+      // typename PTX::Gcd gcd;
+      PolyX D = gcd_utcf(P1, P2);
       std::list<MonomialX> monomials;
       typename PTX::Monomial_representation mrepr;
       mrepr(D, std::back_inserter(monomials));

@@ -138,23 +138,19 @@ setMethod(
   }
 )
 
-simplifyRatioOfQsprays <- function(roq) {
-  roq
-  # num <- roq@numerator
-  # den <- roq@denominator
-  # g <- gcd(num, den)
-  # num <- qsprayDivision(num, g)[["Q"]]
-  # den <- qsprayDivision(den, g)[["Q"]]
-  # if(isConstantQspray(den)) {
-  #   k <- 1L / getConstantTerm(den)
-  #   num <- k * num
-  #   den <- k * den
-  # }
-  # new(
-  #   "ratioOfQsprays",
-  #   numerator   = num,
-  #   denominator = den
-  # )
+adjustRatioOfQsprays <- function(roq) {
+  num <- roq@numerator
+  den <- roq@denominator
+  if(isConstantQspray(den)) {
+    k <- 1L / getConstantTerm(den)
+    num <- k * num
+    den <- k * den
+  }
+  new(
+    "ratioOfQsprays",
+    numerator   = num,
+    denominator = den
+  )
 }
 
 ratioOfQsprays_arith_ratioOfQsprays <- function(e1, e2) {
@@ -171,12 +167,10 @@ ratioOfQsprays_arith_ratioOfQsprays <- function(e1, e2) {
         list("powers" = num2@powers, "coeffs" = num2@coeffs),
         list("powers" = den2@powers, "coeffs" = den2@coeffs)
       )
-      simplifyRatioOfQsprays(
-        new(
-          "ratioOfQsprays",
-          numerator   = qspray_from_list(x[["numerator"]]),
-          denominator = qspray_from_list(x[["denominator"]])
-        )
+      new(
+        "ratioOfQsprays",
+        numerator   = qspray_from_list(x[["numerator"]]),
+        denominator = qspray_from_list(x[["denominator"]])
       )
     },
     "-" = {
@@ -186,12 +180,10 @@ ratioOfQsprays_arith_ratioOfQsprays <- function(e1, e2) {
         list("powers" = num2@powers, "coeffs" = num2@coeffs),
         list("powers" = den2@powers, "coeffs" = den2@coeffs)
       )
-      simplifyRatioOfQsprays(
-        new(
-          "ratioOfQsprays",
-          numerator   = qspray_from_list(x[["numerator"]]),
-          denominator = qspray_from_list(x[["denominator"]])
-        )
+      new(
+        "ratioOfQsprays",
+        numerator   = qspray_from_list(x[["numerator"]]),
+        denominator = qspray_from_list(x[["denominator"]])
       )
     },
     "*" = {
@@ -201,12 +193,10 @@ ratioOfQsprays_arith_ratioOfQsprays <- function(e1, e2) {
         list("powers" = num2@powers, "coeffs" = num2@coeffs),
         list("powers" = den2@powers, "coeffs" = den2@coeffs)
       )
-      simplifyRatioOfQsprays(
-        new(
-          "ratioOfQsprays",
-          numerator   = qspray_from_list(x[["numerator"]]),
-          denominator = qspray_from_list(x[["denominator"]])
-        )
+      new(
+        "ratioOfQsprays",
+        numerator   = qspray_from_list(x[["numerator"]]),
+        denominator = qspray_from_list(x[["denominator"]])
       )
     },
     "/" = {
@@ -216,12 +206,10 @@ ratioOfQsprays_arith_ratioOfQsprays <- function(e1, e2) {
         list("powers" = num2@powers, "coeffs" = num2@coeffs),
         list("powers" = den2@powers, "coeffs" = den2@coeffs)
       )
-      simplifyRatioOfQsprays(
-        new(
-          "ratioOfQsprays",
-          numerator   = qspray_from_list(x[["numerator"]]),
-          denominator = qspray_from_list(x[["denominator"]])
-        )
+      new(
+        "ratioOfQsprays",
+        numerator   = qspray_from_list(x[["numerator"]]),
+        denominator = qspray_from_list(x[["denominator"]])
       )
     },
     stop(gettextf(
@@ -283,12 +271,10 @@ ratioOfQspraysPower <- function(ratioOfQsprays, n) {
     list("powers" = denominator@powers, "coeffs" = denominator@coeffs),
     n
   )
-  simplifyRatioOfQsprays(
-    new(
-      "ratioOfQsprays",
-      numerator   = qspray_from_list(roqAsList[["numerator"]]),
-      denominator = qspray_from_list(roqAsList[["denominator"]])
-    )
+  new(
+    "ratioOfQsprays",
+    numerator   = qspray_from_list(roqAsList[["numerator"]]),
+    denominator = qspray_from_list(roqAsList[["denominator"]])
   )
 }
 ratioOfQsprays_arith_gmp <- function(e1, e2) {
@@ -342,7 +328,7 @@ character_arith_ratioOfQsprays <- function(e1, e2) {
       numerator = e1 * e2@numerator,
       denominator = e2@denominator
     ),
-    "/" = simplifyRatioOfQsprays( # juste au cas où le num est constant
+    "/" = adjustRatioOfQsprays( # juste au cas où le num est constant
       new(
         "ratioOfQsprays",
         numerator   = e1 * e2@denominator,
@@ -364,7 +350,7 @@ gmp_arith_ratioOfQsprays <- function(e1, e2) {
       numerator = e1 * e2@numerator,
       denominator = e2@denominator
     ),
-    "/" = simplifyRatioOfQsprays( # juste au cas où le num est constant
+    "/" = adjustRatioOfQsprays( # juste au cas où le num est constant
       new(
         "ratioOfQsprays",
         numerator   = e1 * e2@denominator,
@@ -386,7 +372,7 @@ numeric_arith_ratioOfQsprays <- function(e1, e2) {
       numerator = e1 * e2@numerator,
       denominator = e2@denominator
     ),
-    "/" = simplifyRatioOfQsprays( # juste au cas où le num est constant
+    "/" = adjustRatioOfQsprays( # juste au cas où le num est constant
       new(
         "ratioOfQsprays",
         numerator   = e1 * e2@denominator,
