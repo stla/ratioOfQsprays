@@ -15,7 +15,7 @@
 #'
 #' @examples
 #' x <- qlone(1); y <- qlone(2)
-#' roq <- (2*x + "1/2"*y) / (x^2 + y^2)
+#' roq <- 2*x / (x^2 + 3*y^2)
 #' evalRatioOfQsprays(roq, c("2", "5/2", "99999")) # "99999" will be ignored
 evalRatioOfQsprays <- function(roq, values_re, values_im = NULL) {
   num <- evalQspray(roq@numerator, values_re, values_im)
@@ -34,7 +34,7 @@ evalRatioOfQsprays <- function(roq, values_re, values_im = NULL) {
   }
 }
 
-#' @title Substitutions in a 'ratioOfQsprays' fraction of polynomial
+#' @title Substitutions in a 'ratioOfQsprays' fraction of polynomials
 #' @description Substitute some variables in a \code{ratioOfQsprays} fraction
 #'   of polynomials.
 #'

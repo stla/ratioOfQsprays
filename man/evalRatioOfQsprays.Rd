@@ -25,6 +25,6 @@ Evaluation of the fraction of multivariate polynomials
 }
 \examples{
 x <- qlone(1); y <- qlone(2)
-roq <- (2*x + "1/2"*y) / (x^2 + y^2)
+roq <- 2*x / (x^2 + 3*y^2)
 evalRatioOfQsprays(roq, c("2", "5/2", "99999")) # "99999" will be ignored
 }

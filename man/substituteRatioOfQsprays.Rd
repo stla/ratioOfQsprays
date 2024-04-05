@@ -2,7 +2,7 @@
 % Please edit documentation in R/evaluation.R
 \name{substituteRatioOfQsprays}
 \alias{substituteRatioOfQsprays}
-\title{Substitutions in a 'ratioOfQsprays' fraction of polynomial}
+\title{Substitutions in a 'ratioOfQsprays' fraction of polynomials}
 \usage{
 substituteRatioOfQsprays(roq, values)
 }
