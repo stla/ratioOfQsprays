@@ -1,3 +1,5 @@
+#' @useDynLib ratioOfQsprays, .registration=TRUE
+#' @importFrom Rcpp evalCpp
 #' @importFrom qspray qone as.qspray qsprayDivision isQone isQzero isConstantQspray getConstantTerm
 #' @importFrom resultant gcd
 #' @importFrom methods setMethod setClass new show

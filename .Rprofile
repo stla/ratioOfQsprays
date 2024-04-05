@@ -1,0 +1,22 @@
+myinstall <- function() {
+  try(pkgload::unload("ratioOfQsprays"))
+  Rcpp::compileAttributes()
+  if(rstudioapi::isAvailable()) {
+    rstudioapi::restartSession(
+      "devtools::install(quick = TRUE, keep_source = TRUE)"
+    )
+  } else {
+    devtools::install(quick = TRUE, keep_source = TRUE)
+  }
+}
+
+mydocument <- function() {
+  try(pkgload::unload("ratioOfQsprays"))
+  if(rstudioapi::isAvailable()) {
+    rstudioapi::restartSession(
+      "roxygen2::roxygenise(load_code = roxygen2::load_installed)" 
+    )
+  } else {
+    roxygen2::roxygenise(load_code = roxygen2::load_installed)
+  }
+}
