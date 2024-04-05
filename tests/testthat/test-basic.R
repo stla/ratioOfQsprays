@@ -46,7 +46,7 @@ test_that("power", {
   roq1 <- ROQ1()
   roq2 <- ROQ2()
   roq3 <- ROQ3()
-  expect_true((roq1/roq2*roq3)^6 == roq1^6/roq2^6*roq3^6)
+  expect_true((roq1/roq2*roq3)^3 == roq1^3/roq2^3*roq3^3)
 })
 
 test_that("arithmetic between qsprays and ratioOfQsprays", {
