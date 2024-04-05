@@ -189,12 +189,12 @@ namespace RATIOOFQSPRAYS {
       }
     }
 
-    static Qspray<gmpq> QuotientOfQsprays(Qspray<gmpq>& A, Qspray<gmpq>& B) {
+    static inline Qspray<gmpq> QuotientOfQsprays(Qspray<gmpq>& A, Qspray<gmpq>& B) {
       return qsprayDivision(A, B).first;
     }
 
     template<typename T>
-    static void simplifyFraction(Qspray<T> &A, Qspray<T> &B) {
+    static inline void simplifyFraction(Qspray<T> &A, Qspray<T> &B) {
       Qspray<T> G = callGCD(A, B);
       G.clean();
       A = QuotientOfQsprays(A, G);
@@ -295,7 +295,7 @@ namespace RATIOOFQSPRAYS {
     RatioOfQsprays<T> operator/=(const RatioOfQsprays<T>& ROQ2) {
       numerator   *= ROQ2.denominator;
       denominator *= ROQ2.numerator;
-      utils::simplifyFraction(denominator, numerator);
+      utils::simplifyFraction(numerator, denominator);
       RatioOfQsprays ROQ(numerator, denominator);
       return ROQ;
     }

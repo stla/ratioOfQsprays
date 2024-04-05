@@ -30,8 +30,8 @@ test_that("distributivity", {
 
 test_that("equality with scalar", {
   roq1 <- ROQ1()
-  expect_true(Print(4*roq1/(2*roq1)) == "[2] ")
-  expect_true(Print(2*roq1/(4*roq1)) == "[1/2] ")
+  expect_true(Print(4*roq1/(2*roq1)) == "[2*x^()] ")
+  expect_true(Print(2*roq1/(4*roq1)) == "[1/2*x^()] ")
 })
 
 test_that("division", {
@@ -64,10 +64,10 @@ test_that("equality between qspray and ratioOfQsprays", {
   x <- qlone(1)
   y <- qlone(2)
   z <- qlone(3)
-  expect_true(Print((x^2-y^2)/(x+y)) == "x^(1) - x^(0, 1) ")
+  expect_true(Print((x^2-y^2)/(x+y)) == "[x^(1) - x^(0, 1)] ")
 })
 
 test_that("equality between scalar and ratioOfQsprays", {
   roq1 <- ROQ1()
-  expect_true(Print((3*roq1)/(roq1*6)) == "[1/2]")
+  expect_true(Print((3*roq1)/(roq1*6)) == "[1/2*x^()] ")
 })
