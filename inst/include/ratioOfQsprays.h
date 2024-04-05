@@ -100,11 +100,11 @@ namespace RATIOOFQSPRAYS {
         );
       }
       typename PTX::Monomial_representation mrepr;
+      typename std::list<MonomialX>::iterator it_monoms;
       // first polynomial
       PolyX P1 = constructPolynomial(terms1.begin(), terms1.end());  
       std::list<MonomialX> monomials1;
       mrepr(P1, std::back_inserter(monomials1));
-      typename std::list<MonomialX>::iterator it_monoms;
       qspray SS1;
       for(it_monoms = monomials1.begin(); it_monoms != monomials1.end(); it_monoms++) {
         CGAL::Exponent_vector exponents = (*it_monoms).first;
@@ -115,8 +115,7 @@ namespace RATIOOFQSPRAYS {
       // second polynomial
       PolyX P2 = constructPolynomial(terms2.begin(), terms2.end());  
       std::list<MonomialX> monomials2;
-      mrepr(P1, std::back_inserter(monomials2));
-      typename std::list<MonomialX>::iterator it_monoms;
+      mrepr(P2, std::back_inserter(monomials2));
       qspray SS2;
       for(it_monoms = monomials2.begin(); it_monoms != monomials2.end(); it_monoms++) {
         CGAL::Exponent_vector exponents = (*it_monoms).first;
@@ -124,8 +123,23 @@ namespace RATIOOFQSPRAYS {
         gmpq coeff(Gmpq2str((*it_monoms).second));
         SS2[expnts] = coeff;
       }
+      // GCD
+      typename PTX::Gcd gcd;
+      PolyX D = gcd(P1, P2);
+      std::list<MonomialX> monomials3;
+      mrepr(P3, std::back_inserter(monomials3));
+      qspray SS3;
+      for(it_monoms = monomials3.begin(); it_monoms != monomials3.end(); it_monoms++) {
+        CGAL::Exponent_vector exponents = (*it_monoms).first;
+        powers expnts(exponents.begin(), exponents.end());
+        gmpq coeff(Gmpq2str((*it_monoms).second));
+        SS3[expnts] = coeff;
+      }
+      // Quotients
+      Qspray<gmpq> Qtnt1 = QuotientOfQsprays(Q1, D);
+      Qspray<gmpq> Qtnt2 = QuotientOfQsprays(Q2, D);
       //
-      return std::pair<Qspray<gmpq>,Qspray<gmpq>>(Qspray<gmpq>(SS1), Qspray<gmpq>(SS2));
+      return std::pair<Qspray<gmpq>,Qspray<gmpq>>(Qtnt1, Qtnt2);
     }
 
     static std::pair<Qspray<gmpq>,Qspray<gmpq>> simplify(Qspray<gmpq> Q1, Qspray<gmpq> Q2) {
