@@ -281,8 +281,14 @@ ratioOfQsprays_arith_character <- function(e1, e2) {
 }
 ratioOfQspraysPower <- function(ratioOfQsprays, n) {
   stopifnot(isInteger(n))
-  simplifyRatioOfQsprays(
+  roqAsList <-
     ROQpower(ratioOfQsprays@numerator, ratioOfQsprays@denominator, n)
+  simplifyRatioOfQsprays(
+    new(
+      "ratioOfQsprays",
+      numerator   = qspray_from_list(roqAsList[["numerator"]]),
+      denominator = qspray_from_list(roqAsList[["denominator"]])
+    )
   )
 }
 ratioOfQsprays_arith_gmp <- function(e1, e2) {
