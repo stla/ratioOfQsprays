@@ -75,7 +75,7 @@ namespace RATIOOFQSPRAYS {
     }
 
     template <typename PolyX, typename PTX, typename MonomialX>
-    std::pair<Qspray<gmpq>,Qspray<gmpq>> getQuotients(Qspray<gmpq> Q1, Qspray<gmpq> Q2) {
+    Qspray<gmpq> getGCD(Qspray<gmpq> Q1, Qspray<gmpq> Q2) {
       typename PTX::Construct_polynomial constructPolynomial;
       typename std::list<MonomialX> terms1;
       qspray S1 = Q1.get();
@@ -127,7 +127,7 @@ namespace RATIOOFQSPRAYS {
       typename PTX::Gcd gcd;
       PolyX D = gcd(P1, P2);
       std::list<MonomialX> monomials3;
-      mrepr(P3, std::back_inserter(monomials3));
+      mrepr(D, std::back_inserter(monomials3));
       qspray SS3;
       for(it_monoms = monomials3.begin(); it_monoms != monomials3.end(); it_monoms++) {
         CGAL::Exponent_vector exponents = (*it_monoms).first;
@@ -135,14 +135,15 @@ namespace RATIOOFQSPRAYS {
         gmpq coeff(Gmpq2str((*it_monoms).second));
         SS3[expnts] = coeff;
       }
-      // Quotients
-      Qspray<gmpq> Qtnt1 = QuotientOfQsprays(Q1, D);
-      Qspray<gmpq> Qtnt2 = QuotientOfQsprays(Q2, D);
-      //
-      return std::pair<Qspray<gmpq>,Qspray<gmpq>>(Qtnt1, Qtnt2);
+      return Qspray<gmpq>(SS3);
+      // // Quotients
+      // Qspray<gmpq> Qtnt1 = QuotientOfQsprays(Q1, D);
+      // Qspray<gmpq> Qtnt2 = QuotientOfQsprays(Q2, D);
+      // //
+      // return std::pair<Qspray<gmpq>,Qspray<gmpq>>(Qtnt1, Qtnt2);
     }
 
-    static std::pair<Qspray<gmpq>,Qspray<gmpq>> simplify(Qspray<gmpq> Q1, Qspray<gmpq> Q2) {
+    static Qspray<gmpq> getGCD(Qspray<gmpq> Q1, Qspray<gmpq> Q2) {
       int d1 = 0;
       qspray S1 = Q1.get();
       for(const auto& term : S1) {
@@ -161,7 +162,7 @@ namespace RATIOOFQSPRAYS {
       }
       const int X = std::max<int>(d1, d2);
       if(X == 4) {
-        return getQuotients<Poly4, PT4, Monomial4>(Q1, Q2);
+        return getGCD<Poly4, PT4, Monomial4>(Q1, Q2);
       } else {
         Rcpp::stop("");
       }
@@ -211,7 +212,7 @@ namespace RATIOOFQSPRAYS {
     }
 
     void simplify() {
-    	Qspray<T> G = gcdQsprays(numerator, denominator);
+    	Qspray<T> G = RATIOOFQSPRAYS::utils::getGCD(numerator, denominator);
     	numerator   = QuotientOfQsprays(numerator, G);
     	denominator = QuotientOfQsprays(denominator, G);
       if(denominator.isConstant()) {
