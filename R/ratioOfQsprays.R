@@ -139,21 +139,22 @@ setMethod(
 )
 
 simplifyRatioOfQsprays <- function(roq) {
-  num <- roq@numerator
-  den <- roq@denominator
-  g <- gcd(num, den)
-  num <- qsprayDivision(num, g)[["Q"]]
-  den <- qsprayDivision(den, g)[["Q"]]
-  if(isConstantQspray(den)) {
-    k <- 1L / getConstantTerm(den)
-    num <- k * num
-    den <- k * den
-  }
-  new(
-    "ratioOfQsprays",
-    numerator   = num,
-    denominator = den
-  )
+  roq
+  # num <- roq@numerator
+  # den <- roq@denominator
+  # g <- gcd(num, den)
+  # num <- qsprayDivision(num, g)[["Q"]]
+  # den <- qsprayDivision(den, g)[["Q"]]
+  # if(isConstantQspray(den)) {
+  #   k <- 1L / getConstantTerm(den)
+  #   num <- k * num
+  #   den <- k * den
+  # }
+  # new(
+  #   "ratioOfQsprays",
+  #   numerator   = num,
+  #   denominator = den
+  # )
 }
 
 ratioOfQsprays_arith_ratioOfQsprays <- function(e1, e2) {
