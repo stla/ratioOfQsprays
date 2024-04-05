@@ -76,9 +76,6 @@ namespace RATIOOFQSPRAYS {
 
     template <typename PolyX, typename PTX, typename MonomialX>
     static Qspray<gmpq> getGCD(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
-      // typedef CGAL::Polynomial_type_generator<CGAL::Gmpq, 4>::Type PolyX;
-      // typedef CGAL::Polynomial_traits_d<Poly4>                     PTX;
-      // typedef std::pair<CGAL::Exponent_vector, PT4::Innermost_coefficient_type> MonomialX;
       typename std::list<MonomialX> terms1;
       qspray S1 = Q1.get();
       for(const auto& term : S1) {
@@ -110,6 +107,10 @@ namespace RATIOOFQSPRAYS {
       // GCD
       typename PTX::Gcd gcd;
       PolyX D = gcd(P1, P2);
+
+      Rcpp::Rcout << "GCD:\n";
+      std::cout << D;
+
       std::list<MonomialX> monomials;
       typename PTX::Monomial_representation mrepr;
       mrepr(D, std::back_inserter(monomials));
@@ -124,22 +125,22 @@ namespace RATIOOFQSPRAYS {
       return Qspray<gmpq>(S);
     }
 
-    Qspray<gmpq> getGCD1(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
+    static Qspray<gmpq> getGCD1(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
       return getGCD<Poly1, PT1, Monomial1>(Q1, Q2);
     }
-    Qspray<gmpq> getGCD2(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
+    static Qspray<gmpq> getGCD2(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
       return getGCD<Poly2, PT2, Monomial2>(Q1, Q2);
     }
-    Qspray<gmpq> getGCD3(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
+    static Qspray<gmpq> getGCD3(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
       return getGCD<Poly3, PT3, Monomial3>(Q1, Q2);
     }
-    Qspray<gmpq> getGCD4(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
+    static Qspray<gmpq> getGCD4(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
       return getGCD<Poly4, PT4, Monomial4>(Q1, Q2);
     }
-    Qspray<gmpq> getGCD5(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
+    static Qspray<gmpq> getGCD5(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
       return getGCD<Poly5, PT5, Monomial5>(Q1, Q2);
     }
-    Qspray<gmpq> getGCD6(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
+    static Qspray<gmpq> getGCD6(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
       return getGCD<Poly6, PT6, Monomial6>(Q1, Q2);
     }
 
@@ -222,13 +223,16 @@ namespace RATIOOFQSPRAYS {
 
     void simplify() {
     	Qspray<T> G = RATIOOFQSPRAYS::utils::callGCD(numerator, denominator);
+      G.clean();
+      std::cout << "num \n"; 
     	numerator   = QuotientOfQsprays(numerator, G);
+      std::cout << "den \n"; 
     	denominator = QuotientOfQsprays(denominator, G);
-      if(denominator.isConstant()) {
-        Qspray<T> d = scalarQspray<T>(T(1) / denominator.constantTerm());
-        numerator   *= d;
-        denominator *= d;
-      }
+      // if(denominator.isConstant()) {
+      //   Qspray<T> d = scalarQspray<T>(T(1) / denominator.constantTerm());
+      //   numerator   *= d;
+      //   denominator *= d;
+      // }
     }
 
     RatioOfQsprays<T> operator+=(const RatioOfQsprays<T>& ROQ2) {
