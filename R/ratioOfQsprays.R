@@ -15,9 +15,6 @@ setClass(
 #' @importFrom utils capture.output
 #' @noRd
 showRatioOfQsprays <- function(roq) {
-  # if(roq@numerator == qzero()) {
-  #   return("0")
-  # }
   if(isQone(roq@denominator)) {
     sprintf(
       "[%s]",
@@ -25,7 +22,7 @@ showRatioOfQsprays <- function(roq) {
     )
   } else {
     sprintf(
-      "[%s] / [%s]",
+      "[ %s ]  %/%  [ %s ]",
       trimws(capture.output(show(roq@numerator)),   which = "right"),
       trimws(capture.output(show(roq@denominator)), which = "right")
     )

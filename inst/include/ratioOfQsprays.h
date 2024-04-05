@@ -1,7 +1,6 @@
-#ifndef __ROQHEADER__
-#define __ROQHEADER__
+#ifndef ___RATIO_OF_QSPRAYS___
+#define ___RATIO_OF_QSPRAYS___
 
-#define CGAL_EIGEN3_ENABLED 1
 #include "gmp.h"
 #include <CGAL/Gmpq.h>
 #include <CGAL/Gmpz.h>
@@ -379,7 +378,7 @@ typedef Qspray<RatioOfQsprays<gmpq>>                                   SymbolicQ
 typedef std::unordered_map<powers, RatioOfQsprays<gmpq>, PowersHasher> symbolicQspray;
 
 
-static Rcpp::List returnSymbolicQspray(SymbolicQspray SQ) { // used to return a list to R
+static Rcpp::List returnSymbolicQspray(SymbolicQspray SQ) { // to return a list to R
   symbolicQspray S = SQ.get();
   if(S.size() == 0) {
     return Rcpp::List::create(Rcpp::Named("powers") = R_NilValue,
