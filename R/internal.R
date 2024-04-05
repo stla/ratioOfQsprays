@@ -29,3 +29,11 @@ removeTrailingZeros <- function(x) {
   head(x, n)
 }
 
+qspray_from_list <- function(qspray_as_list) {
+  powers <- qspray_as_list[["powers"]]
+  if(is.null(powers)) {
+    new("qspray", powers = list(), coeffs = character(0L))
+  } else {
+    new("qspray", powers = powers, coeffs = qspray_as_list[["coeffs"]])
+  }
+}

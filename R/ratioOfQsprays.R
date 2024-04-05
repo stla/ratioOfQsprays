@@ -179,10 +179,8 @@ ratioOfQsprays_arith_ratioOfQsprays <- function(e1, e2) {
       simplifyRatioOfQsprays(
         new(
           "ratioOfQsprays",
-          # numerator   = num1 * den2 + num2 * den1,
-          # denominator = den1 * den2
-          numerator   = qspray:::qspray_from_list(x[["numerator"]]),
-          denominator = qspray:::qspray_from_list(x[["denominator"]])
+          numerator   = qspray_from_list(x[["numerator"]]),
+          denominator = qspray_from_list(x[["denominator"]])
         )
       )
     },
@@ -196,8 +194,8 @@ ratioOfQsprays_arith_ratioOfQsprays <- function(e1, e2) {
       simplifyRatioOfQsprays(
         new(
           "ratioOfQsprays",
-          numerator   = qspray:::qspray_from_list(x[["numerator"]]),
-          denominator = qspray:::qspray_from_list(x[["denominator"]])
+          numerator   = qspray_from_list(x[["numerator"]]),
+          denominator = qspray_from_list(x[["denominator"]])
         )
       )
     },
@@ -211,8 +209,8 @@ ratioOfQsprays_arith_ratioOfQsprays <- function(e1, e2) {
       simplifyRatioOfQsprays(
         new(
           "ratioOfQsprays",
-          numerator   = qspray:::qspray_from_list(x[["numerator"]]),
-          denominator = qspray:::qspray_from_list(x[["denominator"]])
+          numerator   = qspray_from_list(x[["numerator"]]),
+          denominator = qspray_from_list(x[["denominator"]])
         )
       )
     },
@@ -226,8 +224,8 @@ ratioOfQsprays_arith_ratioOfQsprays <- function(e1, e2) {
       simplifyRatioOfQsprays(
         new(
           "ratioOfQsprays",
-          numerator   = qspray:::qspray_from_list(x[["numerator"]]),
-          denominator = qspray:::qspray_from_list(x[["denominator"]])
+          numerator   = qspray_from_list(x[["numerator"]]),
+          denominator = qspray_from_list(x[["denominator"]])
         )
       )
     },
@@ -282,25 +280,10 @@ ratioOfQsprays_arith_character <- function(e1, e2) {
   )
 }
 ratioOfQspraysPower <- function(ratioOfQsprays, n) {
-  if(n == 0L) {
-    as.ratioOfQsprays(1L)
-  } else if(n > 0L) {
-    simplifyRatioOfQsprays(
-      new(
-        "ratioOfQsprays",
-        numerator   = ratioOfQsprays@numerator^n,
-        denominator = ratioOfQsprays@denominator^n
-      )
-    )
-  } else {
-    simplifyRatioOfQsprays(
-      new(
-        "ratioOfQsprays",
-        numerator   = ratioOfQsprays@denominator^(-n),
-        denominator = ratioOfQsprays@numerator^(-n)
-      )
-    )
-  }
+  stopifnot(isInteger(n))
+  simplifyRatioOfQsprays(
+    ROQpower(ratioOfQsprays@numerator, ratioOfQsprays@denominator, n)
+  )
 }
 ratioOfQsprays_arith_gmp <- function(e1, e2) {
   switch(
@@ -346,17 +329,19 @@ ratioOfQsprays_arith_numeric <- function(e1, e2) {
 character_arith_ratioOfQsprays <- function(e1, e2) {
   switch(
     .Generic,
-    "+" = e2 + as.ratioOfQsprays(e1),
+    "+" = as.ratioOfQsprays(e1) + e2,
     "-" = as.ratioOfQsprays(e1) - e2,
     "*" = new(
       "ratioOfQsprays",
-      numerator = e2@numerator * e1,
+      numerator = e1 * e2@numerator,
       denominator = e2@denominator
     ),
-    "/" = new(
-      "ratioOfQsprays",
-      numerator   = e2@denominator * e1,
-      denominator = e2@numerator
+    "/" = simplifyRatioOfQsprays( # juste au cas où le num est constant
+      new(
+        "ratioOfQsprays",
+        numerator   = e1 * e2@denominator,
+        denominator = e2@numerator
+      )
     ),
     stop(gettextf(
       "Binary operator %s not defined for these two objects.", dQuote(.Generic)
@@ -370,13 +355,15 @@ gmp_arith_ratioOfQsprays <- function(e1, e2) {
     "-" = as.ratioOfQsprays(e1) - e2,
     "*" = new(
       "ratioOfQsprays",
-      numerator = e1 * e2@numerator ,
+      numerator = e1 * e2@numerator,
       denominator = e2@denominator
     ),
-    "/" = new(
-      "ratioOfQsprays",
-      numerator   = e1 * e2@denominator,
-      denominator = e2@numerator
+    "/" = simplifyRatioOfQsprays( # juste au cas où le num est constant
+      new(
+        "ratioOfQsprays",
+        numerator   = e1 * e2@denominator,
+        denominator = e2@numerator
+      )
     ),
     stop(gettextf(
       "Binary operator %s not defined for these two objects.", dQuote(.Generic)
@@ -393,10 +380,12 @@ numeric_arith_ratioOfQsprays <- function(e1, e2) {
       numerator = e1 * e2@numerator,
       denominator = e2@denominator
     ),
-    "/" = new(
-      "ratioOfQsprays",
-      numerator   = e1 * e2@denominator,
-      denominator = e2@numerator
+    "/" = simplifyRatioOfQsprays( # juste au cas où le num est constant
+      new(
+        "ratioOfQsprays",
+        numerator   = e1 * e2@denominator,
+        denominator = e2@numerator
+      )
     ),
     stop(gettextf(
       "Binary operator %s not defined for these two objects.", dQuote(.Generic)

@@ -41,3 +41,32 @@ test_that("division", {
   roq3 <- ROQ3()
   expect_true((roq1/roq2) * roq3 == (roq1*roq3) / roq2)
 })
+
+test_that("power", {
+  roq1 <- ROQ1()
+  roq2 <- ROQ2()
+  roq3 <- ROQ3()
+  expect_true((roq1/roq2*roq3)^6 == roq1^6/roq2^6*roq3^6)
+})
+
+test_that("arithmetic between qsprays and ratioOfQsprays", {
+  x <- qlone(1)
+  y <- qlone(2)
+  z <- qlone(3)
+  roq1 <- ROQ1()
+  roq2 <- ROQ2()
+  roq3 <- ROQ3()
+  expect_true("3/2"+(x*roq1)/(y*roq2)+z == z+((x/y)*(roq1/roq2))+"3/2")
+})
+
+test_that("equality between qspray and ratioOfQsprays", {
+  x <- qlone(1)
+  y <- qlone(2)
+  z <- qlone(3)
+  expect_true((x^2-y^2)/(x+y) == x-y)
+})
+
+test_that("equality between scalar and ratioOfQsprays", {
+  roq1 <- ROQ1()
+  expect_true((3*roq1)/(roq1*6) == "1/2")
+})
