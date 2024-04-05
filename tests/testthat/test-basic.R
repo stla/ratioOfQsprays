@@ -16,7 +16,7 @@ test_that("associativity", {
   roq1 <- ROQ1()
   roq2 <- ROQ2()
   roq3 <- ROQ3()
-  expect_true(roq1*(roq2*roq3) == (roq1*roq2)*roq3)  
+  expect_true(roq1*(roq2*roq3) == (roq1*roq2)*roq3)
 })
 
 test_that("distributivity", {
@@ -35,3 +35,9 @@ test_that("equality", {
   expect_true(4*roq1/(2*roq1) == as.ratioOfQsprays(2L))
 })
 
+test_that("division", {
+  roq1 <- ROQ1()
+  roq2 <- ROQ2()
+  roq3 <- ROQ3()
+  expect_true((roq1/roq2) * roq3 == (roq1*roq3) / roq2)
+})

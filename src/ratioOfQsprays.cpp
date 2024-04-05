@@ -43,7 +43,7 @@ Rcpp::List ROQdivision(
 ) {
   RatioOfQsprays<gmpq> ROQ1 = makeRatioOfQsprays(Numerator1, Denominator1);
   RatioOfQsprays<gmpq> ROQ2 = makeRatioOfQsprays(Numerator2, Denominator2);
-  return returnRatioOfQsprays(ROQ1 + ROQ2);
+  return returnRatioOfQsprays(ROQ1 / ROQ2);
 }
 
 // -------------------------------------------------------------------------- //

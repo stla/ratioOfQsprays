@@ -9,3 +9,8 @@ num2 <- e2@numerator
 den2 <- e2@denominator
 numerator   = num1 * den2 + num2 * den1
 num1 * den2
+
+switch(
+  "a",
+  a = {x <-2; x}
+)

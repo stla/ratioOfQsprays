@@ -161,12 +161,6 @@ ratioOfQsprays_arith_ratioOfQsprays <- function(e1, e2) {
   den1 <- e1@denominator
   num2 <- e2@numerator
   den2 <- e2@denominator
-  x <- ROQaddition(
-    list("powers" = num1@powers, "coeffs" = num1@coeffs),
-    list("powers" = den1@powers, "coeffs" = den1@coeffs),
-    list("powers" = num2@powers, "coeffs" = num2@coeffs),
-    list("powers" = den2@powers, "coeffs" = den2@coeffs)
-  )
   y <- ROQsubtraction(
     list("powers" = num1@powers, "coeffs" = num1@coeffs),
     list("powers" = den1@powers, "coeffs" = den1@coeffs),
@@ -175,36 +169,68 @@ ratioOfQsprays_arith_ratioOfQsprays <- function(e1, e2) {
   )
   switch(
     .Generic,
-    "+" = simplifyRatioOfQsprays(
-      new(
-        "ratioOfQsprays",
-        # numerator   = num1 * den2 + num2 * den1,
-        # denominator = den1 * den2
-        numerator   = qspray:::qspray_from_list(x[["numerator"]]),#num1 * den2 + num2 * den1,
-        denominator = qspray:::qspray_from_list(x[["denominator"]])#den1 * den2
+    "+" = {
+      x <- ROQaddition(
+        list("powers" = num1@powers, "coeffs" = num1@coeffs),
+        list("powers" = den1@powers, "coeffs" = den1@coeffs),
+        list("powers" = num2@powers, "coeffs" = num2@coeffs),
+        list("powers" = den2@powers, "coeffs" = den2@coeffs)
       )
-    ),
-    "-" = simplifyRatioOfQsprays(
-      new(
-        "ratioOfQsprays",
-        numerator   = qspray:::qspray_from_list(y[["numerator"]]),#num1 * den2 - num2 * den1,
-        denominator = qspray:::qspray_from_list(y[["denominator"]])#den1 * den2
+      simplifyRatioOfQsprays(
+        new(
+          "ratioOfQsprays",
+          # numerator   = num1 * den2 + num2 * den1,
+          # denominator = den1 * den2
+          numerator   = qspray:::qspray_from_list(x[["numerator"]]),
+          denominator = qspray:::qspray_from_list(x[["denominator"]])
+        )
       )
-    ),
-    "*" = simplifyRatioOfQsprays(
-      new(
-        "ratioOfQsprays",
-        numerator   = num1 * num2,
-        denominator = den1 * den2
+    },
+    "-" = {
+      x <- ROQsubtraction(
+        list("powers" = num1@powers, "coeffs" = num1@coeffs),
+        list("powers" = den1@powers, "coeffs" = den1@coeffs),
+        list("powers" = num2@powers, "coeffs" = num2@coeffs),
+        list("powers" = den2@powers, "coeffs" = den2@coeffs)
       )
-    ),
-    "/" = simplifyRatioOfQsprays(
-      new(
-        "ratioOfQsprays",
-        numerator   = num1 * den2,
-        denominator = den1 * num2
+      simplifyRatioOfQsprays(
+        new(
+          "ratioOfQsprays",
+          numerator   = qspray:::qspray_from_list(x[["numerator"]]),
+          denominator = qspray:::qspray_from_list(x[["denominator"]])
+        )
       )
-    ),
+    },
+    "*" = {
+      x <- ROQmultiplication(
+        list("powers" = num1@powers, "coeffs" = num1@coeffs),
+        list("powers" = den1@powers, "coeffs" = den1@coeffs),
+        list("powers" = num2@powers, "coeffs" = num2@coeffs),
+        list("powers" = den2@powers, "coeffs" = den2@coeffs)
+      )
+      simplifyRatioOfQsprays(
+        new(
+          "ratioOfQsprays",
+          numerator   = qspray:::qspray_from_list(x[["numerator"]]),
+          denominator = qspray:::qspray_from_list(x[["denominator"]])
+        )
+      )
+    },
+    "/" = {
+      x <- ROQdivision(
+        list("powers" = num1@powers, "coeffs" = num1@coeffs),
+        list("powers" = den1@powers, "coeffs" = den1@coeffs),
+        list("powers" = num2@powers, "coeffs" = num2@coeffs),
+        list("powers" = den2@powers, "coeffs" = den2@coeffs)
+      )
+      simplifyRatioOfQsprays(
+        new(
+          "ratioOfQsprays",
+          numerator   = qspray:::qspray_from_list(x[["numerator"]]),
+          denominator = qspray:::qspray_from_list(x[["denominator"]])
+        )
+      )
+    },
     stop(gettextf(
       "Binary operator %s not defined for ratioOfQsprays objects.",
       dQuote(.Generic)
