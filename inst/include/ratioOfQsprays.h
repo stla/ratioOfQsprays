@@ -1,7 +1,6 @@
 #ifndef __ROQHEADER__
 #define __ROQHEADER__
 
-#include <Rcpp.h>
 #include "qspray.h"
 #include <boost/multiprecision/gmp.hpp>
 typedef std::vector<signed int>                             powers;
@@ -76,7 +75,7 @@ namespace RATIOOFQSPRAYS {
     	numerator   = numerator * ROQ2.denominator + denominator * ROQ2.numerator;
     	denominator = denominator * ROQ2.denominator;
     	RatioOfQsprays ROQ(numerator, denominator);
-//    	ROQ.simplify();
+    	ROQ.simplify();
     	return ROQ;
     }
 
