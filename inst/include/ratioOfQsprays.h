@@ -58,7 +58,7 @@ namespace RATIOOFQSPRAYS {
   namespace utils {
 
     // -------------------------------------------------------------------------- //
-    static std::string Gmpq2str(CGAL::Gmpq r) {
+    static inline std::string Gmpq2str(CGAL::Gmpq r) {
       CGAL::Gmpz numer = r.numerator();
       CGAL::Gmpz denom = r.denominator();
       size_t n = mpz_sizeinbase(numer.mpz(), 10) + 2;
@@ -75,12 +75,14 @@ namespace RATIOOFQSPRAYS {
     }
 
     template <typename PolyX, typename PTX, typename MonomialX>
-    Qspray<gmpq> getGCD(Qspray<gmpq> Q1, Qspray<gmpq> Q2) {
-      typename PTX::Construct_polynomial constructPolynomial;
+    static Qspray<gmpq> getGCD(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
+      // typedef CGAL::Polynomial_type_generator<CGAL::Gmpq, 4>::Type PolyX;
+      // typedef CGAL::Polynomial_traits_d<Poly4>                     PTX;
+      // typedef std::pair<CGAL::Exponent_vector, PT4::Innermost_coefficient_type> MonomialX;
       typename std::list<MonomialX> terms1;
       qspray S1 = Q1.get();
       for(const auto& term : S1) {
-        powers expnts = term.first;
+        powers expnts = QSPRAY::utils::growPowers(term.first, term.first.size(), 4);
         terms1.push_back(
           std::make_pair(
             CGAL::Exponent_vector(expnts.begin(), expnts.end()),
@@ -91,7 +93,7 @@ namespace RATIOOFQSPRAYS {
       typename std::list<MonomialX> terms2;
       qspray S2 = Q2.get();
       for(const auto& term : S2) {
-        powers expnts = term.first;
+        powers expnts = QSPRAY::utils::growPowers(term.first, term.first.size(), 4);
         terms2.push_back(
           std::make_pair(
             CGAL::Exponent_vector(expnts.begin(), expnts.end()),
@@ -99,51 +101,49 @@ namespace RATIOOFQSPRAYS {
           )
         );
       }
-      typename PTX::Monomial_representation mrepr;
-      typename std::list<MonomialX>::iterator it_monoms;
+      // polynomials
+      typename PTX::Construct_polynomial constructPolynomial;
       // first polynomial
-      PolyX P1 = constructPolynomial(terms1.begin(), terms1.end());  
-      std::list<MonomialX> monomials1;
-      mrepr(P1, std::back_inserter(monomials1));
-      qspray SS1;
-      for(it_monoms = monomials1.begin(); it_monoms != monomials1.end(); it_monoms++) {
-        CGAL::Exponent_vector exponents = (*it_monoms).first;
-        powers expnts(exponents.begin(), exponents.end());
-        gmpq coeff(Gmpq2str((*it_monoms).second));
-        SS1[expnts] = coeff;
-      }
+      PolyX P1 = constructPolynomial(terms1.begin(), terms1.end()); 
       // second polynomial
       PolyX P2 = constructPolynomial(terms2.begin(), terms2.end());  
-      std::list<MonomialX> monomials2;
-      mrepr(P2, std::back_inserter(monomials2));
-      qspray SS2;
-      for(it_monoms = monomials2.begin(); it_monoms != monomials2.end(); it_monoms++) {
-        CGAL::Exponent_vector exponents = (*it_monoms).first;
-        powers expnts(exponents.begin(), exponents.end());
-        gmpq coeff(Gmpq2str((*it_monoms).second));
-        SS2[expnts] = coeff;
-      }
       // GCD
       typename PTX::Gcd gcd;
       PolyX D = gcd(P1, P2);
-      std::list<MonomialX> monomials3;
-      mrepr(D, std::back_inserter(monomials3));
-      qspray SS3;
-      for(it_monoms = monomials3.begin(); it_monoms != monomials3.end(); it_monoms++) {
+      std::list<MonomialX> monomials;
+      typename PTX::Monomial_representation mrepr;
+      mrepr(D, std::back_inserter(monomials));
+      qspray S;
+      typename std::list<MonomialX>::iterator it_monoms;
+      for(it_monoms = monomials.begin(); it_monoms != monomials.end(); it_monoms++) {
         CGAL::Exponent_vector exponents = (*it_monoms).first;
         powers expnts(exponents.begin(), exponents.end());
         gmpq coeff(Gmpq2str((*it_monoms).second));
-        SS3[expnts] = coeff;
+        S[expnts] = coeff;
       }
-      return Qspray<gmpq>(SS3);
-      // // Quotients
-      // Qspray<gmpq> Qtnt1 = QuotientOfQsprays(Q1, D);
-      // Qspray<gmpq> Qtnt2 = QuotientOfQsprays(Q2, D);
-      // //
-      // return std::pair<Qspray<gmpq>,Qspray<gmpq>>(Qtnt1, Qtnt2);
+      return Qspray<gmpq>(S);
     }
 
-    static Qspray<gmpq> getGCD(Qspray<gmpq> Q1, Qspray<gmpq> Q2) {
+    Qspray<gmpq> getGCD1(Qspray<gmpq> Q1, Qspray<gmpq> Q2) {
+      return getGCD<Poly1, PT1, Monomial1>(Q1, Q2);
+    }
+    Qspray<gmpq> getGCD2(Qspray<gmpq> Q1, Qspray<gmpq> Q2) {
+      return getGCD<Poly2, PT2, Monomial2>(Q1, Q2);
+    }
+    Qspray<gmpq> getGCD3(Qspray<gmpq> Q1, Qspray<gmpq> Q2) {
+      return getGCD<Poly3, PT3, Monomial3>(Q1, Q2);
+    }
+    Qspray<gmpq> getGCD4(Qspray<gmpq> Q1, Qspray<gmpq> Q2) {
+      return getGCD<Poly4, PT4, Monomial4>(Q1, Q2);
+    }
+    Qspray<gmpq> getGCD5(Qspray<gmpq> Q1, Qspray<gmpq> Q2) {
+      return getGCD<Poly5, PT5, Monomial5>(Q1, Q2);
+    }
+    Qspray<gmpq> getGCD6(Qspray<gmpq> Q1, Qspray<gmpq> Q2) {
+      return getGCD<Poly6, PT6, Monomial6>(Q1, Q2);
+    }
+
+    static Qspray<gmpq> callGCD(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
       int d1 = 0;
       qspray S1 = Q1.get();
       for(const auto& term : S1) {
@@ -160,9 +160,19 @@ namespace RATIOOFQSPRAYS {
           d2 = n;
         }
       }
-      const int X = std::max<int>(d1, d2);
-      if(X == 4) {
-        return getGCD<Poly4, PT4, Monomial4>(Q1, Q2);
+      const int X = std::max<int>(1, std::max<int>(d1, d2));
+      if(X == 1) {
+        return getGCD1(Q1, Q2);
+      } else if (X == 2) {
+        return getGCD2(Q1, Q2);
+      } else if (X == 3) {
+        return getGCD3(Q1, Q2);
+      } else if (X == 4) {
+        return getGCD4(Q1, Q2);
+      } else if (X == 5) {
+        return getGCD5(Q1, Q2);
+      } else if (X == 6) {
+        return getGCD6(Q1, Q2);
       } else {
         Rcpp::stop("");
       }
@@ -213,13 +223,13 @@ namespace RATIOOFQSPRAYS {
 
     void simplify() {
     	Qspray<T> G = RATIOOFQSPRAYS::utils::getGCD(numerator, denominator);
-    	numerator   = QuotientOfQsprays(numerator, G);
-    	denominator = QuotientOfQsprays(denominator, G);
-      if(denominator.isConstant()) {
-        Qspray<T> d = scalarQspray<T>(T(1) / denominator.constantTerm());
-        numerator   *= d;
-        denominator *= d;
-      }
+    	// numerator   = QuotientOfQsprays(numerator, G);
+    	// denominator = QuotientOfQsprays(denominator, G);
+      // if(denominator.isConstant()) {
+      //   Qspray<T> d = scalarQspray<T>(T(1) / denominator.constantTerm());
+      //   numerator   *= d;
+      //   denominator *= d;
+      // }
     }
 
     RatioOfQsprays<T> operator+=(const RatioOfQsprays<T>& ROQ2) {
@@ -254,7 +264,7 @@ namespace RATIOOFQSPRAYS {
       numerator   = numerator * ROQ2.numerator;
       denominator = denominator * ROQ2.denominator;
       RatioOfQsprays ROQ(numerator, denominator);
-      ROQ.simplify();
+      //ROQ.simplify();
       return ROQ;
     }
 
@@ -268,7 +278,7 @@ namespace RATIOOFQSPRAYS {
       numerator   = numerator * ROQ2.denominator;
       denominator = denominator * ROQ2.numerator;
       RatioOfQsprays ROQ(numerator, denominator);
-      ROQ.simplify();
+      //ROQ.simplify();
       return ROQ;
     }
 
