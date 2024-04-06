@@ -240,6 +240,12 @@ namespace RATIOOFQSPRAYS {
         denominator(Qspray<T>(T(1))),
         dimension(0)
         {}
+
+    RatioOfQsprays(int k)
+      : numerator(Qspray<T>(k)), 
+        denominator(Qspray<T>(1)),
+        dimension(0)
+        {}
     
     // methods --------------------
     Qspray<T> getNumerator() {
