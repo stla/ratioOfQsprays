@@ -32,8 +32,6 @@ Collate:
     'ratioOfQsprays.R'
     'show.R'
     'transformation.R'
-Remotes:
-  stla/qspray,
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
