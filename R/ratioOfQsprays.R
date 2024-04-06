@@ -14,12 +14,20 @@ setClass(
 setMethod(
   "show", "ratioOfQsprays",
   function(object) {
-    cat(showRatioOfQspraysCanonical("x", "  %//%  ")(object), "\n")
+    x <- attr(object, "x")
+    if(is.null(x)) x <- "x"
+    quotientBar <- attr(object, quotientBar)
+    if(is.null(quotientBar)) quotientBar <- "  %//%  "
+    cat(showRatioOfQspraysCanonical(x, quotientBar)(object), "\n")
   }
 )
 
-identifyQspray <- function(qspray) {
-  new("ratioOfQsprays", numerator = qspray, denominator = qone())
+as_ratioOfQsprays_scalar <- function(x) {
+  attrs <- attributes(x)
+  qspray <- as.qspray(x)
+  roq <- new("ratioOfQsprays", numerator = qspray, denominator = qone())
+  attributes(roq) <- attrs
+  roq
 }
 
 setGeneric(
@@ -49,7 +57,7 @@ setGeneric(
 setMethod(
   "as.ratioOfQsprays", "character",
   function(x) {
-    identifyQspray(as.qspray(x))
+    as_ratioOfQsprays_scalar(x)
   }
 )
 
@@ -65,7 +73,7 @@ setMethod(
 setMethod(
   "as.ratioOfQsprays", "qspray",
   function(x) {
-    identifyQspray(x)
+    as_ratioOfQsprays_scalar(x)
   }
 )
 
@@ -73,7 +81,7 @@ setMethod(
 setMethod(
   "as.ratioOfQsprays", "numeric",
   function(x) {
-    identifyQspray(as.qspray(x))
+    as_ratioOfQsprays_scalar(x)
   }
 )
 
@@ -81,7 +89,7 @@ setMethod(
 setMethod(
   "as.ratioOfQsprays", "bigz",
   function(x) {
-    identifyQspray(as.qspray(x))
+    as_ratioOfQsprays_scalar(x)
   }
 )
 
@@ -89,7 +97,7 @@ setMethod(
 setMethod(
   "as.ratioOfQsprays", "bigq",
   function(x) {
-    identifyQspray(as.qspray(x))
+    as_ratioOfQsprays_scalar(x)
   }
 )
 
@@ -137,7 +145,7 @@ ratioOfQsprays_arith_ratioOfQsprays <- function(e1, e2) {
   den1 <- e1@denominator
   num2 <- e2@numerator
   den2 <- e2@denominator
-  switch(
+  roq <- switch(
     .Generic,
     "+" = {
       x <- ROQaddition(
@@ -196,9 +204,11 @@ ratioOfQsprays_arith_ratioOfQsprays <- function(e1, e2) {
       dQuote(.Generic)
     ))
   )
+  attributes(roq) <- attributes(e2)
+  roq
 }
 ratioOfQsprays_arith_qspray <- function(e1, e2) {
-  switch(
+  roq <- switch(
     .Generic,
     "+" = e1 + as.ratioOfQsprays(e2),
     "-" = e1 - as.ratioOfQsprays(e2),
@@ -208,9 +218,11 @@ ratioOfQsprays_arith_qspray <- function(e1, e2) {
       "Binary operator %s not defined for these two objects.", dQuote(.Generic)
     ))
   )
+  attributes(roq) <- attributes(e1)
+  roq
 }
 qspray_arith_ratioOfQsprays <- function(e1, e2) {
-  switch(
+  roq <- switch(
     .Generic,
     "+" = as.ratioOfQsprays(e1) + e2,
     "-" = as.ratioOfQsprays(e1) - e2,
@@ -220,9 +232,11 @@ qspray_arith_ratioOfQsprays <- function(e1, e2) {
       "Binary operator %s not defined for these two objects.", dQuote(.Generic)
     ))
   )
+  attributes(roq) <- attributes(e2)
+  roq
 }
 ratioOfQsprays_arith_character <- function(e1, e2) {
-  switch(
+  roq <- switch(
     .Generic,
     "+" = e1 + as.ratioOfQsprays(e2),
     "-" = e1 - as.ratioOfQsprays(e2),
@@ -240,6 +254,8 @@ ratioOfQsprays_arith_character <- function(e1, e2) {
       "Binary operator %s not defined for these two objects.", dQuote(.Generic)
     ))
   )
+  attributes(roq) <- attributes(e1)
+  roq
 }
 ratioOfQspraysPower <- function(ratioOfQsprays, n) {
   stopifnot(isInteger(n))
@@ -250,14 +266,16 @@ ratioOfQspraysPower <- function(ratioOfQsprays, n) {
     list("powers" = denominator@powers, "coeffs" = denominator@coeffs),
     n
   )
-  new(
+  roq <- new(
     "ratioOfQsprays",
     numerator   = qspray_from_list(roqAsList[["numerator"]]),
     denominator = qspray_from_list(roqAsList[["denominator"]])
   )
+  attributes(roq) <- attributes(ratioOfQsprays)
+  roq
 }
 ratioOfQsprays_arith_gmp <- function(e1, e2) {
-  switch(
+  roq <- switch(
     .Generic,
     "+" = e1 + as.ratioOfQsprays(e2),
     "-" = e1 - as.ratioOfQsprays(e2),
@@ -275,9 +293,11 @@ ratioOfQsprays_arith_gmp <- function(e1, e2) {
       "Binary operator %s not defined for these two objects.", dQuote(.Generic)
     ))
   )
+  attributes(roq) <- attributes(e1)
+  roq
 }
 ratioOfQsprays_arith_numeric <- function(e1, e2) {
-  switch(
+  roq <- switch(
     .Generic,
     "+" = e1 + as.ratioOfQsprays(e2),
     "-" = e1 - as.ratioOfQsprays(e2),
@@ -296,9 +316,11 @@ ratioOfQsprays_arith_numeric <- function(e1, e2) {
       "Binary operator %s not defined for these two objects.", dQuote(.Generic)
     ))
   )
+  attributes(roq) <- attributes(e1)
+  roq
 }
 character_arith_ratioOfQsprays <- function(e1, e2) {
-  switch(
+  roq <- switch(
     .Generic,
     "+" = as.ratioOfQsprays(e1) + e2,
     "-" = as.ratioOfQsprays(e1) - e2,
@@ -318,9 +340,11 @@ character_arith_ratioOfQsprays <- function(e1, e2) {
       "Binary operator %s not defined for these two objects.", dQuote(.Generic)
     ))
   )
+  attributes(roq) <- attributes(e2)
+  roq
 }
 gmp_arith_ratioOfQsprays <- function(e1, e2) {
-  switch(
+  roq <- switch(
     .Generic,
     "+" = as.ratioOfQsprays(e1) + e2,
     "-" = as.ratioOfQsprays(e1) - e2,
@@ -340,9 +364,11 @@ gmp_arith_ratioOfQsprays <- function(e1, e2) {
       "Binary operator %s not defined for these two objects.", dQuote(.Generic)
     ))
   )
+  attributes(roq) <- attributes(e2)
+  roq
 }
 numeric_arith_ratioOfQsprays <- function(e1, e2) {
-  switch(
+  roq <- switch(
     .Generic,
     "+" = as.ratioOfQsprays(e1) + e2,
     "-" = as.ratioOfQsprays(e1) - e2,
@@ -362,6 +388,8 @@ numeric_arith_ratioOfQsprays <- function(e1, e2) {
       "Binary operator %s not defined for these two objects.", dQuote(.Generic)
     ))
   )
+  attributes(roq) <- attributes(e2)
+  roq
 }
 
 setMethod(
