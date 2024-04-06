@@ -26,7 +26,13 @@ Print a \code{ratioOfQsprays} object given a string to denote
 }
 \note{
 The \code{show} method for \code{ratioOfQsprays} objects uses
-  \code{showRatioOfQspraysCanonical("x", quotientBar = "  \%//\%  ")}.
+  \code{showRatioOfQspraysCanonical("x", quotientBar = "  \%//\%  ")}
+  by default. But this can be controlled as follows. If a
+  \code{ratioOfQsprays} object has an attribute \code{"x"}, then the value
+  of this attribute will replace \code{"x"} in the \code{show} output.
+  It is also possible to control the \code{quotientBar} argument by
+  assigning a \code{"quotientBar"} attribute to the \code{ratioOfQsprays}
+  object to be printed.
 }
 \examples{
 roq <- rRatioOfQsprays
