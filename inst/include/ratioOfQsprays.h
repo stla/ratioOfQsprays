@@ -334,9 +334,21 @@ namespace RATIOOFQSPRAYS {
       return Q.isConstant() && Q.constantTerm() == T(0);
     }
 
+    bool operator==(RatioOfQsprays<T>& ROQ2) {
+      RatioOfQsprays<T> ROQ(numerator, denominator);
+      const RatioOfQsprays<T> ROQ3 = ROQ2;
+      return ROQ == ROQ3;
+    }
+
     bool operator!=(const RatioOfQsprays<T>& ROQ2) {
-      Qspray<T> Q = numerator * ROQ2.denominator + denominator * ROQ2.numerator; 
-      return !Q.isConstant() || Q.constantTerm() != T(0);
+      RatioOfQsprays<T> ROQ(numerator, denominator);
+      return !(ROQ == ROQ2);
+    }
+
+    bool operator!=(RatioOfQsprays<T>& ROQ2) {
+      RatioOfQsprays<T> ROQ(numerator, denominator);
+      const RatioOfQsprays<T> ROQ3 = ROQ2;
+      return ROQ != ROQ3;
     }
 
   };
