@@ -11,27 +11,10 @@ setClass(
   slots = c(numerator = "qspray", denominator = "qspray")
 )
 
-#' @importFrom utils capture.output
-#' @noRd
-showRatioOfQsprays <- function(roq) {
-  if(isQone(roq@denominator)) {
-    sprintf(
-      "[%s]",
-      trimws(capture.output(show(roq@numerator)),   which = "right")
-    )
-  } else {
-    sprintf(
-      "[ %s ]  %%/%%  [ %s ]",
-      trimws(capture.output(show(roq@numerator)),   which = "right"),
-      trimws(capture.output(show(roq@denominator)), which = "right")
-    )
-  }
-}
-
 setMethod(
   "show", "ratioOfQsprays",
   function(object) {
-    cat(showRatioOfQsprays(object), "\n")
+    cat(showRatioOfQspraysCanonical("x", "  %//%  ")(object), "\n")
   }
 )
 
