@@ -65,7 +65,7 @@ showRatioOfQspraysCanonical <- function(var, quotientBar = "  %//%  ", ...) {
 #' @title Set show options to a 'ratioOfQsprays' object
 #' @description Set some attributes to a \code{ratioOfQsprays} object
 #'   to control the way it is displayed. See the note in the
-#'   documentation of \code{\link[showRatioOfQspraysCanonical]} for details.
+#'   documentation of \code{\link{showRatioOfQspraysCanonical}} for details.
 #'
 #' @param roq a \code{ratioOfQsprays} object
 #' @param x value for the \code{"x"} attribute

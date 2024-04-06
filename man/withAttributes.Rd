@@ -19,7 +19,7 @@ The input \code{ratioOfQsprays} object with new attributes.
 \description{
 Set some attributes to a \code{ratioOfQsprays} object
   to control the way it is displayed. See the note in the
-  documentation of \code{\link[showRatioOfQspraysCanonical]} for details.
+  documentation of \code{\link{showRatioOfQspraysCanonical}} for details.
 }
 \examples{
 ( roq <- rRatioOfQsprays() )
