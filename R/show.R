@@ -61,3 +61,26 @@ showRatioOfQsprays <- function(showQspray, quotientBar = "  %//%  ") {
 showRatioOfQspraysCanonical <- function(var, quotientBar = "  %//%  ", ...) {
   showRatioOfQsprays(showQsprayCanonical(var), quotientBar = quotientBar, ...)
 }
+
+#' @title Set show options to a 'ratioOfQsprays' object
+#' @description Set some attributes to a \code{ratioOfQsprays} object
+#'   to control the way it is displayed. See the note in the
+#'   documentation of \code{\link[showRatioOfQspraysCanonical]} for details.
+#'
+#' @param roq a \code{ratioOfQsprays} object
+#' @param x value for the \code{"x"} attribute
+#' @param quotientBar value for the \code{"quotientBar"} attribute
+#'
+#' @return The input \code{ratioOfQsprays} object with new attributes.
+#' @export
+#'
+#' @examples
+#' ( roq <- rRatioOfQsprays() )
+#' withAttributes(roq, x = "a", quotientBar = " / ")
+withAttributes <- function(
+    roq, x = "x", quotientBar = "  %//%  "
+) {
+  attr(roq, "x") <- x
+  attr(roq, "quotientBar") <- quotientBar
+  roq
+}
