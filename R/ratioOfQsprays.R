@@ -3,7 +3,7 @@
 #' @importFrom qspray qone as.qspray isQone isQzero isConstantQspray getConstantTerm
 #' @importFrom methods setMethod setClass new show
 #' @importFrom gmp as.bigq
-#' @include ratioOfQsprays.R
+#' @include ratioOfQspray.R
 NULL
 
 setClass(
