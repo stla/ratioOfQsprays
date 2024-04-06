@@ -27,7 +27,7 @@ derivRatioOfQsprays <- function(roq, i, derivative = 1) {
 }
 
 #' @title Partial differentiation
-#' @description Partial differentiation of a ratioOfQsprays polynomial.
+#' @description Partial differentiation of a \code{ratioOfQsprays} polynomial.
 #'
 #' @param roq object of class \code{ratioOfQsprays}
 #' @param orders integer vector, the orders of the differentiation
