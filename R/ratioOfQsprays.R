@@ -3,7 +3,7 @@
 #' @importFrom qspray qone as.qspray isQone isQzero isConstantQspray getConstantTerm
 #' @importFrom methods setMethod setClass new show
 #' @importFrom gmp as.bigq
-#' @include ratioOfQspray.R
+#' @include ratioOfQsprays.R
 NULL
 
 setClass(
@@ -111,8 +111,8 @@ setMethod(
 )
 
 #' @name ratioOfQsprays-unary
-#' @title Unary operators for ratioOfQsprays objects
-#' @description Unary operators for ratioOfQsprays objects.
+#' @title Unary operators for 'ratioOfQsprays' objects
+#' @description Unary operators for \code{ratioOfQsprays} objects.
 #' @aliases +,ratioOfQsprays,missing-method -,ratioOfQsprays,missing-method
 #' @param e1 object of class \code{ratioOfQsprays}
 #' @param e2 nothing
@@ -129,7 +129,7 @@ setMethod(
   function(e1, e2) {
     new(
       "ratioOfQsprays",
-      powers = e1@powers, coeffs = as.character(-as.bigq(e1@coeffs))
+      numerator = -e1@numerator, denominator = e1@denominator
     )
   }
 )

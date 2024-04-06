@@ -4,7 +4,7 @@
 \alias{ratioOfQsprays-unary}
 \alias{+,ratioOfQsprays,missing-method}
 \alias{-,ratioOfQsprays,missing-method}
-\title{Unary operators for ratioOfQsprays objects}
+\title{Unary operators for 'ratioOfQsprays' objects}
 \usage{
 \S4method{+}{ratioOfQsprays,missing}(e1, e2)
 
@@ -19,5 +19,5 @@
 A \code{ratioOfQsprays} object.
 }
 \description{
-Unary operators for ratioOfQsprays objects.
+Unary operators for \code{ratioOfQsprays} objects.
 }
