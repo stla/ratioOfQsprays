@@ -220,8 +220,8 @@ namespace RATIOOFQSPRAYS {
   public:
     // constructors ---------------
     RatioOfQsprays()
-      : numerator(scalarQspray<T>(T(0))), 
-        denominator(scalarQspray<T>(T(1))),
+      : numerator(Qspray<T>(T(0))), 
+        denominator(Qspray<T>(T(1))),
         dimension(0)
         {}
 
@@ -235,9 +235,9 @@ namespace RATIOOFQSPRAYS {
         )
         {}
 
-    RatioOfQsprays(int k)
-      : numerator(scalarQspray<T>(T(k))), 
-        denominator(scalarQspray<T>(T(1))),
+    RatioOfQsprays(T x)
+      : numerator(Qspray<T>(x)), 
+        denominator(Qspray<T>(T(1))),
         dimension(0)
         {}
     
