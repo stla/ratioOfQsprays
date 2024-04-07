@@ -1,8 +1,12 @@
 passShowAttributes <- function(source, target) {
-  lapply(c("x", "quotientBar"), function(a) {
+  lapply(c("showQspray", "showRatioOfQsprays"), function(a) {
     attr(target, a) <<- attr(source, a)
   })
   target
+}
+
+`%||%` <- function(x, y) {
+  if(is.null(x)) y else x
 }
 
 isInteger <- function(x) {

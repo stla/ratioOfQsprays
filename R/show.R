@@ -84,3 +84,47 @@ withAttributes <- function(
   attr(roq, "quotientBar") <- quotientBar
   roq
 }
+
+#' @title Set show option to a 'qspray' object
+#' @description Set show option to a \code{qspray} object
+#'
+#' @param x a \code{qspray} object
+#' @param which which option to set; this can be \code{"x"},
+#'   \code{"showMonomial"}, or \code{"showQspray"}
+#' @param value the value of the option
+#'
+#' @return This returns the updated \code{qspray}.
+#' @export
+#'
+#' @examples
+#' roq <- rRatioOfQsprays()
+#' showRatioOfQspraysOption(roq, "x") <- "a"
+#' showRatioOfQspraysOption(roq, "quotientBar") <- " / "
+#' roq
+`showRatioOfQspraysOption<-` <- function(x, which, value) {
+  which <-
+    match.arg(which, c("x", "quotientBar", "showQspray", "showRatioOfQsprays"))
+  if(which == "x") {
+    attr(x, "x") <- value
+    attr(x, "showRatioOfQsprays") <-
+      showRatioOfQspraysCanonical(
+        var = value,
+        quotientBar = attr(x, "quotientBar") %||% "  %//%  "
+      )
+  } else if(which == "quotientBar") {
+    attr(x, "quotientBar") <- value
+    attr(x, "showRatioOfQsprays") <-
+      showRatioOfQspraysCanonical(
+        var = attr(x, "x") %||% "x",
+        quotientBar = value
+      )
+  } else if(which == "showQspray") {
+    attr(x, "showRatioOfQsprays") <- showRatioOfQsprays(
+      showQspray = value,
+      quotientBar = attr(x, "quotientBar") %||% "  %//%  "
+    )
+  } else {
+    attr(x, "showRatioOfQsprays") <- value
+  }
+  x
+}

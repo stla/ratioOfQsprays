@@ -15,7 +15,7 @@ dRatioOfQsprays(roq, orders)
 A \code{ratioOfQsprays} object.
 }
 \description{
-Partial differentiation of a ratioOfQsprays polynomial.
+Partial differentiation of a \code{ratioOfQsprays} polynomial.
 }
 \examples{
 library(ratioOfQsprays)
