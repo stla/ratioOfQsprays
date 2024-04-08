@@ -148,11 +148,7 @@ ratioOfQsprays_arith_ratioOfQsprays <- function(e1, e2) {
         list("powers" = num2@powers, "coeffs" = num2@coeffs),
         list("powers" = den2@powers, "coeffs" = den2@coeffs)
       )
-      new(
-        "ratioOfQsprays",
-        numerator   = qspray_from_list(x[["numerator"]]),
-        denominator = qspray_from_list(x[["denominator"]])
-      )
+      ratioOfQsprays_from_list(x)
     },
     "-" = {
       x <- ROQsubtraction(
@@ -161,11 +157,7 @@ ratioOfQsprays_arith_ratioOfQsprays <- function(e1, e2) {
         list("powers" = num2@powers, "coeffs" = num2@coeffs),
         list("powers" = den2@powers, "coeffs" = den2@coeffs)
       )
-      new(
-        "ratioOfQsprays",
-        numerator   = qspray_from_list(x[["numerator"]]),
-        denominator = qspray_from_list(x[["denominator"]])
-      )
+      ratioOfQsprays_from_list(x)
     },
     "*" = {
       x <- ROQmultiplication(
@@ -174,11 +166,7 @@ ratioOfQsprays_arith_ratioOfQsprays <- function(e1, e2) {
         list("powers" = num2@powers, "coeffs" = num2@coeffs),
         list("powers" = den2@powers, "coeffs" = den2@coeffs)
       )
-      new(
-        "ratioOfQsprays",
-        numerator   = qspray_from_list(x[["numerator"]]),
-        denominator = qspray_from_list(x[["denominator"]])
-      )
+      ratioOfQsprays_from_list(x)
     },
     "/" = {
       x <- ROQdivision(
@@ -187,11 +175,7 @@ ratioOfQsprays_arith_ratioOfQsprays <- function(e1, e2) {
         list("powers" = num2@powers, "coeffs" = num2@coeffs),
         list("powers" = den2@powers, "coeffs" = den2@coeffs)
       )
-      new(
-        "ratioOfQsprays",
-        numerator   = qspray_from_list(x[["numerator"]]),
-        denominator = qspray_from_list(x[["denominator"]])
-      )
+      ratioOfQsprays_from_list(x)
     },
     stop(gettextf(
       "Binary operator %s not defined for ratioOfQsprays objects.",
@@ -256,11 +240,7 @@ ratioOfQspraysPower <- function(ratioOfQsprays, n) {
     list("powers" = denominator@powers, "coeffs" = denominator@coeffs),
     n
   )
-  roq <- new(
-    "ratioOfQsprays",
-    numerator   = qspray_from_list(roqAsList[["numerator"]]),
-    denominator = qspray_from_list(roqAsList[["denominator"]])
-  )
+  roq <- ratioOfQsprays_from_list(roqAsList)
   passShowAttributes(ratioOfQsprays, roq)
 }
 ratioOfQsprays_arith_gmp <- function(e1, e2) {

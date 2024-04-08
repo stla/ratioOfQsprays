@@ -5,6 +5,24 @@ passShowAttributes <- function(source, target) {
   target
 }
 
+#' @title (internal) Make a 'ratioOfQsprays' object from a list
+#' @description This function is for internal usage. It is exported because
+#'   it is also used for internal usage in others packages.
+#'
+#' @param qspray_as_list list returned by the Rcpp function
+#'   \code{returnRatioOfQsprays}
+#'
+#' @return A \code{ratioOfQsprays} object.
+#' @export
+#' @importFrom qspray qspray_from_list
+ratioOfQsprays_from_list <- function(x) {
+  new(
+    "ratioOfQsprays",
+    numerator   = qspray_from_list(x[["numerator"]]),
+    denominator = qspray_from_list(x[["denominator"]])
+  )
+}
+
 `%||%` <- function(x, y) {
   if(is.null(x)) y else x
 }
@@ -40,11 +58,3 @@ removeTrailingZeros <- function(x) {
   head(x, n)
 }
 
-qspray_from_list <- function(qspray_as_list) {
-  powers <- qspray_as_list[["powers"]]
-  if(is.null(powers)) {
-    new("qspray", powers = list(), coeffs = character(0L))
-  } else {
-    new("qspray", powers = powers, coeffs = qspray_as_list[["coeffs"]])
-  }
-}

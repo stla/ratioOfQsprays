@@ -266,23 +266,19 @@ namespace RATIOOFQSPRAYS {
     //   return qsprayDivision(A, B).first;
     // }
 
-    template<typename T>
-    static inline void simplifyFraction(Qspray<T> &A, Qspray<T> &B) {
-      std::pair<Qspray<gmpq>,Qspray<gmpq>> QAQB = callGCD(A, B);
-      A = QAQB.first;  // is clean
-      B = QAQB.second; // is clean
-      // A.clean(); 
-      // B.clean();
-      // if(!G.isConstant()) {
-      //   A = QuotientOfQsprays(A, G);
-      //   B = QuotientOfQsprays(B, G);
-      // }
+    // template<typename T>
+    static inline void simplifyFraction(Qspray<gmpq> &A, Qspray<gmpq> &B) {
+      if(!A.isConstant() && !B.isConstant()) {
+        std::pair<Qspray<gmpq>,Qspray<gmpq>> QAQB = callGCD(A, B);
+        A = QAQB.first;  // is clean
+        B = QAQB.second; // is clean
+      }
       if(B.isConstant()) {
-        // Rcpp::Rcout << "constant term: " << B.constantTerm() << "\n";
-        if(B.constantTerm() == T(0)) {
+        gmpq b = B.constantTerm();
+        if(b == gmpq(0)) {
           Rcpp::stop("division by zero");
         }
-        T lambda = T(1) / B.constantTerm();
+        gmpq lambda = gmpq(1) / b;
         A.scale(lambda);
         B.scale(lambda);
       }
@@ -324,8 +320,8 @@ namespace RATIOOFQSPRAYS {
         {}
 
     RatioOfQsprays(int k)
-      : numerator(Qspray<T>(k)), 
-        denominator(Qspray<T>(1)),
+      : numerator(Qspray<T>(T(k))), 
+        denominator(Qspray<T>(T(1))),
         dimension(0)
         {}
     

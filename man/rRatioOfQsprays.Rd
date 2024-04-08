@@ -4,7 +4,11 @@
 \alias{rRatioOfQsprays}
 \title{Random 'ratioOfQsprays'}
 \usage{
-rRatioOfQsprays()
+rRatioOfQsprays(allow.zero = TRUE)
+}
+\arguments{
+\item{allow.zero}{Boolean, whether to allow to get a null 
+\code{ratioOfQsprays}}
 }
 \value{
 A \code{ratioOfQsprays} object.
