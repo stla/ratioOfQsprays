@@ -235,7 +235,6 @@ namespace RATIOOFQSPRAYS {
       return getQuotients<Poly9, PT9, Monomial9, 9>(Q1, Q2);
     }
 
-
     std::pair<Qspray<gmpq>,Qspray<gmpq>> callGCD(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
       int d1 = Q1.numberOfVariables();
       int d2 = Q2.numberOfVariables();
@@ -270,10 +269,10 @@ namespace RATIOOFQSPRAYS {
     template<typename T>
     static inline void simplifyFraction(Qspray<T> &A, Qspray<T> &B) {
       std::pair<Qspray<gmpq>,Qspray<gmpq>> QAQB = callGCD(A, B);
-      A = QAQB.first;
-      B = QAQB.second;
-      A.clean(); 
-      B.clean();
+      A = QAQB.first;  // is clean
+      B = QAQB.second; // is clean
+      // A.clean(); 
+      // B.clean();
       // if(!G.isConstant()) {
       //   A = QuotientOfQsprays(A, G);
       //   B = QuotientOfQsprays(B, G);
