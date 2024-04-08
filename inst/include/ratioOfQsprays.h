@@ -78,7 +78,7 @@ namespace RATIOOFQSPRAYS {
 
       // converts the first Qspray to a CGAL polynomial
       typename std::list<MonomialX> terms1;
-      qspray S1 = Q1.get();
+      Polynomial<gmpq> S1 = Q1.get();
       for(const auto& term : S1) {
         powers expnts = 
           QSPRAY::utils::growPowers(term.first, term.first.size(), X);
@@ -93,7 +93,7 @@ namespace RATIOOFQSPRAYS {
 
       // converts the second Qspray to a CGAL polynomial
       typename std::list<MonomialX> terms2;
-      qspray S2 = Q2.get();
+      Polynomial<gmpq> S2 = Q2.get();
       for(const auto& term : S2) {
         powers expnts = 
           QSPRAY::utils::growPowers(term.first, term.first.size(), X);
@@ -142,7 +142,7 @@ namespace RATIOOFQSPRAYS {
       std::list<MonomialX> monomialsA;
       typename PTX::Monomial_representation mrepr;
       mrepr(QA, std::back_inserter(monomialsA));
-      qspray SA;
+      Polynomial<gmpq> SA;
       typename std::list<MonomialX>::iterator itmons;
       for(itmons = monomialsA.begin(); itmons != monomialsA.end(); itmons++) {
         CGAL::Exponent_vector exponents = (*itmons).first;
@@ -154,7 +154,7 @@ namespace RATIOOFQSPRAYS {
       // now make the Qspray corresponding to QB
       std::list<MonomialX> monomialsB;
       mrepr(QB, std::back_inserter(monomialsB));
-      qspray SB;
+      Polynomial<gmpq> SB;
       for(itmons = monomialsB.begin(); itmons != monomialsB.end(); itmons++) {
         CGAL::Exponent_vector exponents = (*itmons).first;
         powers expnts(exponents.begin(), exponents.end());
@@ -235,7 +235,7 @@ namespace RATIOOFQSPRAYS {
       return getQuotients<Poly9, PT9, Monomial9, 9>(Q1, Q2);
     }
 
-    std::pair<Qspray<gmpq>,Qspray<gmpq>> callGCD(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
+    static std::pair<Qspray<gmpq>,Qspray<gmpq>> callGCD(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
       int d1 = Q1.numberOfVariables();
       int d2 = Q2.numberOfVariables();
       const int X = std::max<int>(1, std::max<int>(d1, d2));
@@ -469,14 +469,14 @@ namespace RATIOOFQSPRAYS {
     Rcpp::List Powers2 = Denominator["powers"];
     Rcpp::StringVector coeffs1 = Numerator["coeffs"];
     Rcpp::StringVector coeffs2 = Denominator["coeffs"];
-    qspray S1;
+    Polynomial<gmpq> S1;
     for(int i = 0; i < Powers1.size(); i++) {
       Rcpp::IntegerVector Exponents = Powers1(i);
       gmpq coeff(Rcpp::as<std::string>(coeffs1(i)));
       powers pows(Exponents.begin(), Exponents.end());
       S1[pows] = coeff;
     }
-    qspray S2;
+    Polynomial<gmpq> S2;
     for(int i = 0; i < Powers2.size(); i++) {
       Rcpp::IntegerVector Exponents = Powers2(i);
       gmpq coeff(Rcpp::as<std::string>(coeffs2(i)));
