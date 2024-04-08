@@ -3,24 +3,31 @@ Title: Fractions of Multivariate Polynomials with Rational Coefficients
 Version: 0.0.0.9000
 Authors@R: 
     person("Stéphane", "Laurent", , "laurent_step@outlook.fr", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Description: This package is based on the 'qspray' package and it
+    introduces the new object 'ratioOfQsprays', corresponding to a
+    fraction of two multivariate polynomials with rational coefficients.
+    Then it makes available arithmetic operations, always returning
+    irreducible fractions.
 License: GPL-3
 URL: https://github.com/stla/ratioOfQsprays
 BugReports: https://github.com/stla/ratioOfQsprays/issues
 Depends:
     qspray
 Imports: 
-    methods,
-    utils,
     gmp,
+    methods,
+    Rcpp,
     Ryacas,
-    Rcpp
+    utils
+Suggests: 
+    testthat (>= 3.0.0)
 LinkingTo:
-    qspray, 
     BH,
+    qspray,
+    Rcpp,
     RcppArmadillo,
-    RcppCGAL,
-    Rcpp
+    RcppCGAL
+Config/testthat/edition: 3
 Encoding: UTF-8
 RoxygenNote: 7.3.1
 SystemRequirements: C++17, gmp, mpfr
@@ -32,6 +39,3 @@ Collate:
     'ratioOfQsprays.R'
     'show.R'
     'transformation.R'
-Suggests: 
-    testthat (>= 3.0.0)
-Config/testthat/edition: 3

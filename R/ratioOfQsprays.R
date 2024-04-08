@@ -14,10 +14,7 @@ setClass(
 setMethod(
   "show", "ratioOfQsprays",
   function(object) {
-    showQspray <- attr(object, "showQspray") %||% showQsprayCanonical("x")
-    quotientBar <- attr(object, "quotientBar") %||% "  %//%  "
-    f <- attr(object, "showRatioOfQsprays") %||%
-      showRatioOfQsprays(showQspray, quotientBar)
+    f <- getShowRatioOfQsprays(object)
     cat(f(object), "\n")
   }
 )

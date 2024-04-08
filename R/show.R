@@ -128,3 +128,14 @@ withAttributes <- function(
   }
   x
 }
+
+getShowRatioOfQsprays <- function(roq) {
+  showOpts <- attr(roq, "showOpts")
+  attr(showOpts, "showRatioOfQsprays") %||%
+    attr(attr(showOpts, "showSymbolicQspray"), "showRatioOfQsprays") %||%
+    showRatioOfQsprays(
+      showQspray = attr(showOpts, "showQspray") %||%
+        showQsprayCanonical(attr(showOpts, "a") %||% "a"),
+      quotientBar = attr(showOpts, "quotientBar") %||% " %//% "
+    )
+}
