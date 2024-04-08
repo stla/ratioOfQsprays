@@ -369,6 +369,11 @@ namespace RATIOOFQSPRAYS {
       return ROQ;
     }
 
+    void unsafeMultiply(const RatioOfQsprays<T>& ROQ2) {
+      numerator   *= ROQ2.numerator;
+      denominator *= ROQ2.denominator;
+    }
+
     RatioOfQsprays<T> operator*=(const RatioOfQsprays<T>& ROQ2) {
       numerator   *= ROQ2.numerator;
       denominator *= ROQ2.denominator;
@@ -404,15 +409,21 @@ namespace RATIOOFQSPRAYS {
       RatioOfQsprays<T> Result(1);
       RatioOfQsprays ROQ(numerator, denominator);
       if(n >= 0) {
+        int n0 = n, b = 1, p = 0;
         while(n) {
           if(n & 1) {
-            Result *= ROQ;
+            Result.unsafeMultiply(ROQ);
+            p += b;
+            if(p == n0) {
+              break;
+            }
           }
           n >>= 1;
-          ROQ *= ROQ;
+          ROQ.unsafeMultiply(ROQ);
+          b *= 2;
         }
       } else {
-        ROQ.power(-n);
+        Result = ROQ.power(-n);
       }
       return Result;
     }

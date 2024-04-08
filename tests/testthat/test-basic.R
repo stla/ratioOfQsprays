@@ -44,6 +44,7 @@ test_that("division", {
 
 test_that("power", {
   roq1 <- ROQ1()
+  expect_true(roq1^5 = roq1*roq1*roq1*roq1*roq1)
   roq2 <- ROQ2()
   roq3 <- ROQ3()
   expect_true((roq1/roq2*roq3)^3 == roq1^3/roq2^3*roq3^3)

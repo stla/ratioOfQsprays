@@ -1,7 +1,7 @@
 test_that("evaluation", {
   library(gmp)
   f <- function(x, y, z) {
-    (x + 2*y^2 - 3*z^3) / (3*x^3 - 2*y^2 + z)
+    (x + 2*y^2 - 3*z^3) / (3*x^3 - 2*y^2 + z + 5) + (x/y)^2 + z + 3
   }
   roq <- f(qlone(1), qlone(2), qlone(3))
   x <- as.bigq("2")
