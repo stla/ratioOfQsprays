@@ -19,6 +19,21 @@ setMethod(
   }
 )
 
+setAs("integer", "ratioOfQsprays", function(from) {
+  new("ratioOfQsprays", numerator = as.qspray(from), denominator = qone())
+})
+setAs("numeric", "ratioOfQsprays", function(from) {
+  new("ratioOfQsprays", numerator = as.qspray(from), denominator = qone())
+})
+setAs("character", "ratioOfQsprays", function(from) {
+  new("ratioOfQsprays", numerator = as.qspray(from), denominator = qone())
+})
+setAs("bigz", "ratioOfQsprays", function(from) {
+  new("ratioOfQsprays", numerator = as.qspray(from), denominator = qone())
+})
+setAs("bigq", "ratioOfQsprays", function(from) {
+  new("ratioOfQsprays", numerator = as.qspray(from), denominator = qone())
+})
 setAs("qspray", "ratioOfQsprays", function(from) {
   new("ratioOfQsprays", numerator = from, denominator = qone())
 })
