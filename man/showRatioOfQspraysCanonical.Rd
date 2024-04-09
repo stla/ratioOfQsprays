@@ -35,6 +35,6 @@ The \code{show} method for \code{ratioOfQsprays} objects uses
   object to be printed.
 }
 \examples{
-roq <- rRatioOfQsprays
+roq <- rRatioOfQsprays()
 showRatioOfQspraysCanonical("X", " / ")(roq)
 }

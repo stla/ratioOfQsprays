@@ -44,7 +44,7 @@ showRatioOfQsprays <- function(showQspray, quotientBar = "  %//%  ") {
 #' @return A function which takes as argument a \code{ratioOfQsprays} object
 #'   and which prints it.
 #' @export
-#' @importFrom qspray showQsprayCanonical
+#' @importFrom qspray showQsprayCanonical showQsprayUnivariate
 #'
 #' @note The \code{show} method for \code{ratioOfQsprays} objects uses
 #'   \code{showRatioOfQspraysCanonical("x", quotientBar = "  \%//\%  ")}
@@ -56,10 +56,14 @@ showRatioOfQsprays <- function(showQspray, quotientBar = "  %//%  ") {
 #'   object to be printed.
 #'
 #' @examples
-#' roq <- rRatioOfQsprays
+#' roq <- rRatioOfQsprays()
 #' showRatioOfQspraysCanonical("X", " / ")(roq)
 showRatioOfQspraysCanonical <- function(var, quotientBar = "  %//%  ", ...) {
   showRatioOfQsprays(showQsprayCanonical(var), quotientBar = quotientBar, ...)
+}
+
+showRatioOfQspraysUnivariate <- function(var, quotientBar = "  %//%  ", ...) {
+  showRatioOfQsprays(showQsprayUnivariate(var), quotientBar = quotientBar, ...)
 }
 
 #' @title Set show options to a 'ratioOfQsprays' object
@@ -104,28 +108,33 @@ withAttributes <- function(
 `showRatioOfQspraysOption<-` <- function(x, which, value) {
   which <-
     match.arg(which, c("x", "quotientBar", "showQspray", "showRatioOfQsprays"))
+  showOpts <- attr(x, "showOpts") %||% TRUE
+  attr(showOpts, which) <- value
+  univariate <- numberOfVariables2(x) == 1L
+  sROQ <- if(univariate) {
+    showRatioOfQspraysUnivariate
+  } else {
+    showRatioOfQspraysCanonical
+  }
   if(which == "x") {
-    attr(x, "x") <- value
-    attr(x, "showRatioOfQsprays") <-
-      showRatioOfQspraysCanonical(
+    attr(showOpts, "showRatioOfQsprays") <-
+      sROQ(
         var = value,
-        quotientBar = attr(x, "quotientBar") %||% "  %//%  "
+        quotientBar = attr(showOpts, "quotientBar") %||% "  %//%  "
       )
   } else if(which == "quotientBar") {
-    attr(x, "quotientBar") <- value
-    attr(x, "showRatioOfQsprays") <-
-      showRatioOfQspraysCanonical(
-        var = attr(x, "x") %||% "x",
+    attr(showOpts, "showRatioOfQsprays") <-
+      sROQ(
+        var = attr(showOpts, "x") %||% "x",
         quotientBar = value
       )
   } else if(which == "showQspray") {
-    attr(x, "showRatioOfQsprays") <- showRatioOfQsprays(
+    attr(showOpts, "showRatioOfQsprays") <- showRatioOfQsprays(
       showQspray = value,
-      quotientBar = attr(x, "quotientBar") %||% "  %//%  "
+      quotientBar = attr(showOpts, "quotientBar") %||% "  %//%  "
     )
-  } else {
-    attr(x, "showRatioOfQsprays") <- value
   }
+  attr(x, "showOpts") <- showOpts
   x
 }
 

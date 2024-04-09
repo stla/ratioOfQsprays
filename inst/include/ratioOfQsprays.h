@@ -127,7 +127,7 @@ namespace RATIOOFQSPRAYS {
       // divisions
       PolyX QA = CGAL::integral_division(P1, D);
       PolyX QB = CGAL::integral_division(P2, D);
-      // now make the Qspray corresponding to the QA
+      // now make the Qspray corresponding to QA
       std::list<MonomialX> monomialsA;
       typename PTX::Monomial_representation mrepr;
       mrepr(QA, std::back_inserter(monomialsA));
