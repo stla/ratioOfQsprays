@@ -106,38 +106,27 @@ namespace RATIOOFQSPRAYS {
       }
       PolyX P2 = constructPolynomial(terms2.begin(), terms2.end());  
 
+      // Rcpp::Rcout << "--------------------\n";
+      // Rcpp::Rcout << "NUMERATOR: \n";
+      // std::cout << P1 << "\n";
+      // Rcpp::Rcout << "DENOMINATOR:\n";
+      // std::cout << P2 << "\n";
+      // Rcpp::Rcout << "--------------------\n";
+
       // take the CGAL GCD up to a constant factor
-
-      Rcpp::Rcout << "--------------------\n";
-      Rcpp::Rcout << "NUMERATOR: \n";
-      std::cout << P1 << "\n";
-      Rcpp::Rcout << "DENOMINATOR:\n";
-      std::cout << P2 << "\n";
-      Rcpp::Rcout << "--------------------\n";
-
       typename PTX::Gcd_up_to_constant_factor gcd_utcf;
       // (to get the 'ordinary' GCD we would use typename PTX::Gcd gcd)
 
-      Rcpp::Rcout << "--------------------\n";
-      Rcpp::Rcout << "GCD\n";
+      // Rcpp::Rcout << "--------------------\n";
+      // Rcpp::Rcout << "GCD\n";
 
       PolyX D = gcd_utcf(P1, P2);
 
-      std::cout << D << "\n";
-      // Rcpp::Rcout << "--------------------\n";
-      // Rcpp::Rcout << "DIVISION 1\n";
+      // std::cout << D << "\n";
 
       // divisions
       PolyX QA = CGAL::integral_division(P1, D);
       PolyX QB = CGAL::integral_division(P2, D);
-
-      // std::cout << QA << "\n";
-      Rcpp::Rcout << "_______________________________\n";
-      // Rcpp::Rcout << "--------------------\n";
-      // Rcpp::Rcout << "DIVISION 2\n";
-      // std::cout << QB << "\n";
-      Rcpp::Rcout << "_______________________________\n";
-
       // now make the Qspray corresponding to the QA
       std::list<MonomialX> monomialsA;
       typename PTX::Monomial_representation mrepr;

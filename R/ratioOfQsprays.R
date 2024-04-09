@@ -1,7 +1,7 @@
 #' @useDynLib ratioOfQsprays, .registration=TRUE
 #' @importFrom Rcpp evalCpp
 #' @importFrom qspray qone as.qspray isQone isQzero isConstantQspray getConstantTerm
-#' @importFrom methods setMethod setClass new show
+#' @importFrom methods setMethod setClass new show setAs
 #' @importFrom gmp as.bigq
 #' @include ratioOfQsprays.R
 NULL
@@ -18,6 +18,10 @@ setMethod(
     cat(f(object), "\n")
   }
 )
+
+setAs("qspray", "ratioOfQsprays", function(from) {
+  new("ratioOfQsprays", numerator = from, denominator = qone())
+})
 
 as_ratioOfQsprays_scalar <- function(x) {
   roq <- new("ratioOfQsprays", numerator = as.qspray(x), denominator = qone())
