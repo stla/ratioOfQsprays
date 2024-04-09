@@ -10,4 +10,8 @@ test_that("evaluation", {
   expect_true(
     evalRatioOfQsprays(roq, c(x, y, z)) == f(x, y, z)
   )
+  roqfun <- as.function(roq)
+  expect_true(
+    as.character(f(x, y, z)) == roqfun("2", "3/2", "4/3")
+  )
 })

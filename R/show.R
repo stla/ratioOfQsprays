@@ -1,5 +1,5 @@
 #' @title Print a 'ratioOfQsprays' object
-#' @description Print a \code{ratioOfQsprays} object given a function to print
+#' @description Prints a \code{ratioOfQsprays} object given a function to print
 #'   a \code{qspray} object
 #'
 #' @param showQspray a function which prints a \code{qspray} object, which will

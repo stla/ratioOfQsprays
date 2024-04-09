@@ -19,7 +19,7 @@ A function which takes as argument a \code{ratioOfQsprays} object
   and which prints it.
 }
 \description{
-Print a \code{ratioOfQsprays} object given a function to print
+Prints a \code{ratioOfQsprays} object given a function to print
   a \code{qspray} object
 }
 \seealso{

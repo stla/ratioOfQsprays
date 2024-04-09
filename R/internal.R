@@ -1,5 +1,5 @@
 passShowAttributes <- function(source, target) {
-  lapply(c("showQspray", "showRatioOfQsprays"), function(a) {
+  lapply(c("showOpts"), function(a) {
     attr(target, a) <<- attr(source, a)
   })
   target
@@ -9,7 +9,7 @@ passShowAttributes <- function(source, target) {
 #' @description This function is for internal usage. It is exported because
 #'   it is also used for internal usage in others packages.
 #'
-#' @param qspray_as_list list returned by the Rcpp function
+#' @param x list returned by the Rcpp function
 #'   \code{returnRatioOfQsprays}
 #'
 #' @return A \code{ratioOfQsprays} object.

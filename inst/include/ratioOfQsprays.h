@@ -72,7 +72,7 @@ namespace RATIOOFQSPRAYS {
     static std::pair<Qspray<gmpq>,Qspray<gmpq>> getQuotients(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
 
       CGAL::IO::set_pretty_mode(std::cout);
-      
+
       // CGAL polynomial constructor
       typename PTX::Construct_polynomial constructPolynomial;
 
@@ -80,7 +80,7 @@ namespace RATIOOFQSPRAYS {
       typename std::list<MonomialX> terms1;
       Polynomial<gmpq> S1 = Q1.get();
       for(const auto& term : S1) {
-        powers expnts = 
+        powers expnts =
           QSPRAY::utils::growPowers(term.first, term.first.size(), X);
         terms1.push_back(
           std::make_pair(
@@ -89,13 +89,13 @@ namespace RATIOOFQSPRAYS {
           )
         );
       }
-      PolyX P1 = constructPolynomial(terms1.begin(), terms1.end()); 
+      PolyX P1 = constructPolynomial(terms1.begin(), terms1.end());
 
       // converts the second Qspray to a CGAL polynomial
       typename std::list<MonomialX> terms2;
       Polynomial<gmpq> S2 = Q2.get();
       for(const auto& term : S2) {
-        powers expnts = 
+        powers expnts =
           QSPRAY::utils::growPowers(term.first, term.first.size(), X);
         terms2.push_back(
           std::make_pair(
@@ -104,7 +104,7 @@ namespace RATIOOFQSPRAYS {
           )
         );
       }
-      PolyX P2 = constructPolynomial(terms2.begin(), terms2.end());  
+      PolyX P2 = constructPolynomial(terms2.begin(), terms2.end());
 
       // Rcpp::Rcout << "--------------------\n";
       // Rcpp::Rcout << "NUMERATOR: \n";
@@ -287,13 +287,13 @@ namespace RATIOOFQSPRAYS {
   public:
     // constructors ---------------
     RatioOfQsprays()
-      : numerator(Qspray<T>(T(0))), 
+      : numerator(Qspray<T>(T(0))),
         denominator(Qspray<T>(T(1))),
         dimension(0)
         {}
 
-    RatioOfQsprays(Qspray<T> numerator_, Qspray<T> denominator_) 
-      : numerator(numerator_), 
+    RatioOfQsprays(Qspray<T> numerator_, Qspray<T> denominator_)
+      : numerator(numerator_),
         denominator(denominator_),
         dimension(
           std::max<int>(
@@ -303,17 +303,17 @@ namespace RATIOOFQSPRAYS {
         {}
 
     RatioOfQsprays(T x)
-      : numerator(Qspray<T>(x)), 
+      : numerator(Qspray<T>(x)),
         denominator(Qspray<T>(T(1))),
         dimension(0)
         {}
 
     RatioOfQsprays(int k)
-      : numerator(Qspray<T>(T(k))), 
+      : numerator(Qspray<T>(T(k))),
         denominator(Qspray<T>(T(1))),
         dimension(0)
         {}
-    
+
     // methods --------------------
     Qspray<T> getNumerator() {
       return numerator;
@@ -408,13 +408,13 @@ namespace RATIOOFQSPRAYS {
           b *= 2;
         }
       } else {
-        Result = ROQ.power(-n);
+        Result = RatioOfQsprays(denominator, numerator).power(-n);
       }
       return Result;
     }
 
     bool operator==(const RatioOfQsprays<T>& ROQ2) {
-      Qspray<T> Q = numerator * ROQ2.denominator - denominator * ROQ2.numerator; 
+      Qspray<T> Q = numerator * ROQ2.denominator - denominator * ROQ2.numerator;
       return Q.isConstant() && Q.constantTerm() == T(0);
     }
 
@@ -447,7 +447,7 @@ namespace RATIOOFQSPRAYS {
 
   // ------------------------------------------------------------------------ //
   static RatioOfQsprays<gmpq> makeRatioOfQsprays(
-    const Rcpp::List& Numerator, 
+    const Rcpp::List& Numerator,
     const Rcpp::List& Denominator
   ) {
     Rcpp::List Powers1 = Numerator["powers"];

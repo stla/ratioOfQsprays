@@ -1,3 +1,7 @@
+rox <- function() {
+  roxygen2::roxygenise()
+}
+
 myinstall <- function() {
   try(pkgload::unload("ratioOfQsprays"))
   Rcpp::compileAttributes()
@@ -14,7 +18,7 @@ mydocument <- function() {
   try(pkgload::unload("ratioOfQsprays"))
   if(rstudioapi::isAvailable()) {
     rstudioapi::restartSession(
-      "roxygen2::roxygenise(load_code = roxygen2::load_installed)" 
+      "roxygen2::roxygenise(load_code = roxygen2::load_installed)"
     )
   } else {
     roxygen2::roxygenise(load_code = roxygen2::load_installed)

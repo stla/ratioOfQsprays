@@ -50,6 +50,12 @@ test_that("power", {
   expect_true((roq1/roq2*roq3)^3 == roq1^3/roq2^3*roq3^3)
 })
 
+test_that("negative power", {
+  roq1 <- ROQ1()
+  roq2 <- ROQ2()
+  expect_true((roq1 - roq2)^(-4) == 1 / (roq1 - roq2)^4)
+})
+
 test_that("arithmetic between qsprays and ratioOfQsprays", {
   x <- qlone(1)
   y <- qlone(2)

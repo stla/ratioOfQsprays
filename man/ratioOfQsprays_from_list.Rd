@@ -7,7 +7,7 @@
 ratioOfQsprays_from_list(x)
 }
 \arguments{
-\item{qspray_as_list}{list returned by the Rcpp function
+\item{x}{list returned by the Rcpp function
 \code{returnRatioOfQsprays}}
 }
 \value{
