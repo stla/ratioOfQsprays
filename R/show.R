@@ -62,6 +62,14 @@ showRatioOfQspraysCanonical <- function(var, quotientBar = "  %//%  ", ...) {
   showRatioOfQsprays(showQsprayCanonical(var), quotientBar = quotientBar, ...)
 }
 
+#' Title
+#'
+#' @param var xx
+#' @param quotientBar xx
+#' @param ... xx
+#'
+#' @return xx
+#' @export
 showRatioOfQspraysUnivariate <- function(var, quotientBar = "  %//%  ", ...) {
   showRatioOfQsprays(showQsprayUnivariate(var), quotientBar = quotientBar, ...)
 }
