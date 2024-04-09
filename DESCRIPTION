@@ -36,6 +36,7 @@ Collate:
     'creation.R'
     'evaluation.R'
     'internal.R'
+    'queries.R'
     'ratioOfQsprays.R'
     'show.R'
     'transformation.R'
