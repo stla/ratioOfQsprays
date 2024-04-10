@@ -118,7 +118,7 @@ withAttributes <- function(
     match.arg(which, c("x", "quotientBar", "showQspray", "showRatioOfQsprays"))
   showOpts <- attr(x, "showOpts") %||% TRUE
   attr(showOpts, which) <- value
-  univariate <- numberOfVariables2(x) == 1L
+  univariate <- numberOfVariables(x) == 1L
   sROQ <- if(univariate) {
     showRatioOfQspraysUnivariate
   } else {

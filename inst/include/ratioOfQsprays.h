@@ -330,7 +330,7 @@ namespace RATIOOFQSPRAYS {
 
       // Rcpp::Rcout << "ADDITION\n";
 
-    	RatioOfQsprays ROQ(numerator, denominator);
+    	RatioOfQsprays<T> ROQ(numerator, denominator);
     	return ROQ;
     }
 
@@ -344,7 +344,7 @@ namespace RATIOOFQSPRAYS {
       numerator    = numerator * ROQ2.denominator - denominator * ROQ2.numerator;
       denominator *= ROQ2.denominator;
       utils::simplifyFraction(numerator, denominator);
-      RatioOfQsprays ROQ(numerator, denominator);
+      RatioOfQsprays<T> ROQ(numerator, denominator);
       return ROQ;
     }
 
@@ -380,7 +380,7 @@ namespace RATIOOFQSPRAYS {
       numerator   *= ROQ2.denominator;
       denominator *= ROQ2.numerator;
       utils::simplifyFraction(numerator, denominator);
-      RatioOfQsprays ROQ(numerator, denominator);
+      RatioOfQsprays<T> ROQ(numerator, denominator);
       return ROQ;
     }
 
@@ -392,7 +392,7 @@ namespace RATIOOFQSPRAYS {
 
     RatioOfQsprays<T> power(int n) {
       RatioOfQsprays<T> Result(1);
-      RatioOfQsprays ROQ(numerator, denominator);
+      RatioOfQsprays<T> ROQ(numerator, denominator);
       if(n >= 0) {
         int n0 = n, b = 1, p = 0;
         while(n) {

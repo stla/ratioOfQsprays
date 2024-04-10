@@ -48,7 +48,7 @@ dRatioOfQsprays <- function(roq, orders) {
     stopifnot(isPositiveInteger(orders[i]))
   }
   orders <- removeTrailingZeros(orders)
-  if(length(orders) > numberOfVariables2(roq)) {
+  if(length(orders) > numberOfVariables(roq)) {
     return(as.ratioOfQsprays(0L))
   }
   ns <- do.call(c, lapply(seq_along(as.integer(orders)), function(i) {
