@@ -4,7 +4,12 @@
 \alias{showRatioOfQsprays}
 \title{Print a 'ratioOfQsprays' object}
 \usage{
-showRatioOfQsprays(showQspray, quotientBar = "  \%//\%  ")
+showRatioOfQsprays(
+  showQspray,
+  quotientBar = "  \%//\%  ",
+  lbracket = "[ ",
+  rbracket = " ]"
+)
 }
 \arguments{
 \item{showQspray}{a function which prints a \code{qspray} object, which will
@@ -13,6 +18,8 @@ be applied to the numerator and the denominator}
 \item{quotientBar}{a string representing the quotient bar between the
 numerator and the denominator, including surrounding spaces,
 e.g \code{" / "}}
+
+\item{lbracket, rbracket}{used to enclose the numerator and the denominator}
 }
 \value{
 A function which takes as argument a \code{ratioOfQsprays} object
@@ -21,6 +28,12 @@ A function which takes as argument a \code{ratioOfQsprays} object
 \description{
 Prints a \code{ratioOfQsprays} object given a function to print
   a \code{qspray} object
+}
+\examples{
+set.seed(666)
+( roq <- rRatioOfQsprays() )
+f <- showRatioOfQsprays(showQsprayX1X2X3("a"), " / ", "[[[ ", " ]]]")
+f(roq)
 }
 \seealso{
 \code{\link{showRatioOfQspraysX1X2X3}},

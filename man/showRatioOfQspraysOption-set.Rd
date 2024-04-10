@@ -27,4 +27,6 @@ showRatioOfQspraysOption(roq, "quotientBar") <- " / "
 roq
 showRatioOfQspraysOption(roq, "x") <- "a"
 roq
+showRatioOfQspraysOption(roq, "showQspray") <- showQsprayXYZ()
+roq
 }

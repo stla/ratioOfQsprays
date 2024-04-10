@@ -15,7 +15,7 @@ numerator and the denominator, including surrounding spaces,
 e.g \code{" / "}}
 
 \item{...}{arguments other than \code{quotientBar} passed to
-\code{\link{showRatioOfQsprays}} (currently there's no such argument)}
+\code{\link{showRatioOfQsprays}}}
 }
 \value{
 A function which takes as argument a \code{ratioOfQsprays} object
