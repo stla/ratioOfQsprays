@@ -1,7 +1,7 @@
 passShowAttributes <- function(source, target) {
   showOpts <- attr(source, "showOpts")
   inheritable <- isTRUE(attr(showOpts, "inheritable")) ||
-    numberOfVariables(source) >= numberOfVariables(target)
+    isTRUE(numberOfVariables(source) >= numberOfVariables(target))
   if(inheritable) {
     attr(target, "showOpts") <- showOpts
   }

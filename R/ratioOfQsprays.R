@@ -206,7 +206,7 @@ ratioOfQsprays_arith_ratioOfQsprays <- function(e1, e2) {
       dQuote(.Generic)
     ))
   )
-  passShowAttributes(e2, roq)
+  passShowAttributes(e1, roq)
 }
 ratioOfQsprays_arith_qspray <- function(e1, e2) {
   roq <- switch(
