@@ -40,6 +40,25 @@ setMethod(
   }
 )
 
+#' @name isUnivariate
+#' @aliases isUnivariate,ratioOfQsprays-method
+#' @docType methods
+#' @importFrom qspray isUnivariate
+#' @title Whether a 'ratioOfQsprays' is univariate
+#' @description Checks whether a \code{ratioOfQsprays} object defines a
+#'   univariate fraction of polynomials.
+#'
+#' @param x a \code{ratioOfQsprays} object
+#'
+#' @return A Boolean value.
+#' @export
+setMethod(
+  "isUnivariate", "ratioOfQsprays",
+  function(x) {
+    numberOfVariables(x) %in% c(0L, 1L)
+  }
+)
+
 #' @title Whether a 'ratioOfQsprays' is polynomial
 #' @description Checks whether a \code{ratioOfQsprays} actually is polynomial,
 #'   that is, whether its denominator is a constant \code{qspray} polynomial
