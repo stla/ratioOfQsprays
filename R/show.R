@@ -7,6 +7,7 @@
 #' @param quotientBar a string representing the quotient bar between the
 #'   numerator and the denominator, including surrounding spaces,
 #'   e.g \code{" / "}
+#' @param lbracket,rbracket used to enclose the numerator and the denominator
 #'
 #' @return A function which takes as argument a \code{ratioOfQsprays} object
 #'   and which prints it.
@@ -15,18 +16,29 @@
 #' @seealso \code{\link{showRatioOfQspraysX1X2X3}},
 #'   \code{\link{showRatioOfQspraysXYZ}},
 #'   \code{\link{showRatioOfQspraysOption<-}}.
-showRatioOfQsprays <- function(showQspray, quotientBar = "  %//%  ") {
+#'
+#' @examples
+#' set.seed(666)
+#' ( roq <- rRatioOfQsprays() )
+#' f <- showRatioOfQsprays(showQsprayX1X2X3("a"), " / ", "[[[ ", " ]]]")
+#' f(roq)
+showRatioOfQsprays <- function(
+  showQspray, quotientBar = "  %//%  ", lbracket = "[ ", rbracket = " ]"
+) {
   function(roq) {
-    if(isQone(roq@denominator)) {
+    enclose <- function(qspray) {
       sprintf(
-        "[%s]", showQspray(roq@numerator)
+        "%s%s%s", lbracket, showQspray(qspray), rbracket
       )
+    }
+    if(isQone(roq@denominator)) {
+      enclose(roq@numerator)
     } else {
       sprintf(
-        "[ %s ]%s[ %s ]",
-        showQspray(roq@numerator),
+        "%s%s%s",
+        enclose(roq@numerator),
         quotientBar,
-        showQspray(roq@denominator)
+        enclose(roq@denominator)
       )
     }
   }
@@ -41,7 +53,7 @@ showRatioOfQsprays <- function(showQspray, quotientBar = "  %//%  ") {
 #'   numerator and the denominator, including surrounding spaces,
 #'   e.g \code{" / "}
 #' @param ... arguments other than \code{quotientBar} passed to
-#'   \code{\link{showRatioOfQsprays}} (currently there's no such argument)
+#'   \code{\link{showRatioOfQsprays}}
 #'
 #' @return A function which takes as argument a \code{ratioOfQsprays} object
 #'   and which prints it.
@@ -69,7 +81,7 @@ showRatioOfQspraysX1X2X3 <- function(var, quotientBar = "  %//%  ", ...) {
 #'   numerator and the denominator, including surrounding spaces,
 #'   e.g \code{" / "}
 #' @param ... arguments other than \code{quotientBar} passed to
-#'   \code{\link{showRatioOfQsprays}} (currently there's no such argument)
+#'   \code{\link{showRatioOfQsprays}}
 #'
 #' @return A function which takes as argument a \code{ratioOfQsprays} object
 #'   and which prints it.
@@ -105,6 +117,8 @@ showRatioOfQspraysXYZ <- function(letters, quotientBar = "  %//%  ", ...) {
 #' showRatioOfQspraysOption(roq, "quotientBar") <- " / "
 #' roq
 #' showRatioOfQspraysOption(roq, "x") <- "a"
+#' roq
+#' showRatioOfQspraysOption(roq, "showQspray") <- showQsprayXYZ()
 #' roq
 `showRatioOfQspraysOption<-` <- function(x, which, value) {
   which <-
