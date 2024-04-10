@@ -26,6 +26,11 @@ Print a \code{ratioOfQsprays} object given some letters to
   denote the variables, by printing monomials like \code{"x^2yz"}.
 }
 \examples{
+set.seed(666)
 ( roq <- rRatioOfQsprays() )
 showRatioOfQspraysXYZ(c("X", "Y", "Z"), " / ")(roq)
+}
+\seealso{
+\code{\link{showRatioOfQspraysX1X2X3}},
+  \code{\link{showRatioOfQspraysOption<-}}.
 }

@@ -38,5 +38,9 @@ Coercion to a 'ratioOfQsprays' object
 library(qspray)
 as.ratioOfQsprays(2)
 as.ratioOfQsprays("1/3")
-as.ratioOfQsprays(5*qlone(1) + qlone(2)^2)
+qspray <- 5*qlone(1) + qlone(2)^2
+as.ratioOfQsprays(qspray)
+# show options are inherited:
+showQsprayOption(qspray, "x") <- "A"
+as.ratioOfQsprays(qspray)
 }

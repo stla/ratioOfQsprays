@@ -14,9 +14,6 @@ setClass(
 setMethod(
   "show", "ratioOfQsprays",
   function(object) {
-    if(is.null(attr(object, "showOpts"))) {
-      showRatioOfQspraysOption(object, "quotientBar") <- "  %//%  "
-    }
     f <- getShowRatioOfQsprays(object)
     cat(f(object), "\n")
   }
@@ -38,7 +35,8 @@ setAs("bigq", "ratioOfQsprays", function(from) {
   new("ratioOfQsprays", numerator = as.qspray(from), denominator = qone())
 })
 setAs("qspray", "ratioOfQsprays", function(from) {
-  new("ratioOfQsprays", numerator = from, denominator = qone())
+  roq <- new("ratioOfQsprays", numerator = from, denominator = qone())
+  passShowAttributes(from, roq)
 })
 
 as_ratioOfQsprays_scalar <- function(x) {
@@ -69,7 +67,11 @@ setGeneric(
 #' library(qspray)
 #' as.ratioOfQsprays(2)
 #' as.ratioOfQsprays("1/3")
-#' as.ratioOfQsprays(5*qlone(1) + qlone(2)^2)
+#' qspray <- 5*qlone(1) + qlone(2)^2
+#' as.ratioOfQsprays(qspray)
+#' # show options are inherited:
+#' showQsprayOption(qspray, "x") <- "A"
+#' as.ratioOfQsprays(qspray)
 setMethod(
   "as.ratioOfQsprays", "character",
   function(x) {

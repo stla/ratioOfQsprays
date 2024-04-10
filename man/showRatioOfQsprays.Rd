@@ -24,5 +24,6 @@ Prints a \code{ratioOfQsprays} object given a function to print
 }
 \seealso{
 \code{\link{showRatioOfQspraysX1X2X3}},
-  \code{\link{showRatioOfQspraysXYZ}}.
+  \code{\link{showRatioOfQspraysXYZ}},
+  \code{\link{showRatioOfQspraysOption<-}}.
 }

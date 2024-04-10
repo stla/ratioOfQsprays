@@ -25,6 +25,11 @@ Print a \code{ratioOfQsprays} object given a string to denote
   the non-indexed variables.
 }
 \examples{
+set.seed(666)
 ( roq <- rRatioOfQsprays() )
 showRatioOfQspraysX1X2X3("X", " / ")(roq)
+}
+\seealso{
+\code{\link{showRatioOfQspraysXYZ}},
+  \code{\link{showRatioOfQspraysOption<-}}.
 }

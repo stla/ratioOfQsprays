@@ -21,6 +21,7 @@ This returns the updated \code{qspray}.
 Set show option to a \code{qspray} object
 }
 \examples{
+set.seed(666)
 ( roq <- rRatioOfQsprays() )
 showRatioOfQspraysOption(roq, "quotientBar") <- " / "
 roq

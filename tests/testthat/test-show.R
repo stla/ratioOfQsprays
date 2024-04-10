@@ -64,7 +64,7 @@ test_that("equality between qspray and ratioOfQsprays", {
   x <- qlone(1)
   y <- qlone(2)
   z <- qlone(3)
-  expect_true(Print((x^2-y^2)/(x+y)) == "[x1 - x2] ")
+  expect_true(Print((x^2-y^2)/(x+y)) == "[x - y] ")
 })
 
 test_that("equality between scalar and ratioOfQsprays", {
