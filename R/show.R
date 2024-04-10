@@ -12,7 +12,8 @@
 #'   and which prints it.
 #' @export
 #'
-#' @seealso \code{\link{showRatioOfQspraysCanonical}}
+#' @seealso \code{\link{showRatioOfQspraysX1X2X3}},
+#'   \code{\link{showRatioOfQspraysXYZ}}.
 showRatioOfQsprays <- function(showQspray, quotientBar = "  %//%  ") {
   function(roq) {
     if(isQone(roq@denominator)) {
@@ -32,9 +33,9 @@ showRatioOfQsprays <- function(showQspray, quotientBar = "  %//%  ") {
 
 #' @title Print a 'ratioOfQsprays'
 #' @description Print a \code{ratioOfQsprays} object given a string to denote
-#'   the unindexed variables.
+#'   the non-indexed variables.
 #'
-#' @param var a string, usually a letter, to denote the unindexed variables
+#' @param var a string, usually a letter, to denote the non-indexed variables
 #' @param quotientBar a string representing the quotient bar between the
 #'   numerator and the denominator, including surrounding spaces,
 #'   e.g \code{" / "}
@@ -44,57 +45,37 @@ showRatioOfQsprays <- function(showQspray, quotientBar = "  %//%  ") {
 #' @return A function which takes as argument a \code{ratioOfQsprays} object
 #'   and which prints it.
 #' @export
-#' @importFrom qspray showQsprayCanonical showQsprayUnivariate
-#'
-#' @note The \code{show} method for \code{ratioOfQsprays} objects uses
-#'   \code{showRatioOfQspraysCanonical("x", quotientBar = "  \%//\%  ")}
-#'   by default. But this can be controlled as follows. If a
-#'   \code{ratioOfQsprays} object has an attribute \code{"x"}, then the value
-#'   of this attribute will replace \code{"x"} in the \code{show} output.
-#'   It is also possible to control the \code{quotientBar} argument by
-#'   assigning a \code{"quotientBar"} attribute to the \code{ratioOfQsprays}
-#'   object to be printed.
-#'
-#' @examples
-#' roq <- rRatioOfQsprays()
-#' showRatioOfQspraysCanonical("X", " / ")(roq)
-showRatioOfQspraysCanonical <- function(var, quotientBar = "  %//%  ", ...) {
-  showRatioOfQsprays(showQsprayCanonical(var), quotientBar = quotientBar, ...)
-}
-
-#' Title
-#'
-#' @param var xx
-#' @param quotientBar xx
-#' @param ... xx
-#'
-#' @return xx
-#' @export
-showRatioOfQspraysUnivariate <- function(var, quotientBar = "  %//%  ", ...) {
-  showRatioOfQsprays(showQsprayUnivariate(var), quotientBar = quotientBar, ...)
-}
-
-#' @title Set show options to a 'ratioOfQsprays' object
-#' @description Set some attributes to a \code{ratioOfQsprays} object
-#'   to control the way it is displayed. See the note in the
-#'   documentation of \code{\link{showRatioOfQspraysCanonical}} for details.
-#'
-#' @param roq a \code{ratioOfQsprays} object
-#' @param x value for the \code{"x"} attribute
-#' @param quotientBar value for the \code{"quotientBar"} attribute
-#'
-#' @return The input \code{ratioOfQsprays} object with new attributes.
-#' @export
+#' @importFrom qspray showQsprayX1X2X3
 #'
 #' @examples
 #' ( roq <- rRatioOfQsprays() )
-#' withAttributes(roq, x = "a", quotientBar = " / ")
-withAttributes <- function(
-    roq, x = "x", quotientBar = "  %//%  "
-) {
-  attr(roq, "x") <- x
-  attr(roq, "quotientBar") <- quotientBar
-  roq
+#' showRatioOfQspraysX1X2X3("X", " / ")(roq)
+showRatioOfQspraysX1X2X3 <- function(var, quotientBar = "  %//%  ", ...) {
+  showRatioOfQsprays(showQsprayX1X2X3(var), quotientBar = quotientBar, ...)
+}
+
+#' @title Print a 'ratioOfQsprays'
+#' @description Print a \code{ratioOfQsprays} object given some letters to
+#'   denote the variables, by printing monomials like \code{"x^2yz"}.
+#'
+#' @param letters a vector of strings, usually some letters such as \code{"x"}
+#'   and \code{"y"}, to denote the variables
+#' @param quotientBar a string representing the quotient bar between the
+#'   numerator and the denominator, including surrounding spaces,
+#'   e.g \code{" / "}
+#' @param ... arguments other than \code{quotientBar} passed to
+#'   \code{\link{showRatioOfQsprays}} (currently there's no such argument)
+#'
+#' @return A function which takes as argument a \code{ratioOfQsprays} object
+#'   and which prints it.
+#' @export
+#' @importFrom qspray showQsprayXYZ
+#'
+#' @examples
+#' ( roq <- rRatioOfQsprays() )
+#' showRatioOfQspraysXYZ(c("X", "Y", "Z"), " / ")(roq)
+showRatioOfQspraysXYZ <- function(letters, quotientBar = "  %//%  ", ...) {
+  showRatioOfQsprays(showQsprayXYZ(letters), quotientBar = quotientBar, ...)
 }
 
 #' @title Set show option to a 'qspray' object
@@ -102,46 +83,46 @@ withAttributes <- function(
 #'
 #' @param x a \code{qspray} object
 #' @param which which option to set; this can be \code{"x"},
-#'   \code{"showMonomial"}, or \code{"showQspray"}
-#' @param value the value of the option
+#'   \code{"quotientBar"}, \code{"showQspray"}, or \code{"showRatioOfQsprays"}
+#' @param value the value of the option to be set
 #'
 #' @return This returns the updated \code{qspray}.
 #' @export
 #'
 #' @examples
-#' roq <- rRatioOfQsprays()
-#' showRatioOfQspraysOption(roq, "x") <- "a"
+#' ( roq <- rRatioOfQsprays() )
 #' showRatioOfQspraysOption(roq, "quotientBar") <- " / "
+#' roq
+#' showRatioOfQspraysOption(roq, "x") <- "a"
 #' roq
 `showRatioOfQspraysOption<-` <- function(x, which, value) {
   which <-
     match.arg(which, c("x", "quotientBar", "showQspray", "showRatioOfQsprays"))
   showOpts <- attr(x, "showOpts") %||% TRUE
   attr(showOpts, which) <- value
-  univariate <- numberOfVariables(x) == 1L
-  sROQ <- if(univariate) {
-    showRatioOfQspraysUnivariate
-  } else {
-    showRatioOfQspraysCanonical
-  }
-  if(which == "x") {
-    attr(showOpts, "showRatioOfQsprays") <-
-      sROQ(
-        var = value,
-        quotientBar = attr(showOpts, "quotientBar") %||% "  %//%  "
-      )
-  } else if(which == "quotientBar") {
-    attr(showOpts, "showRatioOfQsprays") <-
-      sROQ(
-        var = attr(showOpts, "x") %||% "x",
-        quotientBar = value
-      )
-  } else if(which == "showQspray") {
-    attr(showOpts, "showRatioOfQsprays") <- showRatioOfQsprays(
-      showQspray = value,
+  if(which != "showRatioOfQsprays") {
+    if(which == "x") {
+      sQ <- showQsprayX1X2X3(value)
+    } else if(which == "quotientBar") {
+      trivariate <- numberOfVariables(x) <= 3L
+      if(trivariate) {
+        sQ <- showQsprayXYZ()
+      } else {
+        sQ <- showQsprayX1X2X3(attr(showOpts, "x") %||% "x")
+      }
+    } else if(which == "showQspray") {
+      sQ <- value
+    }
+    sROQ <- showRatioOfQsprays(
+      showQspray = sQ,
       quotientBar = attr(showOpts, "quotientBar") %||% "  %//%  "
     )
+  } else {
+    sQ   <- NULL
+    sROQ <- value
   }
+  attr(showOpts, "showQspray") <- sQ
+  attr(showOpts, "showRatioOfQsprays") <- sROQ
   attr(x, "showOpts") <- showOpts
   x
 }
@@ -152,7 +133,7 @@ getShowRatioOfQsprays <- function(roq) {
     attr(attr(showOpts, "showSymbolicQspray"), "showRatioOfQsprays") %||%
     showRatioOfQsprays(
       showQspray = attr(showOpts, "showQspray") %||%
-        showQsprayCanonical(attr(showOpts, "a") %||% "a"),
-      quotientBar = attr(showOpts, "quotientBar") %||% " %//% "
+        showQsprayX1X2X3(attr(showOpts, "x") %||% "x"),
+      quotientBar = attr(showOpts, "quotientBar") %||% "  %//%  "
     )
 }

@@ -15,7 +15,7 @@ setMethod(
   "show", "ratioOfQsprays",
   function(object) {
     if(is.null(attr(object, "showOpts"))) {
-      showRatioOfQspraysOption(object, "x") <- "x"
+      showRatioOfQspraysOption(object, "quotientBar") <- "  %//%  "
     }
     f <- getShowRatioOfQsprays(object)
     cat(f(object), "\n")

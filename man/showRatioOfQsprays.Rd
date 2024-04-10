@@ -23,5 +23,6 @@ Prints a \code{ratioOfQsprays} object given a function to print
   a \code{qspray} object
 }
 \seealso{
-\code{\link{showRatioOfQspraysCanonical}}
+\code{\link{showRatioOfQspraysX1X2X3}},
+  \code{\link{showRatioOfQspraysXYZ}}.
 }

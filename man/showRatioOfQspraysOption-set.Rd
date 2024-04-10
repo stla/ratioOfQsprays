@@ -10,9 +10,9 @@ showRatioOfQspraysOption(x, which) <- value
 \item{x}{a \code{qspray} object}
 
 \item{which}{which option to set; this can be \code{"x"},
-\code{"showMonomial"}, or \code{"showQspray"}}
+\code{"quotientBar"}, \code{"showQspray"}, or \code{"showRatioOfQsprays"}}
 
-\item{value}{the value of the option}
+\item{value}{the value of the option to be set}
 }
 \value{
 This returns the updated \code{qspray}.
@@ -21,8 +21,9 @@ This returns the updated \code{qspray}.
 Set show option to a \code{qspray} object
 }
 \examples{
-roq <- rRatioOfQsprays()
-showRatioOfQspraysOption(roq, "x") <- "a"
+( roq <- rRatioOfQsprays() )
 showRatioOfQspraysOption(roq, "quotientBar") <- " / "
+roq
+showRatioOfQspraysOption(roq, "x") <- "a"
 roq
 }
