@@ -161,8 +161,15 @@ getShowRatioOfQsprays <- function(roq) {
   showOpts <- attr(roq, "showOpts")
   sROQ <- attr(showOpts, "showRatioOfQsprays")
   if(is.null(sROQ)) {
-    roq <- setDefaultShowRatioOfQspraysOption(roq)
-    sROQ <- attr(attr(roq, "showOpts"), "showRatioOfQsprays")
+    # it's possible that showOpts has a "showQspray" attribute, from a call
+    # to as.RatioOfQsprays
+    sQ <- attr(showOpts, "showQspray")
+    if(is.null(sQ)) {
+      roq <- setDefaultShowRatioOfQspraysOption(roq)
+      sROQ <- attr(attr(roq, "showOpts"), "showRatioOfQsprays")
+    } else {
+      showRatioOfQspraysOption(roq, "showQspray") <- sQ
+    }
   }
-  SROQ
+  attr(attr(roq, "showOpts"), "showRatioOfQsprays")
 }
