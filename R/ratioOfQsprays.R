@@ -1,6 +1,6 @@
 #' @useDynLib ratioOfQsprays, .registration=TRUE
 #' @importFrom Rcpp evalCpp
-#' @importFrom qspray qone as.qspray isQone isQzero isConstantQspray getConstantTerm
+#' @importFrom qspray qone as.qspray isQone isQzero isConstant getConstantTerm
 #' @importFrom methods setMethod setClass new show setAs
 #' @importFrom gmp as.bigq
 #' @include ratioOfQsprays.R
@@ -144,7 +144,7 @@ setMethod(
 adjustRatioOfQsprays <- function(roq) {
   num <- roq@numerator
   den <- roq@denominator
-  if(isConstantQspray(den)) {
+  if(isConstant(den)) {
     k <- 1L / getConstantTerm(den)
     num <- k * num
     den <- k * den

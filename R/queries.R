@@ -1,5 +1,9 @@
+#' @include ratioOfQsprays.R
+NULL
+
 setGeneric("numberOfVariables")
 setGeneric("isConstant")
+setGeneric("isUnivariate")
 
 #' @name numberOfVariables
 #' @aliases numberOfVariables,ratioOfQsprays-method
