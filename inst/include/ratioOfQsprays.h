@@ -361,7 +361,8 @@ namespace RATIOOFQSPRAYS {
     }
 
     void unsafeMultiply(const RatioOfQsprays<T>& ROQ2) {
-      if(numerator.empty() || ROQ2.numerator.empty()) { // i.e. zero
+      Qspray<T> numerator2 = ROQ2.numerator;
+      if(numerator.empty() || numerator2.empty()) { // i.e. zero
         numerator   = Qspray<T>(T(0));
         denominator = Qspray<T>(T(1));
       } else {
@@ -372,7 +373,8 @@ namespace RATIOOFQSPRAYS {
 
     RatioOfQsprays<T> operator*=(const RatioOfQsprays<T>& ROQ2) {
       // Rcpp::Rcout << "MULTIPLICATION\n";
-      if(numerator.empty() || ROQ2.numerator.empty()) { // i.e. zero
+      Qspray<T> numerator2 = ROQ2.numerator;
+      if(numerator.empty() || numerator2.empty()) { // i.e. zero
         numerator   = Qspray<T>(T(0));
         denominator = Qspray<T>(T(1));
       } else {
@@ -391,7 +393,8 @@ namespace RATIOOFQSPRAYS {
     }
 
     RatioOfQsprays<T> operator/=(const RatioOfQsprays<T>& ROQ2) {
-      if(numerator.empty() || ROQ2.denominator.empty()) { // i.e. zero
+      Qspray<T> denominator2 = ROQ2.denominator;
+      if(numerator.empty() || denominator2.empty()) { // i.e. zero
         numerator   = Qspray<T>(T(0));
         denominator = Qspray<T>(T(1));
       } else {

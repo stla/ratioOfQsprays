@@ -7,7 +7,7 @@
 rRatioOfQsprays(allow.zero = TRUE)
 }
 \arguments{
-\item{allow.zero}{Boolean, whether to allow to get a null 
+\item{allow.zero}{Boolean, whether to allow to get a null
 \code{ratioOfQsprays}}
 }
 \value{
