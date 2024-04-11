@@ -83,3 +83,29 @@ setMethod(
 isPolynomial <- function(roq) {
   isConstant(roq@denominator)
 }
+
+#' @title Get the numerator of a 'ratioOfQsprays'
+#' @description Get the numerator of a \code{ratioOfQsprays} object,
+#'   preserving the show options.
+#'
+#' @param roq a \code{ratioOfQsprays} object
+#'
+#' @return A \code{qspray} object.
+#' @export
+getNumerator <- function(roq) {
+  qspray <- roq@numerator
+  passShowAttributes(roq, qspray)
+}
+
+#' @title Get the denominator of a 'ratioOfQsprays'
+#' @description Get the denominator of a \code{ratioOfQsprays} object,
+#'   preserving the show options.
+#'
+#' @param roq a \code{ratioOfQsprays} object
+#'
+#' @return A \code{qspray} object.
+#' @export
+getDenominator <- function(roq) {
+  qspray <- roq@denominator
+  passShowAttributes(roq, qspray)
+}

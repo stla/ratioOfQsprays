@@ -18,13 +18,19 @@ with rational coefficients. Based on this one, the **ratioOfQsprays** package
 allows to manipulate fractions of multivariate polynomials with rational 
 coefficients.
 
-A `symbolicQspray` object represents a multivariate polynomial whose 
-coefficients are fractions of polynomials. For example:
+## Creating a `ratioOfQsprays` 
+
+A `ratioOfQsprays` object represents a fraction of two multivariate 
+polynomial with rational coefficients. Such polynomials are represented by 
+`qspray` objects. The easiest way to create a `ratioOfQsprays` is to introduce 
+the variables of the polynomials with the `qlone` function, and then to build a 
+`qspray` numerator and a `qspray` denominator with arithmetic operations. 
+For example:
 
 ```{r, message=FALSE, collapse=TRUE}
 library(ratioOfQsprays)
 f <- function(x1, x2, x3) {
-  2*x1^2 / (3*x3 + 1)  +  (x2 * x3) / (4*x1 + x2)
+  (2*x1^2 + x2*x3) / (4*x1 - 3*x3 + 1)
 }
 # variables:
 x1 <- qlone(1)
@@ -40,13 +46,30 @@ Arithmetic on `ratioOfQsprays` objects is available:
 roq^2
 roq - roq
 1 / roq
+roq + (x2 + x3)/x1
 ```
 
-And evaluation: 
+Rational numbers and \code{qspray} polynomials are coercable to 
+`ratioOfQsprays` objects, and you can also perform arithmetic operations 
+between a `ratioOfQsprays` and such an object:
+
+```{r, message=FALSE, collapse=TRUE}
+2 * roq
+"1/2" * roq
+roq + gmp::as.bigq("7/3") 
+x1 + roq + x3
+```
+
+## Evaluating a `ratioOfQsprays` 
+
+Use `evalRatioOfQsprays` to evaluate a `ratioOfQsprays`. This function returns 
+a `bigq` number:
 
 ```{r, message=FALSE, collapse=TRUE}
 library(gmp) # rational numbers
-x <- c(as.bigq(4), as.bigq(3), as.bigq("2/5"))
+x <- c("4", "3", "2/5")
+evalRatioOfQsprays(roq, x)
+x <- as.bigq(x)
 evalRatioOfQsprays(roq, x)
 f(x[1], x[2], x[3])
 ```

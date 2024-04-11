@@ -255,19 +255,19 @@ namespace RATIOOFQSPRAYS {
     //   return qsprayDivision(A, B).first;
     // }
 
-    // template<typename T>
-    static inline void simplifyFraction(Qspray<gmpq> &A, Qspray<gmpq> &B) {
+    template<typename T>
+    static inline void simplifyFraction(Qspray<T> &A, Qspray<T> &B) {
       if(!A.isConstant() && !B.isConstant()) {
-        std::pair<Qspray<gmpq>,Qspray<gmpq>> QAQB = callGCD(A, B);
+        std::pair<Qspray<T>,Qspray<T>> QAQB = callGCD(A, B);
         A = QAQB.first;  // is clean
         B = QAQB.second; // is clean
       }
       if(B.isConstant()) {
-        gmpq b = B.constantTerm();
-        if(b == gmpq(0)) {
+        T b = B.constantTerm();
+        if(b == T(0)) {
           Rcpp::stop("division by zero");
         }
-        gmpq lambda = gmpq(1) / b;
+        T lambda = T(1) / b;
         A.scale(lambda);
         B.scale(lambda);
       }
@@ -324,12 +324,14 @@ namespace RATIOOFQSPRAYS {
     }
 
     RatioOfQsprays<T> operator+=(const RatioOfQsprays<T>& ROQ2) {
-    	numerator    = numerator * ROQ2.denominator + denominator * ROQ2.numerator;
-    	denominator *= ROQ2.denominator;
-      utils::simplifyFraction(numerator, denominator);
-
       // Rcpp::Rcout << "ADDITION\n";
-
+    	numerator = numerator * ROQ2.denominator + denominator * ROQ2.numerator;
+      if(numerator.empty()) { // i.e. zero
+        denominator = Qspray<T>(T(1));
+      } else {
+        denominator *= ROQ2.denominator;
+        utils::simplifyFraction<T>(numerator, denominator);
+      }
     	RatioOfQsprays<T> ROQ(numerator, denominator);
     	return ROQ;
     }
@@ -341,9 +343,13 @@ namespace RATIOOFQSPRAYS {
     }
 
     RatioOfQsprays<T> operator-=(const RatioOfQsprays<T>& ROQ2) {
-      numerator    = numerator * ROQ2.denominator - denominator * ROQ2.numerator;
-      denominator *= ROQ2.denominator;
-      utils::simplifyFraction(numerator, denominator);
+      numerator = numerator * ROQ2.denominator - denominator * ROQ2.numerator;
+      if(numerator.empty()) { // i.e. zero
+        denominator = Qspray<T>(T(1));
+      } else {
+        denominator *= ROQ2.denominator;
+        utils::simplifyFraction<T>(numerator, denominator);
+      }
       RatioOfQsprays<T> ROQ(numerator, denominator);
       return ROQ;
     }
@@ -355,17 +361,25 @@ namespace RATIOOFQSPRAYS {
     }
 
     void unsafeMultiply(const RatioOfQsprays<T>& ROQ2) {
-      numerator   *= ROQ2.numerator;
-      denominator *= ROQ2.denominator;
+      if(numerator.empty() || ROQ2.numerator.empty()) { // i.e. zero
+        numerator   = Qspray<T>(T(0));
+        denominator = Qspray<T>(T(1));
+      } else {
+        numerator   *= ROQ2.numerator;
+        denominator *= ROQ2.denominator;
+      }
     }
 
     RatioOfQsprays<T> operator*=(const RatioOfQsprays<T>& ROQ2) {
-      numerator   *= ROQ2.numerator;
-      denominator *= ROQ2.denominator;
-
       // Rcpp::Rcout << "MULTIPLICATION\n";
-
-      utils::simplifyFraction(numerator, denominator);
+      if(numerator.empty() || ROQ2.numerator.empty()) { // i.e. zero
+        numerator   = Qspray<T>(T(0));
+        denominator = Qspray<T>(T(1));
+      } else {
+        numerator   *= ROQ2.numerator;
+        denominator *= ROQ2.denominator;
+        utils::simplifyFraction<T>(numerator, denominator);
+      }
       RatioOfQsprays ROQ(numerator, denominator);
       return ROQ;
     }
@@ -377,9 +391,14 @@ namespace RATIOOFQSPRAYS {
     }
 
     RatioOfQsprays<T> operator/=(const RatioOfQsprays<T>& ROQ2) {
-      numerator   *= ROQ2.denominator;
-      denominator *= ROQ2.numerator;
-      utils::simplifyFraction(numerator, denominator);
+      if(numerator.empty() || ROQ2.denominator.empty()) { // i.e. zero
+        numerator   = Qspray<T>(T(0));
+        denominator = Qspray<T>(T(1));
+      } else {
+        numerator   *= ROQ2.denominator;
+        denominator *= ROQ2.numerator;
+        utils::simplifyFraction<T>(numerator, denominator);
+      }
       RatioOfQsprays<T> ROQ(numerator, denominator);
       return ROQ;
     }
