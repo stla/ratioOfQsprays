@@ -93,7 +93,7 @@ test_that("show is inherited from qspray", {
   )
   expect_identical(
     Print(q1 / q2),
-    "[ x ]  %//%  [ 5*x^4y - y^2z^3 - 3 ] "
+    "[ A ]  %//%  [ 5*A1^4.A2 - A2^2.A3^3 - 3 ] "
   )
 })
 
@@ -122,8 +122,8 @@ test_that("show options are inherited by the first operand", {
 
   roq <- qlone(1) / (1 + qlone(1))
   expect_identical(Print(roq), "[ x ]  %//%  [ x + 1 ] ")
-  showQsprayOption(roq, "x") <- "A"
+  showRatioOfQspraysOption(roq, "x") <- "A"
   expect_identical(Print(roq), "[ A ]  %//%  [ A + 1 ] ")
   expect_identical(Print(roq + qlone(1)), "[ A^2 + 2*A ]  %//%  [ A + 1 ] ")
-  expect_identical(Print(roq + qlone(2)), "[ xy + x + y ]  %//%  [ x + 1 ] ")
+  expect_identical(Print(roq + qlone(2)), "[ A1.A2 + A1 + A2 ]  %//%  [ A1 + 1 ] ")
 })
