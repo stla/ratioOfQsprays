@@ -46,7 +46,7 @@ Arithmetic on `ratioOfQsprays` objects is available:
 roq^2
 roq - roq
 1 / roq
-roq + (x2 + x3)/x1
+2*roq + (x2 + x3)/x1
 ```
 
 Rational numbers and \code{qspray} polynomials are coercable to 
@@ -59,6 +59,7 @@ between a `ratioOfQsprays` and such an object:
 roq + gmp::as.bigq("7/3") 
 x1 + roq + x3
 ```
+
 
 ## Evaluating a `ratioOfQsprays` 
 
@@ -73,3 +74,52 @@ x <- as.bigq(x)
 evalRatioOfQsprays(roq, x)
 f(x[1], x[2], x[3])
 ```
+
+
+## Querying a `ratioOfQsprays` 
+
+A couple of functions to query a `ratioOfQsprays` are available:
+
+```{r, collapse=TRUE}
+getNumerator(roq)
+getDenominator(roq)
+numberOfVariables(roq)
+isConstant(roq)
+isConstant(roq / roq)
+isUnivariate(roq)
+isUnivariate(x1 / (x1^2 + 1))
+isPolynomial(roq)
+isPolynomial((x1^2 - x2^2)/(x1 - x2))
+```
+
+
+## Showing a `ratioOfQsprays` 
+
+As you have seen, the variables of `roq` are denoted by `x`, `y`, `z`. This is 
+the default of showing a `ratioOfQsprays` which have no more than three 
+variables. If it has more than three variables, the variables are denoted by 
+`x1`, `x2`, `x3`, ...:
+
+```{r, collapse=TRUE}
+x4 <- qlone(4)
+roq / x4
+```
+
+It is possible to control the way a `ratioOfQsprays` is printed. For example, 
+let's say you want to print `roq` by using `a1`, `a2`, `a3` for the variables 
+and you want to change the symbol for the quotient:
+
+```{r, collapse=TRUE}
+showRatioOfQspraysOption(roq, "x") <- "a"
+showRatioOfQspraysOption(roq, "quotientBar") <- " / " 
+roq
+```
+
+Now, if you perform an arithmetic operation between `roq` at first position 
+and an another `ratioOfQsprays` or an object coercable to a `ratioOfQsprays`, 
+these show options are preserved when possible:
+
+```{r, collapse=TRUE}
+roq + (x1 + 1)/x2
+```
+

@@ -46,11 +46,11 @@ Arithmetic on `ratioOfQsprays` objects is available:
 roq^2
 ## [ 4*x^4 + 4*x^2yz + y^2z^2 ]  %//%  [ 16*x^2 - 24*xz + 8*x + 9*z^2 - 6*z + 1 ]
 roq - roq
-## [ 0 ]  %//%  [ 16*x^2 - 24*xz + 8*x + 9*z^2 - 6*z + 1 ]
+## [ 0 ]
 1 / roq
 ## [ 4*x - 3*z + 1 ]  %//%  [ 2*x^2 + yz ]
-roq + (x2 + x3)/x1
-## [ 2*x^3 + xyz + 4*xy + 4*xz - 3*yz + y - 3*z^2 + z ]  %//%  [ 4*x^2 - 3*xz + x ]
+2*roq + (x2 + x3)/x1
+## [ 4*x^3 + 2*xyz + 4*xy + 4*xz - 3*yz + y - 3*z^2 + z ]  %//%  [ 4*x^2 - 3*xz + x ]
 ```
 
 Rational numbers and polynomials are coercable to `ratioOfQsprays`
@@ -86,4 +86,62 @@ evalRatioOfQsprays(roq, x)
 f(x[1], x[2], x[3])
 ## Big Rational ('bigq') :
 ## [1] 166/79
+```
+
+## Querying a `ratioOfQsprays`
+
+A couple of functions to query a `ratioOfQsprays` are available:
+
+``` r
+getNumerator(roq)
+## 2*x^2 + yz
+getDenominator(roq)
+## 4*x - 3*z + 1
+numberOfVariables(roq)
+## [1] 3
+isConstant(roq)
+## [1] FALSE
+isConstant(roq / roq)
+## [1] TRUE
+isUnivariate(roq)
+## [1] FALSE
+isUnivariate(x1 / (x1^2 + 1))
+## [1] TRUE
+isPolynomial(roq)
+## [1] FALSE
+isPolynomial((x1^2 - x2^2)/(x1 - x2))
+## [1] TRUE
+```
+
+## Showing a `ratioOfQsprays`
+
+As you have seen, the variables of `roq` are denoted by `x`, `y`, `z`.
+This is the default of showing a `ratioOfQsprays` which have no more
+than three variables. If it has more than three variables, the variables
+are denoted by `x1`, `x2`, `x3`, …:
+
+``` r
+x4 <- qlone(4)
+roq / x4
+## [ 2*x1^2 + x2.x3 ]  %//%  [ 4*x1.x4 - 3*x3.x4 + x4 ]
+```
+
+It is possible to control the way a `ratioOfQsprays` is printed. For
+example, let’s say you want to print `roq` by using `a1`, `a2`, `a3` for
+the variables and you want to change the symbol for the quotient:
+
+``` r
+showRatioOfQspraysOption(roq, "x") <- "a"
+showRatioOfQspraysOption(roq, "quotientBar") <- " / " 
+roq
+## [ 2*a1^2 + a2.a3 ] / [ 4*a1 - 3*a3 + 1 ]
+```
+
+Now, if you perform an arithmetic operation between `roq` at first
+position and an another `ratioOfQsprays` or an object coercable to a
+`ratioOfQsprays`, these show options are preserved:
+
+``` r
+roq + (x1 + 1)/x2
+## [ 2*a1^2.a2 + 4*a1^2 - 3*a1.a3 + 5*a1 + a2^2.a3 - 3*a3 + 1 ] / [ 4*a1.a2 - 3*a2.a3 + a2 ]
 ```
