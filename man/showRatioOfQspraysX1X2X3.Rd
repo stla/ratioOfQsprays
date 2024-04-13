@@ -24,10 +24,24 @@ A function which takes as argument a \code{ratioOfQsprays} object
 Print a \code{ratioOfQsprays} object given a string to denote
   the non-indexed variables.
 }
+\note{
+The function returned by this function can be used as the option
+  \code{"showRatioOfQsprays"} of the setter function
+  \code{\link{showRatioOfQspraysOption<-}}. If you do not use the
+  ellipsis arguments, this is equivalent to set the \code{"x"}
+  option and the \code{"quotientBar"} option (see example).
+}
 \examples{
 set.seed(666)
 ( roq <- rRatioOfQsprays() )
 showRatioOfQspraysX1X2X3("X", " / ")(roq)
+# setting a show option:
+showRatioOfQspraysOption(roq, "showRatioOfQsprays") <-
+  showRatioOfQspraysX1X2X3("X", " / ")
+roq
+# this is equivalent to set the "x" and the "quotientBar" options:
+showRatioOfQspraysOption(roq, "x") <- "X"
+showRatioOfQspraysOption(roq, "quotientBar") <- " / "
 }
 \seealso{
 \code{\link{showRatioOfQspraysXYZ}},

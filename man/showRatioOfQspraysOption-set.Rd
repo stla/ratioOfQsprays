@@ -2,7 +2,7 @@
 % Please edit documentation in R/show.R
 \name{showRatioOfQspraysOption<-}
 \alias{showRatioOfQspraysOption<-}
-\title{Set show option to a 'ratioOfQsprays'}
+\title{Set a show option to a 'ratioOfQsprays'}
 \usage{
 showRatioOfQspraysOption(x, which) <- value
 }

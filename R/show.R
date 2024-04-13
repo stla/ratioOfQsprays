@@ -19,10 +19,20 @@
 #'   \code{\link{showRatioOfQspraysOption<-}},
 #'   \code{\link[qspray]{showQspray}}.
 #'
+#' @note The function returned by this function can be used as the option
+#'   \code{"showRatioOfQsprays"} of the setter function
+#'   \code{\link{showRatioOfQspraysOption<-}}. That said, one would more often
+#'   uses \code{\link{showRatioOfQspraysX1X2X3}} or
+#'   \code{\link{showRatioOfQspraysXYZ}} for this option, which are both built
+#'   with \code{showRatioOfQsprays}.
+#'
 #' @examples
 #' set.seed(666)
 #' ( roq <- rRatioOfQsprays() )
-#' f <- showRatioOfQsprays(showQsprayX1X2X3("a"), " / ", "[[[ ", " ]]]")
+#' f <- showRatioOfQsprays(showQsprayX1X2X3("a"), " / ", "[[ ", " ]]")
+#' f(roq)
+#' # this is equivalent to
+#' f <- showRatioOfQspraysX1X2X3("a", " / ", lbracket = "[[ ", rbracket = " ]]")
 #' f(roq)
 showRatioOfQsprays <- function(
     showQspray, quotientBar = "  %//%  ", lbracket = "[ ", rbracket = " ]"
@@ -74,17 +84,30 @@ showRatioOfQsprays <- function(
 #' @seealso \code{\link{showRatioOfQspraysXYZ}},
 #'   \code{\link{showRatioOfQspraysOption<-}}.
 #'
+#' @note The function returned by this function can be used as the option
+#'   \code{"showRatioOfQsprays"} of the setter function
+#'   \code{\link{showRatioOfQspraysOption<-}}. If you do not use the
+#'   ellipsis arguments, this is equivalent to set the \code{"x"}
+#'   option and the \code{"quotientBar"} option (see example).
+#'
 #' @examples
 #' set.seed(666)
 #' ( roq <- rRatioOfQsprays() )
 #' showRatioOfQspraysX1X2X3("X", " / ")(roq)
+#' # setting a show option:
+#' showRatioOfQspraysOption(roq, "showRatioOfQsprays") <-
+#'   showRatioOfQspraysX1X2X3("X", " / ")
+#' roq
+#' # this is equivalent to set the "x" and the "quotientBar" options:
+#' showRatioOfQspraysOption(roq, "x") <- "X"
+#' showRatioOfQspraysOption(roq, "quotientBar") <- " / "
 showRatioOfQspraysX1X2X3 <- function(var, quotientBar = "  %//%  ", ...) {
   showRatioOfQsprays(showQsprayX1X2X3(var), quotientBar = quotientBar, ...)
 }
 
 #' @title Print a 'ratioOfQsprays'
 #' @description Print a \code{ratioOfQsprays} object given some letters to
-#'   denote the variables, by printing monomials like \code{"x^2yz"}.
+#'   denote the variables, by printing monomials like \code{"x^2.yz"}.
 #'
 #' @param letters a vector of strings, usually some letters such as \code{"x"}
 #'   and \code{"y"}, to denote the variables
@@ -99,6 +122,16 @@ showRatioOfQspraysX1X2X3 <- function(var, quotientBar = "  %//%  ", ...) {
 #' @export
 #' @importFrom qspray showQsprayXYZ
 #'
+#' @note The function returned by this function can be used as the option
+#'   \code{"showRatioOfQsprays"} of the setter function
+#'   \code{\link{showRatioOfQspraysOption<-}}.
+#'   As another note, let us describe the behavior of this function in a
+#'   case when the number of variables of the \code{ratioOfQsprays} object to
+#'   be printed is bigger than the number of provided letters. In such a case,
+#'   the output will be the same as an application of the function
+#'   \code{showRatioOfQspraysX1X2X3(x)} with \code{x} being the first letter
+#'   provided. See the example.
+#'
 #' @seealso \code{\link{showRatioOfQspraysX1X2X3}},
 #'   \code{\link{showRatioOfQspraysOption<-}}.
 #'
@@ -106,13 +139,20 @@ showRatioOfQspraysX1X2X3 <- function(var, quotientBar = "  %//%  ", ...) {
 #' set.seed(666)
 #' ( roq <- rRatioOfQsprays() )
 #' showRatioOfQspraysXYZ(c("X", "Y", "Z"), " / ")(roq)
+#' # now take a ratioOfQsprays with four variables:
+#' roq <- roq * qlone(4)
+#' # then the symbols X1, X2, X3, X4 denote the variables now:
+#' showRatioOfQspraysXYZ(c("X", "Y", "Z"), " / ")(roq)
+#' # this is the method used by default to print the ratioOfQsprays objects,
+#' # with the initial letters x, y, z which then become x1, x2, x3, x4:
+#' roq
 showRatioOfQspraysXYZ <- function(
   letters = c("x", "y", "z"), quotientBar = "  %//%  ", ...
 ) {
   showRatioOfQsprays(showQsprayXYZ(letters), quotientBar = quotientBar, ...)
 }
 
-#' @title Set show option to a 'ratioOfQsprays'
+#' @title Set a show option to a 'ratioOfQsprays'
 #' @description Set a show option to a \code{ratioOfQsprays} object.
 #'
 #' @param x a \code{ratioOfQsprays} object
@@ -140,11 +180,6 @@ showRatioOfQspraysXYZ <- function(
     match.arg(which, c("x", "quotientBar", "showQspray", "showRatioOfQsprays"))
   showOpts <- attr(x, "showOpts") %||% TRUE
   attr(showOpts, which) <- value
-  if(which == "inheritable") {
-    attr(x, "showOpts") <- showOpts
-    return(x)
-  }
-
   if(which != "showRatioOfQsprays") {
     if(which == "x") {
       sQ <- showQsprayXYZ(letters = value)
@@ -152,54 +187,12 @@ showRatioOfQspraysXYZ <- function(
         showQspray = sQ,
         quotientBar = attr(showOpts, "quotientBar") %||% "  %//%  "
       )
-      # sMU <- showMonomialXYZ(letters = value)
-      # sM  <- showMonomialX1X2X3(x = value)
-      # sQU <- showQspray(sMU)
-      # sQ  <- showQspray(sM)
-      # sROQ <- function(roq) {
-      #   if(isUnivariate(roq)) {
-      #     showRatioOfQsprays(
-      #       showQspray = sQU,
-      #       quotientBar = attr(showOpts, "quotientBar") %||% "  %//%  "
-      #     )(roq)
-      #   } else {
-      #     showRatioOfQsprays(
-      #       showQspray = sQ,
-      #       quotientBar = attr(showOpts, "quotientBar") %||% "  %//%  "
-      #     )(roq)
-      #   }
-      # }
-      # attr(showOpts, "inheritable") <- TRUE
     } else if(which == "quotientBar") {
       sQ <- attr(showOpts, "showQspray") %||% showQsprayXYZ()
       sROQ <- showRatioOfQsprays(
         showQspray  = sQ,
         quotientBar = value
       )
-      # if(is.null(attr(showOpts, "showQspray"))) {
-      #   sROQ <- function(roq) {
-      #     trivariate <- numberOfVariables(roq) <= 3L
-      #     if(trivariate) {
-      #       sM <- showMonomialXYZ()
-      #     } else {
-      #       sM <- showMonomialX1X2X3(attr(showOpts, "x") %||% "x")
-      #     }
-      #     sQ <- showQspray(sM)
-      #     showRatioOfQsprays(
-      #       showQspray = sQ,
-      #       quotientBar = value
-      #     )(roq)
-      #   }
-      # } else {
-      #   sQ <- attr(showOpts, "showQspray")
-      #   sROQ <- showRatioOfQsprays(
-      #     showQspray = sQ,
-      #     quotientBar = value
-      #   )
-      # }
-      # sM <- showMonomialX1X2X3(attr(showOpts, "x") %||% "x")
-      # sQ <- showQspray(sM)
-      # attr(showOpts, "inheritable") <- TRUE
     } else if(which == "showQspray") {
       sQ <- value
       sROQ <- showRatioOfQsprays(
@@ -232,7 +225,6 @@ getShowRatioOfQsprays <- function(roq) {
     sQ <- attr(showOpts, "showQspray")
     if(is.null(sQ)) {
       roq <- setDefaultShowRatioOfQspraysOption(roq)
-      # sROQ <- attr(attr(roq, "showOpts"), "showRatioOfQsprays")
     } else {
       showRatioOfQspraysOption(roq, "showQspray") <- sQ
     }

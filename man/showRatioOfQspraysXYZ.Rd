@@ -27,12 +27,30 @@ A function which takes as argument a \code{ratioOfQsprays} object
 }
 \description{
 Print a \code{ratioOfQsprays} object given some letters to
-  denote the variables, by printing monomials like \code{"x^2yz"}.
+  denote the variables, by printing monomials like \code{"x^2.yz"}.
+}
+\note{
+The function returned by this function can be used as the option
+  \code{"showRatioOfQsprays"} of the setter function
+  \code{\link{showRatioOfQspraysOption<-}}.
+  As another note, let us describe the behavior of this function in a
+  case when the number of variables of the \code{ratioOfQsprays} object to
+  be printed is bigger than the number of provided letters. In such a case,
+  the output will be the same as an application of the function
+  \code{showRatioOfQspraysX1X2X3(x)} with \code{x} being the first letter
+  provided. See the example.
 }
 \examples{
 set.seed(666)
 ( roq <- rRatioOfQsprays() )
 showRatioOfQspraysXYZ(c("X", "Y", "Z"), " / ")(roq)
+# now take a ratioOfQsprays with four variables:
+roq <- roq * qlone(4)
+# then the symbols X1, X2, X3, X4 denote the variables now:
+showRatioOfQspraysXYZ(c("X", "Y", "Z"), " / ")(roq)
+# this is the method used by default to print the ratioOfQsprays objects,
+# with the initial letters x, y, z which then become x1, x2, x3, x4:
+roq
 }
 \seealso{
 \code{\link{showRatioOfQspraysX1X2X3}},

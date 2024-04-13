@@ -29,10 +29,21 @@ A function which takes as argument a \code{ratioOfQsprays} object
 Prints a \code{ratioOfQsprays} object given a function to print
   a \code{qspray} object
 }
+\note{
+The function returned by this function can be used as the option
+  \code{"showRatioOfQsprays"} of the setter function
+  \code{\link{showRatioOfQspraysOption<-}}. That said, one would more often
+  uses \code{\link{showRatioOfQspraysX1X2X3}} or
+  \code{\link{showRatioOfQspraysXYZ}} for this option, which are both built
+  with \code{showRatioOfQsprays}.
+}
 \examples{
 set.seed(666)
 ( roq <- rRatioOfQsprays() )
-f <- showRatioOfQsprays(showQsprayX1X2X3("a"), " / ", "[[[ ", " ]]]")
+f <- showRatioOfQsprays(showQsprayX1X2X3("a"), " / ", "[[ ", " ]]")
+f(roq)
+# this is equivalent to
+f <- showRatioOfQspraysX1X2X3("a", " / ", lbracket = "[[ ", rbracket = " ]]")
 f(roq)
 }
 \seealso{
