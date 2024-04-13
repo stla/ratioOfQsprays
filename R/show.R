@@ -16,7 +16,8 @@
 #'
 #' @seealso \code{\link{showRatioOfQspraysX1X2X3}},
 #'   \code{\link{showRatioOfQspraysXYZ}},
-#'   \code{\link{showRatioOfQspraysOption<-}}.
+#'   \code{\link{showRatioOfQspraysOption<-}},
+#'   \code{\link[qspray]{showQspray}}.
 #'
 #' @examples
 #' set.seed(666)
@@ -110,17 +111,19 @@ showRatioOfQspraysXYZ <- function(
   showRatioOfQsprays(showQsprayXYZ(letters), quotientBar = quotientBar, ...)
 }
 
-#' @title Set show option to a 'qspray' object
-#' @description Set show option to a \code{qspray} object
+#' @title Set show option to a 'ratioOfQsprays'
+#' @description Set a show option to a \code{ratioOfQsprays} object.
 #'
-#' @param x a \code{qspray} object
+#' @param x a \code{ratioOfQsprays} object
 #' @param which which option to set; this can be \code{"x"},
 #'   \code{"quotientBar"}, \code{"showQspray"}, or \code{"showRatioOfQsprays"}
 #' @param value the value of the option to be set
 #'
-#' @return This returns the updated \code{qspray}.
+#' @return This returns the updated \code{ratioOfQsprays}.
 #' @export
-#' @importFrom qspray showQspray showMonomialXYZ showMonomialX1X2X3
+#' @importFrom qspray showQspray showQsprayXYZ
+#'
+#' @seealso \code{\link{showRatioOfQsprays}}.
 #'
 #' @examples
 #' set.seed(666)
