@@ -136,7 +136,7 @@ setMethod(
   "-",
   signature(e1 = "ratioOfQsprays", e2 = "missing"),
   function(e1, e2) {
-    passShowAttribues(e1, new(
+    passShowAttributes(e1, new(
       "ratioOfQsprays",
       numerator = -e1@numerator, denominator = e1@denominator
     ))

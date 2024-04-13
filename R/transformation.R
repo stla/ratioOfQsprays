@@ -97,7 +97,7 @@ setGeneric("permuteVariables")
 #' z <- qlone(3)
 #' R <- f(x, y, z)
 #' permutation <- c(3, 1, 2)
-#' S <- permuteVariables2(R, permutation)
+#' S <- permuteVariables(R, permutation)
 #' S == f(z, x, y) # should be TRUE
 setMethod(
   "permuteVariables", c("ratioOfQsprays", "numeric"),
@@ -110,7 +110,7 @@ setMethod(
 setGeneric("swapVariables")
 
 #' @name swapVariables
-#' @aliases swapVariables,ratioOfQsprays,numeric-method
+#' @aliases swapVariables,ratioOfQsprays,numeric,numeric-method
 #' @docType methods
 #' @title Swap variables
 #' @description Swap two variables of a \code{ratioOfQsprays}.
@@ -131,10 +131,10 @@ setGeneric("swapVariables")
 #' y <- qlone(2)
 #' z <- qlone(3)
 #' R <- f(x, y, z)
-#' S <- swapVariables2(R, 2, 3)
+#' S <- swapVariables(R, 2, 3)
 #' S == f(x, z, y) # should be TRUE
 setMethod(
-  "swapVariables", c("ratioOfQsprays", "numeric"),
+  "swapVariables", c("ratioOfQsprays", "numeric", "numeric"),
   function(x, i, j) {
     swapVariables(x@numerator, i, j) /
       swapVariables(x@denominator, i, j)

@@ -30,6 +30,6 @@ y <- qlone(2)
 z <- qlone(3)
 R <- f(x, y, z)
 permutation <- c(3, 1, 2)
-S <- permuteVariables2(R, permutation)
+S <- permuteVariables(R, permutation)
 S == f(z, x, y) # should be TRUE
 }

@@ -3,10 +3,10 @@
 \docType{methods}
 \name{swapVariables}
 \alias{swapVariables}
-\alias{swapVariables,ratioOfQsprays,numeric-method}
+\alias{swapVariables,ratioOfQsprays,numeric,numeric-method}
 \title{Swap variables}
 \usage{
-\S4method{swapVariables}{ratioOfQsprays,numeric,ANY}(x, i, j)
+\S4method{swapVariables}{ratioOfQsprays,numeric,numeric}(x, i, j)
 }
 \arguments{
 \item{x}{a \code{ratioOfQsprays} object}
@@ -28,6 +28,6 @@ x <- qlone(1)
 y <- qlone(2)
 z <- qlone(3)
 R <- f(x, y, z)
-S <- swapVariables2(R, 2, 3)
+S <- swapVariables(R, 2, 3)
 S == f(x, z, y) # should be TRUE
 }
