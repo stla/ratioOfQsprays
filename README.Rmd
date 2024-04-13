@@ -18,13 +18,15 @@ with rational coefficients. Based on this one, the **ratioOfQsprays** package
 allows to manipulate fractions of multivariate polynomials with rational 
 coefficients.
 
+
 ## Creating a `ratioOfQsprays` 
 
 A `ratioOfQsprays` object represents a fraction of two multivariate 
 polynomial with rational coefficients. Such polynomials are represented by 
 `qspray` objects. The easiest way to create a `ratioOfQsprays` is to introduce 
-the variables of the polynomials with the `qlone` function, and then to build a 
-`qspray` numerator and a `qspray` denominator with arithmetic operations. 
+the variables of the polynomials with the `qlone` function (from the **qspray** 
+package), and then to build a `qspray` numerator and a `qspray` denominator 
+with the arithmetic operations. 
 For example:
 
 ```{r, message=FALSE, collapse=TRUE}
@@ -49,16 +51,22 @@ roq - roq
 2*roq + (x2 + x3)/x1
 ```
 
-Rational numbers and \code{qspray} polynomials are coercable to 
-`ratioOfQsprays` objects, and you can also perform arithmetic operations 
+Rational numbers and `qspray` polynomials are coercable to 
+`ratioOfQsprays` objects, and then you can also perform arithmetic operations 
 between a `ratioOfQsprays` and such an object:
 
 ```{r, message=FALSE, collapse=TRUE}
 2 * roq
 "1/2" * roq
 roq + gmp::as.bigq("7/3") 
-x1 + roq + x3
+x1 + roq + x3^2
 ```
+
+The result of an arithmetic operation is always an irreducible fraction. 
+To perform this step, the C++ library **CGAL** is used to compute a greatest 
+common divisor of the numerator and the denominator of the possibly non-reduced 
+fraction resulting from the arithmetic operation, and then to divide both of 
+them by this greatest common divisor. This is very efficient in general.
 
 
 ## Evaluating a `ratioOfQsprays` 
@@ -115,11 +123,30 @@ showRatioOfQspraysOption(roq, "quotientBar") <- " / "
 roq
 ```
 
-Now, if you perform an arithmetic operation between `roq` at first position 
+Now, if you perform an arithmetic operation between `roq` *at first position* 
 and an another `ratioOfQsprays` or an object coercable to a `ratioOfQsprays`, 
-these show options are preserved when possible:
+these show options are passed to the result if possible:
 
 ```{r, collapse=TRUE}
 roq + (x1 + 1)/x2
 ```
 
+Here it is always possible to pass the options to the result. An obvious 
+example for which this is not always possible is when you use three letters 
+for the variables, e.g.
+
+```{r, collapse=TRUE}
+showRatioOfQspraysOption(roq, "showQspray") <- showQsprayXYZ(c("A", "B", "C"))
+roq
+```
+
+but then you add a `ratioOfQsprays` containing the fourth variable:
+
+```{r, collapse=TRUE}
+roq + x4/(x4 + 1)
+```
+
+Obviously it is not possible to denote the resulting fraction of polynomials 
+with the letters `A`, `B` and `C`. The solution I adopted consists in 
+taking the first of these letters and to index it. The same method is used 
+for the `qspray` polynomials.
