@@ -22,11 +22,15 @@ derivRatioOfQsprays <- function(roq, i, derivative = 1) {
   stopifnot(inherits(roq, "ratioOfQsprays"))
   stopifnot(isNonnegativeInteger(i))
   stopifnot(isPositiveInteger(derivative))
-  f  <- roq@numerator
-  g  <- roq@denominator
-  fp <- derivQspray(f, i)
-  gp <- derivQspray(g, i)
-  (fp*g - f*gp) / g^2
+  droq <- roq
+  for(. in seq_len(derivative)) {
+    f  <- droq@numerator
+    g  <- droq@denominator
+    fp <- derivQspray(f, i, derivative = 1L)
+    gp <- derivQspray(g, i, derivative = 1L)
+    droq <- (fp*g - f*gp) / g^2
+  }
+  passShowAttributes(roq, droq)
 }
 
 #' @title Partial differentiation
@@ -59,12 +63,12 @@ dRatioOfQsprays <- function(roq, orders) {
   }))
   f <- function(r, i) {
     if(i != 0L) {
-      derivRatioOfQsprays(r, i)
+      derivRatioOfQsprays(r, i, derivative = 1L)
     } else {
       r
     }
   }
-  Reduce(f, ns, init = roq)
+  passShowAttributes(roq, Reduce(f, ns, init = roq))
 }
 
 setGeneric("permuteVariables")
