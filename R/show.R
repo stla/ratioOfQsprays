@@ -50,6 +50,7 @@ showRatioOfQsprays <- function(
     }
   }
   attr(f, "showQspray")  <- showQspray
+  attr(f, "showQsprays") <- showQsprays
   attr(f, "inheritable") <- attr(showQspray, "inheritable")
   f
 }

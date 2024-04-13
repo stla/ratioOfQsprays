@@ -93,8 +93,23 @@ isPolynomial <- function(roq) {
 #' @return A \code{qspray} object.
 #' @export
 getNumerator <- function(roq) {
-  qspray <- roq@numerator
-  passShowAttributes(roq, qspray)
+  showOpts <- attr(roq, "showOpts")
+  if(is.null(showOpts)) {
+    roq <- setDefaultShowRatioOfQspraysOption(roq)
+    showOpts <- attr(roq, "showOpts")
+  }
+  sROQ <- attr(showOpts, "showRatioOfQsprays")
+  showQsprays <- attr(sROQ, "showQsprays")
+  if(!is.null(showQsprays)) {
+    showNumerator <- function(qspray) {
+      showQsprays(qspray, roq@denominator)[1L]
+    }
+  } else {
+    showNumerator <- attr(sROQ, "showQspray")
+  }
+  attr(showOpts, "showQspray") <- showNumerator
+  attr(roq, "showOpts") <- showOpts
+  passShowAttributes(roq, roq@numerator)
 }
 
 #' @title Get the denominator of a 'ratioOfQsprays'
@@ -106,6 +121,21 @@ getNumerator <- function(roq) {
 #' @return A \code{qspray} object.
 #' @export
 getDenominator <- function(roq) {
-  qspray <- roq@denominator
-  passShowAttributes(roq, qspray)
+  showOpts <- attr(roq, "showOpts")
+  if(is.null(showOpts)) {
+    roq <- setDefaultShowRatioOfQspraysOption(roq)
+    showOpts <- attr(roq, "showOpts")
+  }
+  sROQ <- attr(showOpts, "showRatioOfQsprays")
+  showQsprays <- attr(sROQ, "showQsprays")
+  if(!is.null(showQsprays)) {
+    showNumerator <- function(qspray) {
+      showQsprays(roq@numeraator, qspray)[2L]
+    }
+  } else {
+    showNumerator <- attr(sROQ, "showQspray")
+  }
+  attr(showOpts, "showQspray") <- showNumerator
+  attr(roq, "showOpts") <- showOpts
+  passShowAttributes(roq, roq@denominator)
 }
