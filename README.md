@@ -113,16 +113,16 @@ evaluated by **Ryacas**:
 
 ``` r
 fyac <- as.function(roq)
-fyac("4", "3", "2/5")
+fyac("4", "3", "2/5") # = evalRatioOfQsprays(roq, c("4", "3", "2/5"))
 ## [1] "166/79"
 ```
 
 Actually you can pass some literal variables to this function:
 
 ``` r
-fyac("x", "3", "2/5")
+fyac("x", "3", "2/5") # = substituteRatioOfQsprays(roq, c(NA, "3", "2/5"))
 ## [1] "(2*(5*x^2+3))/(20*x-1)"
-fyac("x", "y", "z")
+fyac("x", "y", "z")   # = roq
 ## [1] "(y*z+2*x^2)/(4*x-3*z+1)"
 fyac("x", "x", "x")
 ## [1] "(3*x^2)/(x+1)"
@@ -133,9 +133,21 @@ the **Yacas** documentation for more information.
 
 ``` r
 fyac("Sqrt(2)", "2 + 2*I", "3")
+## [1] "Complex(10/(Sqrt(32)-8),6/(Sqrt(32)-8))"
 ```
 
-    ## [1] "Complex(10/(Sqrt(32)-8),6/(Sqrt(32)-8))"
+You can get numerical approximations by setting the option `N=TRUE` in
+`as.function`:
+
+``` r
+fyacN <- as.function(roq, N = TRUE)
+fyacN("4", "3", "2/5") 
+## [1] 2.101266
+fyacN("x", "3", "2/5")
+## expression((2 * (5 * x^2 + 3))/(20 * x - 1))
+fyacN("Sqrt(2)", "2 + 2*I", "3")
+## [1] -4.267767-2.56066i
+```
 
 ## Querying a `ratioOfQsprays`
 

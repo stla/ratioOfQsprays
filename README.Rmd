@@ -51,6 +51,10 @@ roq - roq
 2*roq + (x2 + x3)/x1
 ```
 
+You don't like my quotient bar `%//%`? Be patient, we will see how to change 
+it later. I adopted this large quotient bar because it is more easy to find 
+it than a single slash `/` in a long `ratioOfQsprays`.
+
 Rational numbers and `qspray` polynomials are coercable to 
 `ratioOfQsprays` objects, and then you can also perform arithmetic operations 
 between a `ratioOfQsprays` and such an object:
@@ -99,14 +103,14 @@ evaluated by **Ryacas**:
 
 ```{r, collapse=TRUE}
 fyac <- as.function(roq)
-fyac("4", "3", "2/5")
+fyac("4", "3", "2/5") # = evalRatioOfQsprays(roq, c("4", "3", "2/5"))
 ```
 
 Actually you can pass some literal variables to this function:
 
 ```{r, collapse=TRUE}
-fyac("x", "3", "2/5")
-fyac("x", "y", "z")
+fyac("x", "3", "2/5") # = substituteRatioOfQsprays(roq, c(NA, "3", "2/5"))
+fyac("x", "y", "z")   # = roq
 fyac("x", "x", "x")
 ```
 
@@ -117,6 +121,15 @@ Complex numbers and allowed; the imaginary unit is denoted by `I`. See the
 fyac("Sqrt(2)", "2 + 2*I", "3")
 ```
 
+You can get numerical approximations by setting the option `N=TRUE` in 
+`as.function`:
+
+```{r, collapse=TRUE}
+fyacN <- as.function(roq, N = TRUE)
+fyacN("4", "3", "2/5") 
+fyacN("x", "3", "2/5")
+fyacN("Sqrt(2)", "2 + 2*I", "3")
+```
 
 
 ## Querying a `ratioOfQsprays` 
