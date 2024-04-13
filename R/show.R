@@ -12,6 +12,7 @@
 #' @return A function which takes as argument a \code{ratioOfQsprays} object
 #'   and which prints it.
 #' @export
+#' @importFrom qspray isQone
 #'
 #' @seealso \code{\link{showRatioOfQspraysX1X2X3}},
 #'   \code{\link{showRatioOfQspraysXYZ}},
@@ -25,23 +26,29 @@
 showRatioOfQsprays <- function(
     showQspray, quotientBar = "  %//%  ", lbracket = "[ ", rbracket = " ]"
 ) {
+  showQsprays <- attr(showQspray, "showQsprays") %||%
+    function(qspray1, qspray2) {
+      c(showQspray(qspray1), showQspray(qspray2))
+    }
   f <- function(roq) {
-    enclose <- function(qspray) {
+    enclose <- function(x) {
       sprintf(
-        "%s%s%s", lbracket, showQspray(qspray), rbracket
+        "%s%s%s", lbracket, x, rbracket
       )
     }
     if(isQone(roq@denominator)) {
-      enclose(roq@numerator)
+      enclose(showQspray(roq@numerator))
     } else {
+      strings <- showQsprays(roq@numerator, roq@denominator)
       sprintf(
         "%s%s%s",
-        enclose(roq@numerator),
+        enclose(strings[1L]),
         quotientBar,
-        enclose(roq@denominator)
+        enclose(strings[2L])
       )
     }
   }
+  attr(f, "showQspray")  <- showQspray
   attr(f, "inheritable") <- attr(showQspray, "inheritable")
   f
 }
@@ -97,7 +104,9 @@ showRatioOfQspraysX1X2X3 <- function(var, quotientBar = "  %//%  ", ...) {
 #' set.seed(666)
 #' ( roq <- rRatioOfQsprays() )
 #' showRatioOfQspraysXYZ(c("X", "Y", "Z"), " / ")(roq)
-showRatioOfQspraysXYZ <- function(letters, quotientBar = "  %//%  ", ...) {
+showRatioOfQspraysXYZ <- function(
+  letters = c("x", "y", "z"), quotientBar = "  %//%  ", ...
+) {
   showRatioOfQsprays(showQsprayXYZ(letters), quotientBar = quotientBar, ...)
 }
 
@@ -131,65 +140,74 @@ showRatioOfQspraysXYZ <- function(letters, quotientBar = "  %//%  ", ...) {
     attr(x, "showOpts") <- showOpts
     return(x)
   }
+
   if(which != "showRatioOfQsprays") {
     if(which == "x") {
-      sMU <- showMonomialXYZ(letters = value)
-      sM  <- showMonomialX1X2X3(x = value)
-      # attr(showOpts, "showMonomial") <- sM
-      sQU <- showQspray(sMU)
-      sQ  <- showQspray(sM)
-      sROQ <- function(roq) {
-        if(isUnivariate(roq)) {
-          showRatioOfQsprays(
-            showQspray = sQU,
-            quotientBar = attr(showOpts, "quotientBar") %||% "  %//%  "
-          )(roq)
-        } else {
-          showRatioOfQsprays(
-            showQspray = sQ,
-            quotientBar = attr(showOpts, "quotientBar") %||% "  %//%  "
-          )(roq)
-        }
-      }
-      attr(showOpts, "inheritable") <- TRUE
+      sQ <- showQsprayXYZ(letters = value)
+      sROQ <- showRatioOfQsprays(
+        showQspray = sQ,
+        quotientBar = attr(showOpts, "quotientBar") %||% "  %//%  "
+      )
+      # sMU <- showMonomialXYZ(letters = value)
+      # sM  <- showMonomialX1X2X3(x = value)
+      # sQU <- showQspray(sMU)
+      # sQ  <- showQspray(sM)
+      # sROQ <- function(roq) {
+      #   if(isUnivariate(roq)) {
+      #     showRatioOfQsprays(
+      #       showQspray = sQU,
+      #       quotientBar = attr(showOpts, "quotientBar") %||% "  %//%  "
+      #     )(roq)
+      #   } else {
+      #     showRatioOfQsprays(
+      #       showQspray = sQ,
+      #       quotientBar = attr(showOpts, "quotientBar") %||% "  %//%  "
+      #     )(roq)
+      #   }
+      # }
+      # attr(showOpts, "inheritable") <- TRUE
     } else if(which == "quotientBar") {
-      if(is.null(attr(showOpts, "showQspray"))) {
-        sROQ <- function(roq) {
-          trivariate <- numberOfVariables(roq) <= 3L
-          if(trivariate) {
-            sM <- showMonomialXYZ()
-          } else {
-            sM <- showMonomialX1X2X3(attr(showOpts, "x") %||% "x")
-          }
-          sQ <- showQspray(sM)
-          showRatioOfQsprays(
-            showQspray = sQ,
-            quotientBar = value
-          )(roq)
-        }
-      } else {
-        sQ <- attr(showOpts, "showQspray")
-        sROQ <- showRatioOfQsprays(
-          showQspray = sQ,
-          quotientBar = value
-        )
-      }
-      sM <- showMonomialX1X2X3(attr(showOpts, "x") %||% "x")
-      sQ <- showQspray(sM)
-      attr(showOpts, "inheritable") <- TRUE
+      sQ <- attr(showOpts, "showQspray") %||% showQsprayXYZ()
+      sROQ <- showRatioOfQsprays(
+        showQspray  = sQ,
+        quotientBar = value
+      )
+      # if(is.null(attr(showOpts, "showQspray"))) {
+      #   sROQ <- function(roq) {
+      #     trivariate <- numberOfVariables(roq) <= 3L
+      #     if(trivariate) {
+      #       sM <- showMonomialXYZ()
+      #     } else {
+      #       sM <- showMonomialX1X2X3(attr(showOpts, "x") %||% "x")
+      #     }
+      #     sQ <- showQspray(sM)
+      #     showRatioOfQsprays(
+      #       showQspray = sQ,
+      #       quotientBar = value
+      #     )(roq)
+      #   }
+      # } else {
+      #   sQ <- attr(showOpts, "showQspray")
+      #   sROQ <- showRatioOfQsprays(
+      #     showQspray = sQ,
+      #     quotientBar = value
+      #   )
+      # }
+      # sM <- showMonomialX1X2X3(attr(showOpts, "x") %||% "x")
+      # sQ <- showQspray(sM)
+      # attr(showOpts, "inheritable") <- TRUE
     } else if(which == "showQspray") {
       sQ <- value
       sROQ <- showRatioOfQsprays(
         showQspray = sQ,
         quotientBar = attr(showOpts, "quotientBar") %||% "  %//%  "
       )
-      attr(showOpts, "inheritable") <- attr(sQ, "inheritable")
     }
-  } else {
-    sQ   <- NULL
+  } else { # which == "showRatioOfQsprays"
+    sQ   <- attr(value, "showQspray")
     sROQ <- value
-    attr(showOpts, "inheritable") <- attr(sROQ, "inheritable")
   }
+  attr(showOpts, "inheritable") <- attr(sROQ, "inheritable")
   attr(showOpts, "showQspray") <- sQ
   attr(showOpts, "showRatioOfQsprays") <- sROQ
   attr(x, "showOpts") <- showOpts
@@ -197,7 +215,7 @@ showRatioOfQspraysXYZ <- function(letters, quotientBar = "  %//%  ", ...) {
 }
 
 setDefaultShowRatioOfQspraysOption <- function(roq) {
-  showRatioOfQspraysOption(roq, "quotientBar") <- "  %//%  "
+  showRatioOfQspraysOption(roq, "showRatioOfQsprays") <- showRatioOfQspraysXYZ()
   invisible(roq)
 }
 
@@ -210,7 +228,7 @@ getShowRatioOfQsprays <- function(roq) {
     sQ <- attr(showOpts, "showQspray")
     if(is.null(sQ)) {
       roq <- setDefaultShowRatioOfQspraysOption(roq)
-      sROQ <- attr(attr(roq, "showOpts"), "showRatioOfQsprays")
+      # sROQ <- attr(attr(roq, "showOpts"), "showRatioOfQsprays")
     } else {
       showRatioOfQspraysOption(roq, "showQspray") <- sQ
     }

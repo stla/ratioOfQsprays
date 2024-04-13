@@ -78,7 +78,7 @@ test_that("show is inherited from qspray", {
   q2 <- rQspray()
   expect_identical(
     Print(q1 / q2),
-    "[ -2*x^4y^3z^4 - 4*y^2z^2 ]  %//%  [ 5*x^4y - y^2z^3 - 3 ] "
+    "[ -2*x^4.y^3.z^4 - 4*y^2.z^2 ]  %//%  [ 5*x^4.y - y^2.z^3 - 3 ] "
   )
   showQsprayOption(q1, "x") <- "A"
   expect_identical(
@@ -93,7 +93,7 @@ test_that("show is inherited from qspray", {
   )
   expect_identical(
     Print(q1 / q2),
-    "[ A ]  %//%  [ 5*A1^4.A2 - A2^2.A3^3 - 3 ] "
+    "[ A1 ]  %//%  [ 5*A1^4.A2 - A2^2.A3^3 - 3 ] "
   )
 })
 
