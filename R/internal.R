@@ -42,15 +42,6 @@ isNonnegativeInteger <- function(x) {
   is.numeric(x) && length(x) == 1L && !is.na(x) && floor(x) == x && x != 0
 }
 
-#' @importFrom qspray numberOfVariables
-#' @noRd
-numberOfVariables2 <- function(roq) {
-  max(
-    numberOfVariables(roq@numerator),
-    numberOfVariables(roq@denominator)
-  )
-}
-
 #' @importFrom utils head
 #' @noRd
 removeTrailingZeros <- function(x) {

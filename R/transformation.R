@@ -1,3 +1,6 @@
+#' @include ratioOfQsprays.R
+NULL
+
 #' @title Partial derivative
 #' @description Partial derivative of a \code{ratioOfQsprays}.
 #'
@@ -64,10 +67,16 @@ dRatioOfQsprays <- function(roq, orders) {
   Reduce(f, ns, init = roq)
 }
 
+setGeneric("permuteVariables")
+
+#' @name permuteVariables
+#' @aliases permuteVariables,ratioOfQsprays,numeric-method
+#' @docType methods
 #' @title Permute variables
-#' @description Permute the variables of a \code{ratioOfQsprays} polynomial.
+#' @description Permute the variables of a \code{ratioOfQsprays} fraction
+#'   of polynomials.
 #'
-#' @param roq a \code{ratioOfQsprays} object
+#' @param x a \code{ratioOfQsprays} object
 #' @param permutation a permutation
 #'
 #' @return A \code{ratioOfQsprays} object.
@@ -86,15 +95,23 @@ dRatioOfQsprays <- function(roq, orders) {
 #' permutation <- c(3, 1, 2)
 #' S <- permuteVariables2(R, permutation)
 #' S == f(z, x, y) # should be TRUE
-permuteVariables2 <- function(roq, permutation) {
-  permuteVariables(roq@numerator, permutation) /
-    permuteVariables(roq@denominator, permutation)
-}
+setMethod(
+  "permuteVariables", c("ratioOfQsprays", "numeric"),
+  function(x, permutation) {
+    permuteVariables(x@numerator, permutation) /
+      permuteVariables(x@denominator, permutation)
+  }
+)
 
+setGeneric("swapVariables")
+
+#' @name swapVariables
+#' @aliases swapVariables,ratioOfQsprays,numeric-method
+#' @docType methods
 #' @title Swap variables
 #' @description Swap two variables of a \code{ratioOfQsprays}.
 #'
-#' @param roq a \code{ratioOfQsprays} object
+#' @param x a \code{ratioOfQsprays} object
 #' @param i,j indices of the variables to be swapped
 #'
 #' @return A \code{ratioOfQsprays} object.
@@ -112,12 +129,10 @@ permuteVariables2 <- function(roq, permutation) {
 #' R <- f(x, y, z)
 #' S <- swapVariables2(R, 2, 3)
 #' S == f(x, z, y) # should be TRUE
-swapVariables2 <- function(roq, i, j) {
-  swapVariables(roq@numerator, i, j) /
-    swapVariables(roq@denominator, i, j)
-  # new(
-  #   "ratioOfQsprays",
-  #   numerator   = swapVariables(roq@numerator, i, j),
-  #   denominator = swapVariables(roq@denominator, i, j)
-  # )
-}
+setMethod(
+  "swapVariables", c("ratioOfQsprays", "numeric"),
+  function(x, i, j) {
+    swapVariables(x@numerator, i, j) /
+      swapVariables(x@denominator, i, j)
+  }
+)
