@@ -130,7 +130,7 @@ getDenominator <- function(roq) {
   showQsprays <- attr(sROQ, "showQsprays")
   if(!is.null(showQsprays)) {
     showNumerator <- function(qspray) {
-      showQsprays(roq@numeraator, qspray)[2L]
+      showQsprays(roq@numerator, qspray)[2L]
     }
   } else {
     showNumerator <- attr(sROQ, "showQspray")
