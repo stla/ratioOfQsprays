@@ -2,12 +2,12 @@
 % Please edit documentation in R/show.R
 \name{showRatioOfQspraysOption<-}
 \alias{showRatioOfQspraysOption<-}
-\title{Set show option to a 'qspray' object}
+\title{Set show option to a 'ratioOfQsprays'}
 \usage{
 showRatioOfQspraysOption(x, which) <- value
 }
 \arguments{
-\item{x}{a \code{qspray} object}
+\item{x}{a \code{ratioOfQsprays} object}
 
 \item{which}{which option to set; this can be \code{"x"},
 \code{"quotientBar"}, \code{"showQspray"}, or \code{"showRatioOfQsprays"}}
@@ -15,10 +15,10 @@ showRatioOfQspraysOption(x, which) <- value
 \item{value}{the value of the option to be set}
 }
 \value{
-This returns the updated \code{qspray}.
+This returns the updated \code{ratioOfQsprays}.
 }
 \description{
-Set show option to a \code{qspray} object
+Set a show option to a \code{ratioOfQsprays} object.
 }
 \examples{
 set.seed(666)
@@ -29,4 +29,7 @@ showRatioOfQspraysOption(roq, "x") <- "a"
 roq
 showRatioOfQspraysOption(roq, "showQspray") <- showQsprayXYZ()
 roq
+}
+\seealso{
+\code{\link{showRatioOfQsprays}}.
 }

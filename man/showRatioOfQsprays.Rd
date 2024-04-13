@@ -38,5 +38,6 @@ f(roq)
 \seealso{
 \code{\link{showRatioOfQspraysX1X2X3}},
   \code{\link{showRatioOfQspraysXYZ}},
-  \code{\link{showRatioOfQspraysOption<-}}.
+  \code{\link{showRatioOfQspraysOption<-}},
+  \code{\link[qspray]{showQspray}}.
 }

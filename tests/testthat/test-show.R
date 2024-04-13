@@ -131,4 +131,6 @@ test_that("show options are inherited by the first operand", {
 test_that("show numerator and show denominator are in agreement", {
   roq <- (qlone(1) + qlone(2)) / (qlone(3) + qlone(4))
   expect_identical(Print(roq), "[ x1 + x2 ]  %//%  [ x3 + x4 ] ")
+  expect_identical(Print(getNumerator(roq)), "x1 + x2 ")
+  expect_identical(Print(getDenominator(roq)), "x3 + x4 ")
 })

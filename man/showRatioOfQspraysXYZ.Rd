@@ -4,7 +4,11 @@
 \alias{showRatioOfQspraysXYZ}
 \title{Print a 'ratioOfQsprays'}
 \usage{
-showRatioOfQspraysXYZ(letters, quotientBar = "  \%//\%  ", ...)
+showRatioOfQspraysXYZ(
+  letters = c("x", "y", "z"),
+  quotientBar = "  \%//\%  ",
+  ...
+)
 }
 \arguments{
 \item{letters}{a vector of strings, usually some letters such as \code{"x"}
