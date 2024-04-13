@@ -68,6 +68,13 @@ x1 + roq + x3^2
 ## [ 6*x^2 + 4*x.z^2 - 3*x.z + x + y.z - 3*z^3 + z^2 ]  %//%  [ 4*x - 3*z + 1 ]
 ```
 
+The result of an arithmetic operation is always an irreducible fraction.
+To perform this step, the C++ library **CGAL** is used to compute a
+greatest common divisor of the numerator and the denominator of the
+possibly non-reduced fraction resulting from the arithmetic operation,
+and then to divide both of them by this greatest common divisor. This is
+very efficient in general.
+
 ## Evaluating a `ratioOfQsprays`
 
 Use `evalRatioOfQsprays` to evaluate a `ratioOfQsprays`. This function
@@ -87,6 +94,48 @@ f(x[1], x[2], x[3])
 ## Big Rational ('bigq') :
 ## [1] 166/79
 ```
+
+It is also possible to substitute for a subset of the variables, with
+the help of the function `substituteRatioOfQsprays`. You have to
+indicate the variables you don’t want to replace with `NA`:
+
+``` r
+x <- c(NA, "3", "2/5")
+substituteRatioOfQsprays(roq, x)
+## [ 2*x^2 + 6/5 ]  %//%  [ 4*x - 1/5 ]
+x <- as.bigq(x)
+f(x1, x[2], x[3])
+## [ 2*x^2 + 6/5 ]  %//%  [ 4*x - 1/5 ]
+```
+
+And it is possible to convert a `ratioOfQsprays` to a function which is
+evaluated by **Ryacas**:
+
+``` r
+fyac <- as.function(roq)
+fyac("4", "3", "2/5")
+## [1] "166/79"
+```
+
+Actually you can pass some literal variables to this function:
+
+``` r
+fyac("x", "3", "2/5")
+## [1] "(2*(5*x^2+3))/(20*x-1)"
+fyac("x", "y", "z")
+## [1] "(y*z+2*x^2)/(4*x-3*z+1)"
+fyac("x", "x", "x")
+## [1] "(3*x^2)/(x+1)"
+```
+
+Complex numbers and allowed; the imaginary unit is denoted by `I`. See
+the **Yacas** documentation for more information.
+
+``` r
+fyac("Sqrt(2)", "2 + 2*I", "3")
+```
+
+    ## [1] "Complex(10/(Sqrt(32)-8),6/(Sqrt(32)-8))"
 
 ## Querying a `ratioOfQsprays`
 
@@ -166,4 +215,5 @@ roq + x4/(x4 + 1)
 
 Obviously it is not possible to denote the resulting fraction of
 polynomials with the letters `A`, `B` and `C`. The solution I adopted
-consists in taking the first of these letters and to index it.
+consists in taking the first of these letters and to index it. The same
+method is used for the `qspray` polynomials.

@@ -83,6 +83,41 @@ evalRatioOfQsprays(roq, x)
 f(x[1], x[2], x[3])
 ```
 
+It is also possible to substitute for a subset of the variables, with the 
+help of the function `substituteRatioOfQsprays`. You have to indicate the 
+variables you don't want to replace with `NA`:
+
+```{r, collapse=TRUE}
+x <- c(NA, "3", "2/5")
+substituteRatioOfQsprays(roq, x)
+x <- as.bigq(x)
+f(x1, x[2], x[3])
+```
+
+And it is possible to convert a `ratioOfQsprays` to a function which is 
+evaluated by **Ryacas**:
+
+```{r, collapse=TRUE}
+fyac <- as.function(roq)
+fyac("4", "3", "2/5")
+```
+
+Actually you can pass some literal variables to this function:
+
+```{r, collapse=TRUE}
+fyac("x", "3", "2/5")
+fyac("x", "y", "z")
+fyac("x", "x", "x")
+```
+
+Complex numbers and allowed; the imaginary unit is denoted by `I`. See the 
+**Yacas** documentation for more information.
+
+```{r, collapse=TRUE}
+fyac("Sqrt(2)", "2 + 2*I", "3")
+```
+
+
 
 ## Querying a `ratioOfQsprays` 
 

@@ -47,6 +47,7 @@ evalRatioOfQsprays <- function(roq, values_re, values_im = NULL) {
 #' @return A \code{ratioOfQsprays} object.
 #' @export
 #' @importFrom qspray substituteQspray numberOfVariables
+#' @importFrom utils head
 #'
 #' @examples
 #' library(ratioOfQsprays)
