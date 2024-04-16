@@ -143,6 +143,7 @@ setMethod(
   }
 )
 
+# set denominator to 1 if it is constant
 adjustRatioOfQsprays <- function(roq) {
   num <- roq@numerator
   den <- roq@denominator

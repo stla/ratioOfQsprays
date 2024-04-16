@@ -10,7 +10,7 @@ passShowAttributes <- function(source, target) {
 
 #' @title (internal) Make a 'ratioOfQsprays' object from a list
 #' @description This function is for internal usage. It is exported because
-#'   it is also used for internal usage in others packages.
+#'   it is also used for internal usage in other packages.
 #'
 #' @param x list returned by the Rcpp function
 #'   \code{returnRatioOfQsprays}
@@ -51,4 +51,3 @@ removeTrailingZeros <- function(x) {
   }
   head(x, n)
 }
-
