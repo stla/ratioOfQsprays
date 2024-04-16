@@ -71,7 +71,7 @@ namespace RATIOOFQSPRAYS {
     template <typename PolyX, typename PTX, typename MonomialX, int X>
     static std::pair<Qspray<gmpq>,Qspray<gmpq>> getQuotients(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
 
-      CGAL::IO::set_pretty_mode(std::cout);
+      //CGAL::IO::set_pretty_mode(std::cout);
 
       // CGAL polynomial constructor
       typename PTX::Construct_polynomial constructPolynomial;
