@@ -1,9 +1,9 @@
 The ‘ratioOfQsprays’ package
 ================
 Stéphane Laurent
-2024-04-13
+2024-04-20
 
-*Fractions of multivariate polynomials with rational coefficients.*
+***Fractions of multivariate polynomials with rational coefficients.***
 
 <!-- badges: start -->
 
@@ -12,10 +12,14 @@ Stéphane Laurent
 
 ------------------------------------------------------------------------
 
-The **qspray** package allows arithmetic (and more) on multivariate
-polynomials with rational coefficients. Based on this one, the
-**ratioOfQsprays** package allows to manipulate fractions of
-multivariate polynomials with rational coefficients.
+The [**qspray** package](https://github.com/stla/qspray) allows
+arithmetic (and more) on multivariate polynomials with rational
+coefficients. Based on this one, the **ratioOfQsprays** package allows
+to manipulate *fractions* of multivariate polynomials with rational
+coefficients.
+
+These notes about the **ratioOfQsprays** package assume that the reader
+is a bit familiar with the **qspray** package.
 
 ## Creating a `ratioOfQsprays`
 
@@ -52,6 +56,10 @@ roq - roq
 2*roq + (x2 + x3)/x1
 ## [ 4*x^3 + 2*x.y.z + 4*x.y + 4*x.z - 3*y.z + y - 3*z^2 + z ]  %//%  [ 4*x^2 - 3*x.z + x ]
 ```
+
+You don’t like my quotient bar `%//%`? Be patient, we will see how to
+change it later. I adopted this large quotient bar because it is more
+easy to find it than a single slash `/` in a long `ratioOfQsprays`.
 
 Rational numbers and `qspray` polynomials are coercable to
 `ratioOfQsprays` objects, and then you can also perform arithmetic
@@ -95,7 +103,7 @@ f(x[1], x[2], x[3])
 ## [1] 166/79
 ```
 
-It is also possible to substitute for a subset of the variables, with
+It is also possible to substitute only a subset of the variables, with
 the help of the function `substituteRatioOfQsprays`. You have to
 indicate the variables you don’t want to replace with `NA`:
 
@@ -129,7 +137,8 @@ fyac("x", "x", "x")
 ```
 
 Complex numbers and allowed; the imaginary unit is denoted by `I`. See
-the **Yacas** documentation for more information.
+the [**Yacas** documentation](https://yacas.readthedocs.io/en/latest/)
+for more information.
 
 ``` r
 fyac("Sqrt(2)", "2 + 2*I", "3")
@@ -177,9 +186,9 @@ isPolynomial((x1^2 - x2^2)/(x1 - x2))
 ## Showing a `ratioOfQsprays`
 
 As you have seen, the variables of `roq` are denoted by `x`, `y`, `z`.
-This is the default of showing a `ratioOfQsprays` which have no more
-than three variables. If it has more than three variables, the variables
-are denoted by `x1`, `x2`, `x3`, …:
+This is the default way of printing a `ratioOfQsprays` which has no more
+than three variables. If it has more than three variables, then they are
+denoted by `x1`, `x2`, `x3`, …:
 
 ``` r
 x4 <- qlone(4)
@@ -189,7 +198,7 @@ roq / x4
 
 It is possible to control the way a `ratioOfQsprays` is printed. For
 example, let’s say you want to print `roq` by using `a1`, `a2`, `a3` for
-the variables and you want to change the symbol for the quotient:
+the variables and you want to change the symbol for the quotient bar:
 
 ``` r
 showRatioOfQspraysOption(roq, "x") <- "a"
@@ -199,18 +208,28 @@ roq
 ```
 
 Now, if you perform an arithmetic operation between `roq` *at first
-position* and an another `ratioOfQsprays` or an object coercable to a
-`ratioOfQsprays`, these show options are passed to the result if
-possible:
+position* and an another `ratioOfQsprays`, these show options are passed
+to the result if possible:
 
 ``` r
 roq + (x1 + 1)/x2
 ## [ 2*a1^2.a2 + 4*a1^2 - 3*a1.a3 + 5*a1 + a2^2.a3 - 3*a3 + 1 ] / [ 4*a1.a2 - 3*a2.a3 + a2 ]
 ```
 
-Here it is always possible to pass the options to the result. An obvious
-example for which this is not always possible is when you use three
-letters for the variables, e.g.
+If you perform an arithmetic operation between `roq` and an object
+coercable to a `ratioOfQsprays` object but which is not a
+`ratioOfQsprays` object, such as a `bigq` number or a `qspray` object,
+the show options of `roq` are passed to the result, even if `roq` is not
+at the first position:
+
+``` r
+x1 * roq
+## [ 2*a1^3 + a1.a2.a3 ] / [ 4*a1 - 3*a3 + 1 ]
+```
+
+An obvious example of a situation in which it is not always possible to
+transfer the show options is when you use three letters for the
+variables, e.g.
 
 ``` r
 showRatioOfQspraysOption(roq, "showQspray") <- showQsprayXYZ(c("A", "B", "C"))
@@ -218,7 +237,8 @@ roq
 ## [ 2*A^2 + B.C ] / [ 4*A - 3*C + 1 ]
 ```
 
-but then you add a `ratioOfQsprays` containing the fourth variable:
+but then you add to `roq` a `ratioOfQsprays` containing the fourth
+variable:
 
 ``` r
 roq + x4/(x4 + 1)
@@ -229,3 +249,36 @@ Obviously it is not possible to denote the resulting fraction of
 polynomials with the letters `A`, `B` and `C`. The solution I adopted
 consists in taking the first of these letters and to index it. The same
 method is used for the `qspray` polynomials.
+
+## Transforming a `ratioOfQsprays`
+
+Let’s take a `ratioOfQsprays` fraction of polynomials:
+
+``` r
+f <- function(x, y, z) {
+  (2*x^2 + y*z) / (4*x - 3*z + 1)
+}
+x <- qlone(1); y <- qlone(2); z <- qlone(3)
+roq <- f(x, y, z)
+```
+
+You can derivate it:
+
+``` r
+derivRatioOfQsprays(roq, 2) # derivative w.r.t. y
+## [ -3*z ]  %//%  [ -12*x + 9*z - 3 ]
+```
+
+You can permute its variables:
+
+``` r
+swapVariables(roq, 2, 3) == f(x, z, y)
+## [1] TRUE
+```
+
+You can perform a polynomial change of variables:
+
+``` r
+changeVariables(roq, list(x+1, y^2, x+y+z)) == f(x+1, y^2, x+y+z)
+## [1] TRUE
+```
