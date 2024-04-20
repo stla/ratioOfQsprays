@@ -15,5 +15,5 @@ A \code{ratioOfQsprays} object.
 }
 \description{
 This function is for internal usage. It is exported because
-  it is also used for internal usage in others packages.
+  it is also used for internal usage in other packages.
 }

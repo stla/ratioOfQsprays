@@ -140,3 +140,47 @@ setMethod(
       swapVariables(x@denominator, i, j)
   }
 )
+
+setGeneric("changeVariables")
+
+#' @name changeVariables
+#' @aliases changeVariables,ratioOfQsprays,list-method
+#' @docType methods
+#' @importFrom qspray changeVariables
+#' @title Change of variables in a 'ratioOfQsprays' fraction of polynomials
+#' @description Replaces the variables of a \code{ratioOfQsprays} fraction of
+#'   polynomials with some \code{qspray} polynomials. E.g. you have a fraction
+#'   of polynomials \eqn{R(x, y)} and you want the fraction of polynomials
+#'   \eqn{R(x^2, x+y+1)}.
+#'
+#' @param x a \code{ratioOfQsprays} fraction of polynomials
+#' @param listOfQsprays a list containing at least \code{n} \code{qspray}
+#'   polynomials where \code{n} is the number of variables of the
+#'   \code{ratioOfQsprays} fraction of polynomials given in the \code{x}
+#'   argument
+#'
+#' @return The \code{ratioOfQsprays} fraction of polynomials obtained by
+#'   replacing the variables of the fraction of polynomials given in the
+#'   \code{x} argument with the polynomials given in the \code{listOfQsprays}
+#'   argument.
+#' @export
+#' @examples
+#' library(ratioOfQsprays)
+#' f <- function(x, y) {
+#'   (x^2 + 5*y - 1) / (x + 1)
+#' }
+#' x <- qlone(1)
+#' y <- qlone(2)
+#' R <- f(x, y)
+#' X <- x^2
+#' Y <- x + y + 1
+#' S <- changeVariables(R, list(X, Y))
+#' S == f(X, Y) # should be TRUE
+setMethod(
+  "changeVariables", c("ratioOfQsprays", "list"),
+  function(x, listOfQsprays) {
+    num <- changeVariables(x@numerator, listOfQsprays)
+    den <- changeVariables(x@denominator, listOfQsprays)
+    as.ratioOfQsprays(num) / as.ratioOfQsprays(den)
+  }
+)
