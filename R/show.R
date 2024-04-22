@@ -158,7 +158,8 @@ showRatioOfQspraysXYZ <- function(
     } else {
       showQspray <- showQsprayX1X2X3(letters[1L])
     }
-    showRatioOfQsprays(showQspray, quotientBar = quotientBar, ...)
+    sROQ <- showRatioOfQsprays(showQspray, quotientBar = quotientBar, ...)
+    vapply(rOQs, sROQ, character(1L))
   }
   f
 }
