@@ -1,7 +1,7 @@
 #' @useDynLib ratioOfQsprays, .registration=TRUE
 #' @importFrom Rcpp evalCpp
 #' @importFrom qspray qone as.qspray isQone isQzero isConstant getConstantTerm
-#' @importFrom methods setMethod setClass new show setAs
+#' @importFrom methods setMethod setClass new show setAs setGeneric
 #' @importFrom gmp as.bigq
 #' @include ratioOfQsprays.R
 NULL
@@ -46,7 +46,9 @@ as_ratioOfQsprays_scalar <- function(x) {
 
 setGeneric(
   "as.ratioOfQsprays", function(x) {
-    NULL
+    stop(
+      "No available application of `as.ratioOfQsprays` for this object."
+    )
   }
 )
 
@@ -58,16 +60,19 @@ setGeneric(
 #'
 #' @param x a \code{ratioOfQsprays} object, a \code{qspray} object, or an
 #'   object yielding a quoted integer or a quoted fraction after an application
-#'   of \code{as.character}
+#'   of \code{as.character}, e.g. a \code{bigq} number
 #'
-#' @return A \code{ratioOfQsprays} object.
+#' @return This returns \code{x} if \code{x} already is a \code{ratioOfQsprays}
+#'   object, otherwise this returns the \code{ratioOfQsprays} object whose
+#'   numerator is the coercion of \code{x} to a \code{qspray} object and whose
+#'   denominator is the unit \code{qspray} object.
 #' @export
 #'
 #' @examples
 #' library(qspray)
 #' as.ratioOfQsprays(2)
 #' as.ratioOfQsprays("1/3")
-#' qspray <- 5*qlone(1) + qlone(2)^2
+#' ( qspray <- 5*qlone(1) + qlone(2)^2 )
 #' as.ratioOfQsprays(qspray)
 #' # show options are inherited:
 #' showQsprayOption(qspray, "x") <- "A"

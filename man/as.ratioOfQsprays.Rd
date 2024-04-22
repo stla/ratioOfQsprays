@@ -26,10 +26,13 @@
 \arguments{
 \item{x}{a \code{ratioOfQsprays} object, a \code{qspray} object, or an
 object yielding a quoted integer or a quoted fraction after an application
-of \code{as.character}}
+of \code{as.character}, e.g. a \code{bigq} number}
 }
 \value{
-A \code{ratioOfQsprays} object.
+This returns \code{x} if \code{x} already is a \code{ratioOfQsprays}
+  object, otherwise this returns the \code{ratioOfQsprays} object whose
+  numerator is the coercion of \code{x} to a \code{qspray} object and whose
+  denominator is the unit \code{qspray} object.
 }
 \description{
 Coercion to a 'ratioOfQsprays' object
@@ -38,7 +41,7 @@ Coercion to a 'ratioOfQsprays' object
 library(qspray)
 as.ratioOfQsprays(2)
 as.ratioOfQsprays("1/3")
-qspray <- 5*qlone(1) + qlone(2)^2
+( qspray <- 5*qlone(1) + qlone(2)^2 )
 as.ratioOfQsprays(qspray)
 # show options are inherited:
 showQsprayOption(qspray, "x") <- "A"
