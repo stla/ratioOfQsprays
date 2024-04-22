@@ -155,9 +155,9 @@ setGeneric("changeVariables")
 #'
 #' @param x a \code{ratioOfQsprays} fraction of polynomials
 #' @param listOfQsprays a list containing at least \code{n} \code{qspray}
-#'   polynomials where \code{n} is the number of variables of the
-#'   \code{ratioOfQsprays} fraction of polynomials given in the \code{x}
-#'   argument
+#'   objects, or objects coercable to \code{qspray} objects, where
+#'   \code{n} is the number of variables of the \code{ratioOfQsprays} fraction
+#'   of polynomials given in the \code{x} argument
 #'
 #' @return The \code{ratioOfQsprays} fraction of polynomials obtained by
 #'   replacing the variables of the fraction of polynomials given in the
@@ -179,6 +179,11 @@ setGeneric("changeVariables")
 setMethod(
   "changeVariables", c("ratioOfQsprays", "list"),
   function(x, listOfQsprays) {
+    if(length(listOfQsprays) < numberOfVariables(x)) {
+      stop(
+        "The `listOfQsprays` list is too short."
+      )
+    }
     num <- changeVariables(x@numerator, listOfQsprays)
     den <- changeVariables(x@denominator, listOfQsprays)
     as.ratioOfQsprays(num) / as.ratioOfQsprays(den)

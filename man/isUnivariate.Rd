@@ -18,3 +18,9 @@ A Boolean value.
 Checks whether a \code{ratioOfQsprays} object defines a
   univariate fraction of polynomials.
 }
+\note{
+The \code{ratioOfQsprays} object \code{y / (1 + y)} where
+  \code{y=qlone(2)} is not univariate, although it involves only one
+  variable. The function returns \code{TRUE} when only \code{qlone(1)}
+  is involved or when no variable is involved.
+}

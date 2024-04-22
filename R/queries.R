@@ -16,8 +16,10 @@ setGeneric("isUnivariate")
 #'
 #' @return An integer.
 #' @export
-#' @note The number of variables in the \code{qspray} object \code{qlone(d)}
-#'   is \code{d}, not \code{1}.
+#' @note The number of variables in the \code{ratioOfQsprays} object
+#'   \code{y / (1 + y)} where \code{y=qlone(2)} is \code{2}, not \code{1},
+#'   although only one variable occurs. The function returns the maximal
+#'   integer \code{d} such that \code{qlone(d)} occurs in the 'ratioOfQsprays'.
 setMethod(
   "numberOfVariables", "ratioOfQsprays",
   function(x) {
@@ -53,6 +55,11 @@ setMethod(
 #'   univariate fraction of polynomials.
 #'
 #' @param x a \code{ratioOfQsprays} object
+#'
+#' @note The \code{ratioOfQsprays} object \code{y / (1 + y)} where
+#'   \code{y=qlone(2)} is not univariate, although it involves only one
+#'   variable. The function returns \code{TRUE} when only \code{qlone(1)}
+#'   is involved or when no variable is involved.
 #'
 #' @return A Boolean value.
 #' @export

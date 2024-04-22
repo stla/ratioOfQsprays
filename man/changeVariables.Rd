@@ -12,9 +12,9 @@
 \item{x}{a \code{ratioOfQsprays} fraction of polynomials}
 
 \item{listOfQsprays}{a list containing at least \code{n} \code{qspray}
-polynomials where \code{n} is the number of variables of the
-\code{ratioOfQsprays} fraction of polynomials given in the \code{x}
-argument}
+objects, or objects coercable to \code{qspray} objects, where
+\code{n} is the number of variables of the \code{ratioOfQsprays} fraction
+of polynomials given in the \code{x} argument}
 }
 \value{
 The \code{ratioOfQsprays} fraction of polynomials obtained by
