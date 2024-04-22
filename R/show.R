@@ -149,7 +149,18 @@ showRatioOfQspraysX1X2X3 <- function(var, quotientBar = "  %//%  ", ...) {
 showRatioOfQspraysXYZ <- function(
   letters = c("x", "y", "z"), quotientBar = "  %//%  ", ...
 ) {
-  showRatioOfQsprays(showQsprayXYZ(letters), quotientBar = quotientBar, ...)
+  f <-
+    showRatioOfQsprays(showQsprayXYZ(letters), quotientBar = quotientBar, ...)
+  attr(f, "showMultipleRatiosOfQsprays") <- function(rOQs) {
+    n <- max(vapply(rOQs, numberOfVariables, integer(1L)))
+    if(length(letters) >= n) {
+      showQspray <- showQsprayXYZ(letters)
+    } else {
+      showQspray <- showQsprayX1X2X3(letters[1L])
+    }
+    showRatioOfQsprays(showQspray, quotientBar = quotientBar, ...)
+  }
+  f
 }
 
 #' @title Set a show option to a 'ratioOfQsprays'
