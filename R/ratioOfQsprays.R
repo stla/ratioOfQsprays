@@ -40,6 +40,10 @@ setAs("qspray", "ratioOfQsprays", function(from) {
 })
 
 as_ratioOfQsprays_scalar <- function(x) {
+  new("ratioOfQsprays", numerator = as.qspray(x), denominator = qone())
+}
+
+as_ratioOfQsprays_qspray <- function(x) {
   roq <- new("ratioOfQsprays", numerator = as.qspray(x), denominator = qone())
   passShowAttributes(x, roq)
 }
@@ -96,7 +100,7 @@ setMethod(
 setMethod(
   "as.ratioOfQsprays", "qspray",
   function(x) {
-    as_ratioOfQsprays_scalar(x)
+    as_ratioOfQsprays_qspray(x)
   }
 )
 
