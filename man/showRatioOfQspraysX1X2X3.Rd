@@ -39,7 +39,7 @@ showRatioOfQspraysX1X2X3("X", " / ")(roq)
 showRatioOfQspraysOption(roq, "showRatioOfQsprays") <-
   showRatioOfQspraysX1X2X3("X", " / ")
 roq
-# this is equivalent to set the "x" and the "quotientBar" options:
+# this is equivalent to set the "x" and "quotientBar" options:
 showRatioOfQspraysOption(roq, "x") <- "X"
 showRatioOfQspraysOption(roq, "quotientBar") <- " / "
 }

@@ -240,7 +240,7 @@ You can permute its variables:
 swapVariables(roq, 2, 3) == f(x, z, y)
 ```
 
-You can perform a polynomial change of variables:
+You can perform a polynomial change of its variables:
 
 ```{r}
 changeVariables(roq, list(x+1, y^2, x+y+z)) == f(x+1, y^2, x+y+z)

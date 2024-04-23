@@ -34,15 +34,16 @@ evalRatioOfQsprays <- function(roq, values_re, values_im = NULL) {
   }
 }
 
-#' @title Substitutions in a 'ratioOfQsprays' fraction of polynomials
-#' @description Substitute some variables in a \code{ratioOfQsprays} fraction
-#'   of polynomials.
+#' @title Partial evaluation of a 'ratioOfQsprays' fraction of polynomials
+#' @description Substitute some values to a subset of the variables of a
+#'   \code{ratioOfQsprays} fraction of polynomials.
 #'
 #' @param roq a \code{ratioOfQsprays} object
 #' @param values the values to be substituted; this must be a vector whose
 #'   length equals the number of variables of \code{roq}, and whose each
-#'   entry is either \code{NA} (for non-substitution) or a 'scalar' \code{x}
-#'   such that \code{as.character(x)} is a quoted integer or a quoted fraction
+#'   entry is either \code{NA} for non-substitution or a "scalar" \code{x}
+#'   such that \code{as.character(x)} is a quoted integer or a quoted fraction,
+#'   e.g. a \code{bigq} number
 #'
 #' @return A \code{ratioOfQsprays} object.
 #' @export
@@ -64,7 +65,7 @@ substituteRatioOfQsprays <- function(roq, values) {
 }
 
 #' @title Ratio of multivariate polynomials as function
-#' @description Coerces a \code{ratioOfQsprays} polynomial into a function.
+#' @description Coerces a \code{ratioOfQsprays} polynomial to a function.
 #'
 #' @param x object of class \code{ratioOfQsprays}
 #' @param N Boolean, whether the function must numerically approximate

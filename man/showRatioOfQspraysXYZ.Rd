@@ -27,7 +27,8 @@ A function which takes as argument a \code{ratioOfQsprays} object
 }
 \description{
 Print a \code{ratioOfQsprays} object given some letters to
-  denote the variables, by printing monomials like \code{"x^2.yz"}.
+  denote the variables, by printing monomials in the style of
+  \code{"x^2.yz"}.
 }
 \note{
 The function returned by this function can be used as the option

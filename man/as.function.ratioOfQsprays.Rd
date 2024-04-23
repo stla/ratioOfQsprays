@@ -21,7 +21,7 @@ A function having the same variables as the polynomial. If
   R expression.
 }
 \description{
-Coerces a \code{ratioOfQsprays} polynomial into a function.
+Coerces a \code{ratioOfQsprays} polynomial to a function.
 }
 \examples{
 library(ratioOfQsprays)

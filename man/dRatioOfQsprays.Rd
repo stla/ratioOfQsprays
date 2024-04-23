@@ -9,7 +9,10 @@ dRatioOfQsprays(roq, orders)
 \arguments{
 \item{roq}{object of class \code{ratioOfQsprays}}
 
-\item{orders}{integer vector, the orders of the differentiation}
+\item{orders}{integer vector, the orders of the differentiation; e.g.
+\code{c(2, 0, 1)} means that you differentiate two times with respect to
+\eqn{x}, you do not differentiate with respect to \eqn{y}, and you
+differentiate one time with respect to \eqn{z}}
 }
 \value{
 A \code{ratioOfQsprays} object.

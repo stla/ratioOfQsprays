@@ -98,7 +98,7 @@ showRatioOfQsprays <- function(
 #' showRatioOfQspraysOption(roq, "showRatioOfQsprays") <-
 #'   showRatioOfQspraysX1X2X3("X", " / ")
 #' roq
-#' # this is equivalent to set the "x" and the "quotientBar" options:
+#' # this is equivalent to set the "x" and "quotientBar" options:
 #' showRatioOfQspraysOption(roq, "x") <- "X"
 #' showRatioOfQspraysOption(roq, "quotientBar") <- " / "
 showRatioOfQspraysX1X2X3 <- function(var, quotientBar = "  %//%  ", ...) {
@@ -107,7 +107,8 @@ showRatioOfQspraysX1X2X3 <- function(var, quotientBar = "  %//%  ", ...) {
 
 #' @title Print a 'ratioOfQsprays'
 #' @description Print a \code{ratioOfQsprays} object given some letters to
-#'   denote the variables, by printing monomials like \code{"x^2.yz"}.
+#'   denote the variables, by printing monomials in the style of
+#'   \code{"x^2.yz"}.
 #'
 #' @param letters a vector of strings, usually some letters such as \code{"x"}
 #'   and \code{"y"}, to denote the variables

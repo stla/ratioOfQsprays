@@ -5,7 +5,8 @@ NULL
 #' @description Partial derivative of a \code{ratioOfQsprays}.
 #'
 #' @param roq object of class \code{ratioOfQsprays}
-#' @param i integer, the dimension to differentiate with respect to
+#' @param i integer, the dimension to differentiate with respect to, e.g.
+#'   \code{2} to differentiate with respect to \eqn{y}
 #' @param derivative integer, how many times to differentiate
 #'
 #' @return A \code{ratioOfQsprays} object.
@@ -17,10 +18,13 @@ NULL
 #' x <- qlone(1)
 #' y <- qlone(2)
 #' roq <- (2*x  + 3*x*y) / (x^2 + y^2)
-#' derivRatioOfQsprays(roq, 1)
+#' derivRatioOfQsprays(roq, 2) # derivative w.r.t. y
 derivRatioOfQsprays <- function(roq, i, derivative = 1) {
   stopifnot(inherits(roq, "ratioOfQsprays"))
   stopifnot(isNonnegativeInteger(i))
+  if(derivative == 0L) {
+    return(roq)
+  }
   stopifnot(isPositiveInteger(derivative))
   droq <- roq
   for(. in seq_len(derivative)) {
@@ -37,7 +41,10 @@ derivRatioOfQsprays <- function(roq, i, derivative = 1) {
 #' @description Partial differentiation of a \code{ratioOfQsprays} polynomial.
 #'
 #' @param roq object of class \code{ratioOfQsprays}
-#' @param orders integer vector, the orders of the differentiation
+#' @param orders integer vector, the orders of the differentiation; e.g.
+#'   \code{c(2, 0, 1)} means that you differentiate two times with respect to
+#'   \eqn{x}, you do not differentiate with respect to \eqn{y}, and you
+#'   differentiate one time with respect to \eqn{z}
 #'
 #' @return A \code{ratioOfQsprays} object.
 #' @export

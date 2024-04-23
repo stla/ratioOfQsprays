@@ -9,7 +9,8 @@ derivRatioOfQsprays(roq, i, derivative = 1)
 \arguments{
 \item{roq}{object of class \code{ratioOfQsprays}}
 
-\item{i}{integer, the dimension to differentiate with respect to}
+\item{i}{integer, the dimension to differentiate with respect to, e.g.
+\code{2} to differentiate with respect to \eqn{y}}
 
 \item{derivative}{integer, how many times to differentiate}
 }
@@ -24,5 +25,5 @@ library(ratioOfQsprays)
 x <- qlone(1)
 y <- qlone(2)
 roq <- (2*x  + 3*x*y) / (x^2 + y^2)
-derivRatioOfQsprays(roq, 1)
+derivRatioOfQsprays(roq, 2) # derivative w.r.t. y
 }

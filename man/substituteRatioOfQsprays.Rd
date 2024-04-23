@@ -2,7 +2,7 @@
 % Please edit documentation in R/evaluation.R
 \name{substituteRatioOfQsprays}
 \alias{substituteRatioOfQsprays}
-\title{Substitutions in a 'ratioOfQsprays' fraction of polynomials}
+\title{Partial evaluation of a 'ratioOfQsprays' fraction of polynomials}
 \usage{
 substituteRatioOfQsprays(roq, values)
 }
@@ -11,15 +11,16 @@ substituteRatioOfQsprays(roq, values)
 
 \item{values}{the values to be substituted; this must be a vector whose
 length equals the number of variables of \code{roq}, and whose each
-entry is either \code{NA} (for non-substitution) or a 'scalar' \code{x}
-such that \code{as.character(x)} is a quoted integer or a quoted fraction}
+entry is either \code{NA} for non-substitution or a "scalar" \code{x}
+such that \code{as.character(x)} is a quoted integer or a quoted fraction,
+e.g. a \code{bigq} number}
 }
 \value{
 A \code{ratioOfQsprays} object.
 }
 \description{
-Substitute some variables in a \code{ratioOfQsprays} fraction
-  of polynomials.
+Substitute some values to a subset of the variables of a
+  \code{ratioOfQsprays} fraction of polynomials.
 }
 \examples{
 library(ratioOfQsprays)

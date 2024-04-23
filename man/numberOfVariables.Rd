@@ -20,6 +20,7 @@ Number of variables involved in a \code{ratioOfQsprays} object.
 \note{
 The number of variables in the \code{ratioOfQsprays} object
   \code{y / (1 + y)} where \code{y=qlone(2)} is \code{2}, not \code{1},
-  although only one variable occurs. The function returns the maximal
-  integer \code{d} such that \code{qlone(d)} occurs in the 'ratioOfQsprays'.
+  although only one variable occurs. Rigorously speaking, the function
+  returns the maximal integer \code{d} such that \code{qlone(d)} occurs in
+  the 'ratioOfQsprays'.
 }
