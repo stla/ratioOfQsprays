@@ -91,7 +91,7 @@ substituteRatioOfQsprays <- function(roq, values) {
 #' f("x", "y")
 #' g("x", "y")
 #' # the evaluation is performed by (R)yacas and complex numbers are
-#' # allowed; the imaginary unit is denoted by `I`
+#' # allowed; the imaginary unit is denoted by \code{I}:
 #' f("2 + 2*I", "Sqrt(2)")
 #' g("2 + 2*I", "Sqrt(2)")
 as.function.ratioOfQsprays <- function(x, N = FALSE, ...) {

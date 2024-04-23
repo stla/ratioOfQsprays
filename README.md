@@ -1,7 +1,7 @@
 The ‘ratioOfQsprays’ package
 ================
 Stéphane Laurent
-2024-04-20
+2024-04-23
 
 ***Fractions of multivariate polynomials with rational coefficients.***
 
@@ -59,9 +59,10 @@ roq - roq
 
 You don’t like my quotient bar `%//%`? Be patient, we will see how to
 change it later. I adopted this large quotient bar because it is more
-easy to find it than a single slash `/` in a long `ratioOfQsprays`.
+easy to find it than a single slash `/` in a `ratioOfQsprays` having a
+long expression.
 
-Rational numbers and `qspray` polynomials are coercable to
+Rational numbers and `qspray` polynomials are coercible to
 `ratioOfQsprays` objects, and then you can also perform arithmetic
 operations between a `ratioOfQsprays` and such an object:
 
@@ -103,9 +104,9 @@ f(x[1], x[2], x[3])
 ## [1] 166/79
 ```
 
-It is also possible to substitute only a subset of the variables, with
-the help of the function `substituteRatioOfQsprays`. You have to
-indicate the variables you don’t want to replace with `NA`:
+It is also possible to substitute some values to only a subset of the
+variables, with the help of the function `substituteRatioOfQsprays`. You
+have to indicate the variables you don’t want to replace with `NA`:
 
 ``` r
 x <- c(NA, "3", "2/5")
@@ -179,7 +180,7 @@ isUnivariate(x1 / (x1^2 + 1))
 ## [1] TRUE
 isPolynomial(roq)
 ## [1] FALSE
-isPolynomial((x1^2 - x2^2)/(x1 - x2))
+isPolynomial((x1^2 - x2^2) / (x1 - x2))
 ## [1] TRUE
 ```
 
@@ -217,7 +218,7 @@ roq + (x1 + 1)/x2
 ```
 
 If you perform an arithmetic operation between `roq` and an object
-coercable to a `ratioOfQsprays` object but which is not a
+coercible to a `ratioOfQsprays` object but which is not a
 `ratioOfQsprays` object, such as a `bigq` number or a `qspray` object,
 the show options of `roq` are passed to the result, even if `roq` is not
 at the first position:
@@ -262,7 +263,7 @@ x <- qlone(1); y <- qlone(2); z <- qlone(3)
 roq <- f(x, y, z)
 ```
 
-You can derivate it:
+You can differentiate it:
 
 ``` r
 derivRatioOfQsprays(roq, 2) # derivative w.r.t. y
@@ -276,7 +277,7 @@ swapVariables(roq, 2, 3) == f(x, z, y)
 ## [1] TRUE
 ```
 
-You can perform a polynomial change of variables:
+You can perform some polynomial changes of its variables:
 
 ``` r
 changeVariables(roq, list(x+1, y^2, x+y+z)) == f(x+1, y^2, x+y+z)
