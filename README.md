@@ -1,7 +1,7 @@
 The ‘ratioOfQsprays’ package
 ================
 Stéphane Laurent
-2024-04-23
+2024-04-25
 
 ***Fractions of multivariate polynomials with rational coefficients.***
 
