@@ -8,8 +8,10 @@ test_that("commutativity", {
   roq1 <- ROQ1()
   roq2 <- ROQ2()
   expect_true(roq1*roq2*3 == 3*roq2*roq1)
+  expect_true(roq1+roq2+3 == 3+roq2+roq1)
   x <- qlone(1)
   expect_true(roq1*roq2*x == x*roq2*roq1)
+  expect_true(roq1+roq2+x == x+roq2+roq1)
 })
 
 test_that("associativity", {
@@ -17,6 +19,7 @@ test_that("associativity", {
   roq2 <- ROQ2()
   roq3 <- ROQ3()
   expect_true(roq1*(roq2*roq3) == (roq1*roq2)*roq3)
+  expect_true(roq1+(roq2+roq3) == (roq1+roq2)+roq3)
 })
 
 test_that("distributivity", {
@@ -33,6 +36,8 @@ test_that("equality", {
   expect_true(4*roq1/(2*roq1) == gmp::as.bigq(2L))
   expect_true(4*roq1/(2*roq1) == as.qspray(2L))
   expect_true(4*roq1/(2*roq1) == as.ratioOfQsprays(2L))
+  roq2 <- ROQ2()
+  expect_true((roq1+roq2)/roq2 == roq1/roq2 + 1L)
 })
 
 test_that("division", {
@@ -71,6 +76,8 @@ test_that("equality between qspray and ratioOfQsprays", {
   y <- qlone(2)
   z <- qlone(3)
   expect_true((x^2-y^2)/(x+y) == x-y)
+  expect_true((x^2-y^2)/(x+y)+z == x-y+z)
+  expect_true((x^2-y^2)/(x+y)+y == x)
 })
 
 test_that("equality between scalar and ratioOfQsprays", {
