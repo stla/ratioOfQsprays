@@ -145,8 +145,85 @@ namespace RATIOOFQSPRAYS {
       return std::pair<Qspray<gmpq>,Qspray<gmpq>>(Qspray<gmpq>(SA), Qspray<gmpq>(SB));
     }
 
+    static void go(
+      const Poly1& oldR, const Poly1& R, const Poly1& oldS, const Poly1& S, 
+      const Poly1& oldT, const Poly1& T, Poly1& Q1, Poly1& Q2
+    ) {
+      if(CGAL::is_zero(R)) {
+        Q1 = -T;
+        Q2 = S;
+      } else {
+        Poly1 quo = CGAL::div(oldR, R);
+        go (R, oldR - quo * R, S, oldS - quo * S, T, oldT - quo * T, Q1, Q2);
+      }
+    }
+
     static std::pair<Qspray<gmpq>,Qspray<gmpq>> getQuotients1(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
-      return getQuotients<Poly1, PT1, Monomial1, 1>(Q1, Q2);
+      // CGAL polynomial constructor
+      PT1::Construct_polynomial constructPolynomial;
+      // converts the first Qspray to a CGAL polynomial
+      std::list<Monomial1> terms1;
+      Polynomial<gmpq> S1 = Q1.get();
+      for(const auto& term : S1) {
+        powers expnts =
+          QSPRAY::utils::growPowers(term.first, term.first.size(), 1);
+        terms1.push_back(
+          std::make_pair(
+            CGAL::Exponent_vector(expnts.begin(), expnts.end()),
+            CGAL::Gmpq(QSPRAY::utils::q2str(term.second))
+          )
+        );
+      }
+      Poly1 P1 = constructPolynomial(terms1.begin(), terms1.end());
+      // converts the second Qspray to a CGAL polynomial
+      std::list<Monomial1> terms2;
+      Polynomial<gmpq> S2 = Q2.get();
+      for(const auto& term : S2) {
+        powers expnts(1);
+        if(term.first.size() != 0) {
+          expnts = term.first;
+        }
+        terms2.push_back(
+          std::make_pair(
+            CGAL::Exponent_vector(expnts.begin(), expnts.end()),
+            CGAL::Gmpq(QSPRAY::utils::q2str(term.second))
+          )
+        );
+      }
+      Poly1 P2 = constructPolynomial(terms2.begin(), terms2.end());
+      //
+      Poly1 zeroPoly(0);
+      Poly1 unitPoly(1);
+      //
+      Poly1 Quotient1; Poly1 Quotient2;
+      go (P1, P2, unitPoly, zeroPoly, zeroPoly, unitPoly, Quotient1, Quotient2);
+      //
+      // now make the Qspray corresponding to Quotient1
+      std::list<Monomial1> monomials1;
+      PT1::Monomial_representation mrepr;
+      mrepr(Quotient1, std::back_inserter(monomials1));
+      Polynomial<gmpq> SQ1;
+      std::list<Monomial1>::iterator itmons;
+      for(itmons = monomials1.begin(); itmons != monomials1.end(); itmons++) {
+        CGAL::Exponent_vector exponents = (*itmons).first;
+        powers expnts(exponents.begin(), exponents.end());
+        QSPRAY::utils::simplifyPowers(expnts);
+        gmpq coeff(Gmpq2str((*itmons).second));
+        SQ1[expnts] = coeff;
+      }
+      // now make the Qspray corresponding to Quotient2
+      std::list<Monomial1> monomials2;
+      mrepr(Quotient2, std::back_inserter(monomials2));
+      Polynomial<gmpq> SQ2;
+      for(itmons = monomials2.begin(); itmons != monomials2.end(); itmons++) {
+        CGAL::Exponent_vector exponents = (*itmons).first;
+        powers expnts(exponents.begin(), exponents.end());
+        QSPRAY::utils::simplifyPowers(expnts);
+        gmpq coeff(Gmpq2str((*itmons).second));
+        SQ2[expnts] = coeff;
+      }
+      //
+      return std::pair<Qspray<gmpq>,Qspray<gmpq>>(Qspray<gmpq>(SQ1), Qspray<gmpq>(SQ2));
     }
     static std::pair<Qspray<gmpq>,Qspray<gmpq>> getQuotients2(Qspray<gmpq>& Q1, Qspray<gmpq>& Q2) {
       return getQuotients<Poly2, PT2, Monomial2, 2>(Q1, Q2);
