@@ -51,7 +51,7 @@ setMethod(
   "involvedVariables", "ratioOfQsprays",
   function(x) {
     union(
-      involvedVariables(x@numerator, x@denominator)
+      involvedVariables(x@numerator), involvedVariables(x@denominator)
     )
   }
 )
