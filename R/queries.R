@@ -46,7 +46,7 @@ setMethod(
 #' @examples
 #' x <- qlone(1); z <- qlone(3)
 #' rOQ <- 2*x/z + x/(x+z) + z^2/x
-#' involvedVariables(Qspray) # should be c(1L, 3L)
+#' involvedVariables(rOQ) # should be c(1L, 3L)
 setMethod(
   "involvedVariables", "ratioOfQsprays",
   function(x) {
