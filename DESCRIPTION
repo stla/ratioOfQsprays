@@ -1,6 +1,6 @@
 Package: ratioOfQsprays
 Title: Fractions of Multivariate Polynomials with Rational Coefficients
-Version: 1.0.0
+Version: 1.0.0.9000
 Authors@R: 
     person("Stéphane", "Laurent", , "laurent_step@outlook.fr", role = c("aut", "cre"))
 Description: Based on the 'qspray' package, this package introduces the new 
@@ -16,8 +16,9 @@ Description: Based on the 'qspray' package, this package introduces the new
 License: GPL-3
 URL: https://github.com/stla/ratioOfQsprays
 BugReports: https://github.com/stla/ratioOfQsprays/issues
+Remotes: stla/qspray
 Depends:
-    qspray (>= 3.0.0)
+    qspray (>= 3.0.0.9000)
 Imports: 
     gmp,
     methods,

@@ -2,6 +2,7 @@
 NULL
 
 setGeneric("numberOfVariables")
+setGeneric("involvedVariables")
 setGeneric("isConstant")
 setGeneric("isUnivariate")
 
@@ -15,6 +16,7 @@ setGeneric("isUnivariate")
 #' @param x a \code{ratioOfQsprays} object
 #'
 #' @return An integer.
+#' @seealso \code{\link{involvedVariables}}
 #' @export
 #' @note The number of variables in the \code{ratioOfQsprays} object
 #'   \code{y / (1 + y)} where \code{y=qlone(2)} is \code{2}, not \code{1},
@@ -25,6 +27,32 @@ setMethod(
   "numberOfVariables", "ratioOfQsprays",
   function(x) {
     max(numberOfVariables(x@numerator), numberOfVariables(x@denominator))
+  }
+)
+
+#' @name involvedVariables
+#' @aliases involvedVariables,ratioOfQsprays-method
+#' @docType methods
+#' @importFrom qspray involvedVariables
+#' @title Variables involved in a 'ratioOfQsprays'
+#' @description Variables involved in a \code{ratioOfQsprays} object.
+#'
+#' @param x a \code{ratioOfQsprays} object
+#'
+#' @return A vector of integers. Each integer represents the index of a
+#'   variable involved in \code{x}.
+#' @export
+#' @seealso \code{\link{numberOfVariables}}.
+#' @examples
+#' x <- qlone(1); z <- qlone(3)
+#' rOQ <- 2*x/z + x/(x+z) + z^2/x
+#' involvedVariables(Qspray) # should be c(1L, 3L)
+setMethod(
+  "involvedVariables", "ratioOfQsprays",
+  function(x) {
+    union(
+      involvedVariables(x@numerator, x@denominator)
+    )
   }
 )
 

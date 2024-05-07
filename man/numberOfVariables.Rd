@@ -24,3 +24,6 @@ The number of variables in the \code{ratioOfQsprays} object
   returns the maximal integer \code{d} such that \code{qlone(d)} occurs in
   the 'ratioOfQsprays'.
 }
+\seealso{
+\code{\link{involvedVariables}}
+}
