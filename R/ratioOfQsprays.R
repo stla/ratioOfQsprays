@@ -469,8 +469,8 @@ setMethod(
   function(e1, e2) {
     switch(
       .Generic,
-      "==" = e1 == as.ratioOfQsprays(e2),
-      "!=" = e1 != as.ratioOfQsprays(e2),
+      "==" = e1@numerator == e2 * e1@denominator,
+      "!=" = !(e1 == e2),
       stop(gettextf(
         "Comparison operator %s not defined for these two objects.",
         dQuote(.Generic)
@@ -484,8 +484,8 @@ setMethod(
   function(e1, e2) {
     switch(
       .Generic,
-      "==" = e1 == as.ratioOfQsprays(e2),
-      "!=" = e1 != as.ratioOfQsprays(e2),
+      "==" = e1@numerator == e2 * e1@denominator,
+      "!=" = !(e1 == e2),
       stop(gettextf(
         "Comparison operator %s not defined for these two objects.",
         dQuote(.Generic)
@@ -499,8 +499,8 @@ setMethod(
   function(e1, e2) {
     switch(
       .Generic,
-      "==" = e1 == as.ratioOfQsprays(e2),
-      "!=" = e1 != as.ratioOfQsprays(e2),
+      "==" = e1@numerator == e2 * e1@denominator,
+      "!=" = !(e1 == e2),
       stop(gettextf(
         "Comparison operator %s not defined for these two objects.",
         dQuote(.Generic)
@@ -514,8 +514,8 @@ setMethod(
   function(e1, e2) {
     switch(
       .Generic,
-      "==" = e1 == as.ratioOfQsprays(e2),
-      "!=" = e1 != as.ratioOfQsprays(e2),
+      "==" = e1@numerator == e2 * e1@denominator,
+      "!=" = !(e1 == e2),
       stop(gettextf(
         "Comparison operator %s not defined for these two objects.",
         dQuote(.Generic)
@@ -529,8 +529,8 @@ setMethod(
   function(e1, e2) {
     switch(
       .Generic,
-      "==" = e1 == as.ratioOfQsprays(e2),
-      "!=" = e1 != as.ratioOfQsprays(e2),
+      "==" = e1@numerator == e2 * e1@denominator,
+      "!=" = !(e1 == e2),
       stop(gettextf(
         "Comparison operator %s not defined for these two objects.",
         dQuote(.Generic)
@@ -544,8 +544,8 @@ setMethod(
   function(e1, e2) {
     switch(
       .Generic,
-      "==" = as.ratioOfQsprays(e1) == e2,
-      "!=" = as.ratioOfQsprays(e1) != e2,
+      "==" = e2@numerator == e1 * e2@denominator,
+      "!=" = !(e1 == e2),
       stop(gettextf(
         "Comparison operator %s not defined for these two objects.",
         dQuote(.Generic)
@@ -559,8 +559,8 @@ setMethod(
   function(e1, e2) {
     switch(
       .Generic,
-      "==" = as.ratioOfQsprays(e1) == e2,
-      "!=" = as.ratioOfQsprays(e1) != e2,
+      "==" = e2@numerator == e1 * e2@denominator,
+      "!=" = !(e1 == e2),
       stop(gettextf(
         "Comparison operator %s not defined for these two objects.",
         dQuote(.Generic)
@@ -574,8 +574,8 @@ setMethod(
   function(e1, e2) {
     switch(
       .Generic,
-      "==" = as.ratioOfQsprays(e1) == e2,
-      "!=" = as.ratioOfQsprays(e1) != e2,
+      "==" = e2@numerator == e1 * e2@denominator,
+      "!=" = !(e1 == e2),
       stop(gettextf(
         "Comparison operator %s not defined for these two objects.",
         dQuote(.Generic)
@@ -589,8 +589,8 @@ setMethod(
   function(e1, e2) {
     switch(
       .Generic,
-      "==" = as.ratioOfQsprays(e1) == e2,
-      "!=" = as.ratioOfQsprays(e1) != e2,
+      "==" = e2@numerator == e1 * e2@denominator,
+      "!=" = !(e1 == e2),
       stop(gettextf(
         "Comparison operator %s not defined for these two objects.",
         dQuote(.Generic)
@@ -604,8 +604,8 @@ setMethod(
   function(e1, e2) {
     switch(
       .Generic,
-      "==" = as.ratioOfQsprays(e1) == e2,
-      "!=" = as.ratioOfQsprays(e1) != e2,
+      "==" = e2@numerator == e1 * e2@denominator,
+      "!=" = !(e1 == e2),
       stop(gettextf(
         "Comparison operator %s not defined for these two objects.",
         dQuote(.Generic)
