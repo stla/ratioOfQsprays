@@ -115,7 +115,11 @@ namespace RATIOOFQSPRAYS {
       PolyX QA = CGAL::integral_division(P1, D);
       PolyX QB = CGAL::integral_division(P2, D);
 
-      // now make the Qspray corresponding to QA
+      // get the leading coefficient of QB (denominator), 
+      // in order to return a monic denominator
+      CGAL::Gmpq leadingCoefficient = CGAL::innermost_leading_coefficient(QB);
+
+      // now make the Qspray corresponding to QA (numerator)
       std::list<MonomialX> monomialsA;
       typename PTX::Monomial_representation mrepr;
       mrepr(QA, std::back_inserter(monomialsA));
@@ -125,11 +129,11 @@ namespace RATIOOFQSPRAYS {
         CGAL::Exponent_vector exponents = (*itmons).first;
         powers expnts(exponents.begin(), exponents.end());
         QSPRAY::utils::simplifyPowers(expnts);
-        gmpq coeff(Gmpq2str((*itmons).second));
+        gmpq coeff(Gmpq2str((*itmons).second / leadingCoefficient));
         SA[expnts] = coeff;
       }
 
-      // now make the Qspray corresponding to QB
+      // now make the Qspray corresponding to QB (denominator)
       std::list<MonomialX> monomialsB;
       mrepr(QB, std::back_inserter(monomialsB));
       Polynomial<gmpq> SB;
@@ -137,7 +141,7 @@ namespace RATIOOFQSPRAYS {
         CGAL::Exponent_vector exponents = (*itmons).first;
         powers expnts(exponents.begin(), exponents.end());
         QSPRAY::utils::simplifyPowers(expnts);
-        gmpq coeff(Gmpq2str((*itmons).second));
+        gmpq coeff(Gmpq2str((*itmons).second / leadingCoefficient));
         SB[expnts] = coeff;
       }
       

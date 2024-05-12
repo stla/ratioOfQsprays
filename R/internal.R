@@ -51,3 +51,7 @@ removeTrailingZeros <- function(x) {
   }
   head(x, n)
 }
+
+isNamedList <- function (x) {
+  is.list(x) && length(names(x)) == length(x)
+}

@@ -164,7 +164,8 @@ setGeneric("changeVariables")
 #' @param listOfQsprays a list containing at least \code{n} \code{qspray}
 #'   objects, or objects coercible to \code{qspray} objects, where
 #'   \code{n} is the number of variables of the \code{ratioOfQsprays} fraction
-#'   of polynomials given in the \code{x} argument
+#'   of polynomials given in the \code{x} argument; if this list is named,
+#'   then its names will be used in the show options of the result
 #'
 #' @return The \code{ratioOfQsprays} fraction of polynomials obtained by
 #'   replacing the variables of the fraction of polynomials given in the

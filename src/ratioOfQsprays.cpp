@@ -65,3 +65,5 @@ bool ROQequality(
   RatioOfQsprays<gmpq> ROQ2 = makeRatioOfQsprays(Numerator2, Denominator2);
   return ROQ1 == ROQ2;
 }
+
+
