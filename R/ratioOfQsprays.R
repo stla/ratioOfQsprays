@@ -154,6 +154,7 @@ setMethod(
 
 #' make the denominator monic
 #' @importFrom qspray leadingCoefficient
+#' @noRd
 monicRatioOfQsprays <- function(roq) {
   num <- roq@numerator
   den <- roq@denominator

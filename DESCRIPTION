@@ -31,7 +31,6 @@ LinkingTo:
     BH,
     qspray,
     Rcpp,
-    RcppArmadillo,
     RcppCGAL
 Config/testthat/edition: 3
 Encoding: UTF-8
