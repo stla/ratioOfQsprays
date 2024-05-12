@@ -78,12 +78,12 @@ test_that("show is inherited from qspray", {
   q2 <- rQspray()
   expect_identical(
     Print(q1 / q2),
-    "[ -2*x^4.y^3.z^4 - 4*y^2.z^2 ]  %//%  [ 5*x^4.y - y^2.z^3 - 3 ] "
+    "[ -2/5*x^4.y^3.z^4 - 4/5*y^2.z^2 ]  %//%  [ x^4.y - 1/5*y^2.z^3 - 3/5 ] "
   )
   showQsprayOption(q1, "x") <- "A"
   expect_identical(
     Print(q1 / q2),
-    "[ -2*A1^4.A2^3.A3^4 - 4*A2^2.A3^2 ]  %//%  [ 5*A1^4.A2 - A2^2.A3^3 - 3 ] "
+    "[ -2/5*A1^4.A2^3.A3^4 - 4/5*A2^2.A3^2 ]  %//%  [ A1^4.A2 - 1/5*A2^2.A3^3 - 3/5 ] "
   )
   q1 <- qlone(1)
   showQsprayOption(q1, "x") <- "A"
@@ -93,7 +93,7 @@ test_that("show is inherited from qspray", {
   )
   expect_identical(
     Print(q1 / q2),
-    "[ A1 ]  %//%  [ 5*A1^4.A2 - A2^2.A3^3 - 3 ] "
+    "[ 1/5*A1 ]  %//%  [ A1^4.A2 - 1/5*A2^2.A3^3 - 3/5 ] "
   )
 })
 
@@ -108,16 +108,16 @@ test_that("show options are inherited by the first operand", {
   # slow: resultant::gcd(num, den)
   expect_identical(
     Print(roq1+qlone(4)),
-    "[ -2*x1^4.x2^3.x3^4 + 5*x1^4.x2.x4 - x2^2.x3^3.x4 - 4*x2^2.x3^2 - 3*x4 ]  %//%  [ 5*x1^4.x2 - x2^2.x3^3 - 3 ] "
+    "[ -2/5*x1^4.x2^3.x3^4 + x1^4.x2.x4 - 1/5*x2^2.x3^3.x4 - 4/5*x2^2.x3^2 - 3/5*x4 ]  %//%  [ x1^4.x2 - 1/5*x2^2.x3^3 - 3/5 ] "
   )
   showRatioOfQspraysOption(roq1, "x") <- "A"
   expect_identical(
     Print(roq1),
-    "[ -2*A1^4.A2^3.A3^4 - 4*A2^2.A3^2 ]  %//%  [ 5*A1^4.A2 - A2^2.A3^3 - 3 ] "
+    "[ -2/5*A1^4.A2^3.A3^4 - 4/5*A2^2.A3^2 ]  %//%  [ A1^4.A2 - 1/5*A2^2.A3^3 - 3/5 ] "
   )
   expect_identical(
     Print(roq1 * (q1/q2)),
-    "[ 4*A1^8.A2^6.A3^8 + 16*A1^4.A2^5.A3^6 + 16*A2^4.A3^4 ]  %//%  [ 25*A1^8.A2^2 - 10*A1^4.A2^3.A3^3 - 30*A1^4.A2 + A2^4.A3^6 + 6*A2^2.A3^3 + 9 ] "
+    "[ 4/25*A1^8.A2^6.A3^8 + 16/25*A1^4.A2^5.A3^6 + 16/25*A2^4.A3^4 ]  %//%  [ A1^8.A2^2 - 2/5*A1^4.A2^3.A3^3 - 6/5*A1^4.A2 + 1/25*A2^4.A3^6 + 6/25*A2^2.A3^3 + 9/25 ] "
   )
 
   roq <- qlone(1) / (1 + qlone(1))

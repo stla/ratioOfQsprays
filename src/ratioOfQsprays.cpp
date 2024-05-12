@@ -66,4 +66,3 @@ bool ROQequality(
   return ROQ1 == ROQ2;
 }
 
-

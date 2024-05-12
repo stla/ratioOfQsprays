@@ -116,8 +116,18 @@ namespace RATIOOFQSPRAYS {
       PolyX QB = CGAL::integral_division(P2, D);
 
       // get the leading coefficient of QB (denominator), 
-      // in order to return a monic denominator
-      CGAL::Gmpq leadingCoefficient = CGAL::innermost_leading_coefficient(QB);
+      // in order to return a monic denominator;
+      // we reverse the variables so that the outermost variable is the first one
+      std::vector<int> permutation;
+      permutation.reserve(X);
+      for(int i = X-1; i >= 0; i--) {
+        permutation.emplace_back(i);
+      }
+      typename PTX::Permute permute;
+      CGAL::Gmpq leadingCoefficient = 
+        CGAL::innermost_leading_coefficient(
+          permute(QB, permutation.begin(), permutation.end())
+        );
 
       // now make the Qspray corresponding to QA (numerator)
       std::list<MonomialX> monomialsA;
