@@ -1,7 +1,7 @@
 The ‘ratioOfQsprays’ package
 ================
 Stéphane Laurent
-2024-04-25
+2024-07-26
 
 ***Fractions of multivariate polynomials with rational coefficients.***
 
@@ -41,20 +41,23 @@ x2 <- qlone(2)
 x3 <- qlone(3)
 # the 'ratioOfQsprays':
 ( roq <- f(x1, x2, x3) )
-## [ 2*x^2 + y.z ]  %//%  [ 4*x - 3*z + 1 ]
+## [ 1/2*x^2 + 1/4*y.z ]  %//%  [ x - 3/4*z + 1/4 ]
 ```
+
+The denominator of a `ratioOfQsprays` fraction of polynomials is always
+*monic*. That means it is a polynomial whose leading coefficient is 1.
 
 Arithmetic on `ratioOfQsprays` objects is available:
 
 ``` r
 roq^2
-## [ 4*x^4 + 4*x^2.y.z + y^2.z^2 ]  %//%  [ 16*x^2 - 24*x.z + 8*x + 9*z^2 - 6*z + 1 ]
+## [ 1/4*x^4 + 1/4*x^2.y.z + 1/16*y^2.z^2 ]  %//%  [ x^2 - 3/2*x.z + 1/2*x + 9/16*z^2 - 3/8*z + 1/16 ]
 roq - roq
 ## [ 0 ]
 1 / roq
-## [ 4*x - 3*z + 1 ]  %//%  [ 2*x^2 + y.z ]
+## [ 2*x - 3/2*z + 1/2 ]  %//%  [ x^2 + 1/2*y.z ]
 2*roq + (x2 + x3)/x1
-## [ 4*x^3 + 2*x.y.z + 4*x.y + 4*x.z - 3*y.z + y - 3*z^2 + z ]  %//%  [ 4*x^2 - 3*x.z + x ]
+## [ x^3 + 1/2*x.y.z + x.y + x.z - 3/4*y.z + 1/4*y - 3/4*z^2 + 1/4*z ]  %//%  [ x^2 - 3/4*x.z + 1/4*x ]
 ```
 
 You don’t like my quotient bar `%//%`? Be patient, we will see how to
@@ -68,13 +71,13 @@ operations between a `ratioOfQsprays` and such an object:
 
 ``` r
 2 * roq
-## [ 4*x^2 + 2*y.z ]  %//%  [ 4*x - 3*z + 1 ]
+## [ x^2 + 1/2*y.z ]  %//%  [ x - 3/4*z + 1/4 ]
 "1/2" * roq
-## [ x^2 + 1/2*y.z ]  %//%  [ 4*x - 3*z + 1 ]
+## [ 1/4*x^2 + 1/8*y.z ]  %//%  [ x - 3/4*z + 1/4 ]
 roq + gmp::as.bigq("7/3") 
-## [ 2*x^2 + 28/3*x + y.z - 7*z + 7/3 ]  %//%  [ 4*x - 3*z + 1 ]
+## [ 1/2*x^2 + 7/3*x + 1/4*y.z - 7/4*z + 7/12 ]  %//%  [ x - 3/4*z + 1/4 ]
 x1 + roq + x3^2
-## [ 6*x^2 + 4*x.z^2 - 3*x.z + x + y.z - 3*z^3 + z^2 ]  %//%  [ 4*x - 3*z + 1 ]
+## [ 3/2*x^2 + x.z^2 - 3/4*x.z + 1/4*x + 1/4*y.z - 3/4*z^3 + 1/4*z^2 ]  %//%  [ x - 3/4*z + 1/4 ]
 ```
 
 The result of an arithmetic operation is always an irreducible fraction.
@@ -111,10 +114,10 @@ have to indicate the variables you don’t want to replace with `NA`:
 ``` r
 x <- c(NA, "3", "2/5")
 substituteRatioOfQsprays(roq, x)
-## [ 2*x^2 + 6/5 ]  %//%  [ 4*x - 1/5 ]
+## [ 1/2*x^2 + 3/10 ]  %//%  [ x - 1/20 ]
 x <- as.bigq(x)
 f(x1, x[2], x[3])
-## [ 2*x^2 + 6/5 ]  %//%  [ 4*x - 1/5 ]
+## [ 1/2*x^2 + 3/10 ]  %//%  [ x - 1/20 ]
 ```
 
 And it is possible to convert a `ratioOfQsprays` to a function which is
@@ -132,7 +135,7 @@ Actually you can pass some literal variables to this function:
 fyac("x", "3", "2/5") # = substituteRatioOfQsprays(roq, c(NA, "3", "2/5"))
 ## [1] "(2*(5*x^2+3))/(20*x-1)"
 fyac("x", "y", "z")   # = roq
-## [1] "(y*z+2*x^2)/(4*x-3*z+1)"
+## [1] "(z*y+2*x^2)/(4*x-3*z+1)"
 fyac("x", "x", "x")
 ## [1] "(3*x^2)/(x+1)"
 ```
@@ -165,9 +168,9 @@ A couple of functions to query a `ratioOfQsprays` are available:
 
 ``` r
 getNumerator(roq)
-## 2*x^2 + y.z
+## 1/2*x^2 + 1/4*y.z
 getDenominator(roq)
-## 4*x - 3*z + 1
+## x - 3/4*z + 1/4
 numberOfVariables(roq)
 ## [1] 3
 isConstant(roq)
@@ -194,7 +197,7 @@ denoted by `x1`, `x2`, `x3`, …:
 ``` r
 x4 <- qlone(4)
 roq / x4
-## [ 2*x1^2 + x2.x3 ]  %//%  [ 4*x1.x4 - 3*x3.x4 + x4 ]
+## [ 1/2*x1^2 + 1/4*x2.x3 ]  %//%  [ x1.x4 - 3/4*x3.x4 + 1/4*x4 ]
 ```
 
 It is possible to control the way a `ratioOfQsprays` is printed. For
@@ -205,7 +208,7 @@ the variables and you want to change the symbol for the quotient bar:
 showRatioOfQspraysOption(roq, "x") <- "a"
 showRatioOfQspraysOption(roq, "quotientBar") <- " / " 
 roq
-## [ 2*a1^2 + a2.a3 ] / [ 4*a1 - 3*a3 + 1 ]
+## [ 1/2*a1^2 + 1/4*a2.a3 ] / [ a1 - 3/4*a3 + 1/4 ]
 ```
 
 Now, if you perform an arithmetic operation between `roq` *at first
@@ -214,7 +217,7 @@ to the result if possible:
 
 ``` r
 roq + (x1 + 1)/x2
-## [ 2*a1^2.a2 + 4*a1^2 - 3*a1.a3 + 5*a1 + a2^2.a3 - 3*a3 + 1 ] / [ 4*a1.a2 - 3*a2.a3 + a2 ]
+## [ 1/2*a1^2.a2 + a1^2 - 3/4*a1.a3 + 5/4*a1 + 1/4*a2^2.a3 - 3/4*a3 + 1/4 ] / [ a1.a2 - 3/4*a2.a3 + 1/4*a2 ]
 ```
 
 If you perform an arithmetic operation between `roq` and an object
@@ -225,7 +228,7 @@ at the first position:
 
 ``` r
 x1 * roq
-## [ 2*a1^3 + a1.a2.a3 ] / [ 4*a1 - 3*a3 + 1 ]
+## [ 1/2*a1^3 + 1/4*a1.a2.a3 ] / [ a1 - 3/4*a3 + 1/4 ]
 ```
 
 An obvious example of a situation in which it is not always possible to
@@ -235,7 +238,7 @@ variables, e.g.
 ``` r
 showRatioOfQspraysOption(roq, "showQspray") <- showQsprayXYZ(c("A", "B", "C"))
 roq
-## [ 2*A^2 + B.C ] / [ 4*A - 3*C + 1 ]
+## [ 1/2*A^2 + 1/4*B.C ] / [ A - 3/4*C + 1/4 ]
 ```
 
 but then you add to `roq` a `ratioOfQsprays` containing the fourth
@@ -243,7 +246,7 @@ variable:
 
 ``` r
 roq + x4/(x4 + 1)
-## [ 2*A1^2.A4 + 2*A1^2 + 4*A1.A4 + A2.A3.A4 + A2.A3 - 3*A3.A4 + A4 ] / [ 4*A1.A4 + 4*A1 - 3*A3.A4 - 3*A3 + A4 + 1 ]
+## [ 1/2*A1^2.A4 + 1/2*A1^2 + A1.A4 + 1/4*A2.A3.A4 + 1/4*A2.A3 - 3/4*A3.A4 + 1/4*A4 ] / [ A1.A4 + A1 - 3/4*A3.A4 - 3/4*A3 + 1/4*A4 + 1/4 ]
 ```
 
 Obviously it is not possible to denote the resulting fraction of
@@ -267,7 +270,7 @@ You can differentiate it:
 
 ``` r
 derivRatioOfQsprays(roq, 2) # derivative w.r.t. y
-## [ -3*z ]  %//%  [ -12*x + 9*z - 3 ]
+## [ 1/4*z ]  %//%  [ x - 3/4*z + 1/4 ]
 ```
 
 You can permute its variables:

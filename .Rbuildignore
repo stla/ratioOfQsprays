@@ -5,3 +5,6 @@
 ^README\.Rmd$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
+^ratioOfQsprays\.sublime-project$
+^ratioOfQsprays\.sublime-workspace$
+^README\.html$

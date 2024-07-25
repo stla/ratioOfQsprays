@@ -48,6 +48,9 @@ x3 <- qlone(3)
 ( roq <- f(x1, x2, x3) )
 ```
 
+The denominator of a `ratioOfQsprays` fraction of polynomials is always *monic*. 
+That means it is a polynomial whose leading coefficient is 1.
+
 Arithmetic on `ratioOfQsprays` objects is available:
 
 ```{r}
