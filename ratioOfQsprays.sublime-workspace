@@ -15,6 +15,15 @@
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
+		},
+		{
+			"file": "README.Rmd",
+			"settings":
+			{
+				"buffer_size": 6813,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
 		}
 	],
 	"build_system": "",
@@ -49,6 +58,7 @@
 	},
 	"file_history":
 	[
+		"/D/Work/MyPackages/ratioOfQsprays/README.md",
 		"/D/Work/MyPackages/HypergeoMat/tests/testthat/test-Jack.R",
 		"/D/Work/MyPackages/HypergeoMat/NEWS.md",
 		"/D/Work/MyPackages/HypergeoMat/cran-comments.md",
@@ -116,7 +126,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -144,6 +154,34 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "README.Rmd",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6813,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6813,
+								6813
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 3945.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
