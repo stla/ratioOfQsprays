@@ -49,6 +49,42 @@ evalRatioOfQsprays <- function(roq, values_re, values_im = NULL) {
 #'
 #' @return A \code{ratioOfQsprays} object.
 #' @export
+substituteSomeRatioOfQsprays <- function(roq, listOfRoqs) {
+  stopifnot(is.list(listOfRoqs))
+  n <- numberOfVariables(roq)
+  if(n != length(listOfRoqs)) {
+    stop(
+      "The length of the `listOfRoqs` list is not correct."
+    ) 
+  }
+  listOfRoqs <- lapply(listOfRoqs, as.ratioOfQsprays)
+  qspray1 <- roq@numerator
+  powers1 <- qspray1@powers
+  coeffs1 <- as.bigq(qspray1@coeffs)
+  qspray2 <- roq@denominator
+  powers2 <- qspray2@powers
+  coeffs2 <- as.bigq(qspray2@coeffs)
+  zeroRatioOfQsprays <- as.ratioOfQsprays(0L)
+  num <- zeroRatioOfQsprays
+  for(i in seq_along(powers1)) {
+    exponents <- powers1[[i]]
+    term <- 1L
+    for(j in seq_along(exponents)) {
+      term <- term * listOfRoqs[[j]]^exponents[j]
+    }
+    num <- num + coeffs1[i] * term
+  }
+  den <- zeroRatioOfQsprays
+  for(i in seq_along(powers2)) {
+    exponents <- powers2[[i]]
+    term <- 1L
+    for(j in seq_along(exponents)) {
+      term <- term * listOfRoqs[[j]]^exponents[j]
+    }
+    den <- den + coeffs2[i] * term
+  }
+  num / den
+}
 
 
 #' @title Partial evaluation of a 'ratioOfQsprays' fraction of polynomials
