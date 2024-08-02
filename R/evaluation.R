@@ -34,6 +34,23 @@ evalRatioOfQsprays <- function(roq, values_re, values_im = NULL) {
   }
 }
 
+#' @title Substitute the variables of a 'ratioOfQsprays' with 
+#'   some 'ratioOfQsprays' 
+#' @description Substitute the variables of a \code{ratioOfQsprays} fraction 
+#'   of polynomials with some \code{ratioOfQsprays} objects, or some objects 
+#'   coercible to some \code{ratioOfQsprays}.
+#'
+#' @param roq a \code{ratioOfQsprays} object
+#' @param listOfRoqs the \code{ratioOfQsprays} to be substituted to the 
+#'   variables of \code{roq}; this must be a list of some objects coercible 
+#'   to some \code{ratioOfQsprays} objects (by an application of the function
+#'   \code{\link{as.ratioOfQsprays}}), and the length of this list must be 
+#'   equal to the number of variables of \code{roq}
+#'
+#' @return A \code{ratioOfQsprays} object.
+#' @export
+
+
 #' @title Partial evaluation of a 'ratioOfQsprays' fraction of polynomials
 #' @description Substitute some values to a subset of the variables of a
 #'   \code{ratioOfQsprays} fraction of polynomials.
@@ -65,17 +82,18 @@ substituteRatioOfQsprays <- function(roq, values) {
 }
 
 #' @title Ratio of multivariate polynomials as function
-#' @description Coerces a \code{ratioOfQsprays} polynomial to a function.
+#' @description Coerces a \code{ratioOfQsprays} fraction of polynomials 
+#'   to a function.
 #'
 #' @param x object of class \code{ratioOfQsprays}
 #' @param N Boolean, whether the function must numerically approximate
 #'   the result
 #' @param ... ignored
 #'
-#' @return A function having the same variables as the polynomial. If
-#'   \code{N=FALSE}, it returns a string. If \code{N=TRUE}, it returns a number
-#'   if the result does not contain any variable, otherwise it returns a
-#'   R expression.
+#' @return A function having the same variables as \code{x}. If
+#'   \code{N=FALSE}, this function returns a string. If \code{N=TRUE}, it 
+#'   returns a number if the result does not contain any variable, otherwise 
+#'   it returns a R expression.
 #' @export
 #' @importFrom Ryacas yac_str as_r
 #' @importFrom methods formalArgs
