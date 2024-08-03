@@ -15,13 +15,14 @@ the result}
 \item{...}{ignored}
 }
 \value{
-A function having the same variables as the polynomial. If
-  \code{N=FALSE}, it returns a string. If \code{N=TRUE}, it returns a number
-  if the result does not contain any variable, otherwise it returns a
-  R expression.
+A function having the same variables as \code{x}. If
+  \code{N=FALSE}, this function returns a string. If \code{N=TRUE}, it 
+  returns a number if the result does not contain any variable, otherwise 
+  it returns a R expression.
 }
 \description{
-Coerces a \code{ratioOfQsprays} polynomial to a function.
+Coerces a \code{ratioOfQsprays} fraction of polynomials 
+  to a function.
 }
 \examples{
 library(ratioOfQsprays)

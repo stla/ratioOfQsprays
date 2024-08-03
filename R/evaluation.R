@@ -49,6 +49,16 @@ evalRatioOfQsprays <- function(roq, values_re, values_im = NULL) {
 #'
 #' @return A \code{ratioOfQsprays} object.
 #' @export
+#' @examples
+#' x <- qlone(1)
+#' y <- qlone(2)
+#' z <- qlone(3)
+#' p <- x + y
+#' q <- x - y
+#' rOQ <- p / q
+#' rOQ1 <- x / y
+#' rOQ2 <- z / x
+#' substituteSomeRatioOfQsprays(rOQ, list(rOQ1, rOQ2))
 substituteSomeRatioOfQsprays <- function(roq, listOfRoqs) {
   stopifnot(is.list(listOfRoqs))
   n <- numberOfVariables(roq)

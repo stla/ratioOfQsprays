@@ -15,3 +15,20 @@ test_that("evaluation", {
     as.character(f(x, y, z)) == roqfun("2", "3/2", "4/3")
   )
 })
+
+
+test_that("substituteSomeRatioOfQsprays", {
+  x <- qlone(1)
+  y <- qlone(2)
+  z <- qlone(3)
+  p <- x + y
+  q <- x - y
+  rOQ <- p / q
+  rOQ1 <- x / y
+  rOQ2 <- z / x
+  obtained <- substituteSomeRatioOfQsprays(rOQ, list(rOQ1, rOQ2))
+  expected <- (rOQ1 + rOQ2) / (rOQ1 - rOQ2)
+  expect_true(
+    obtained == expected
+  )
+})
