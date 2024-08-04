@@ -29,7 +29,7 @@ knitr::opts_chunk$set(echo = TRUE, collapse = TRUE, message = FALSE)
 ## Creating a `ratioOfQsprays` 
 
 A `ratioOfQsprays` object represents a fraction of two multivariate 
-polynomial with rational coefficients. Such polynomials are represented by 
+polynomials with rational coefficients. Such polynomials are represented by 
 `qspray` objects. The easiest way to create a `ratioOfQsprays` is to introduce 
 the variables of the polynomials with the `qlone` function (from the **qspray** 
 package), and then to build a `qspray` numerator and a `qspray` denominator 
@@ -123,7 +123,7 @@ fyac("x", "y", "z")   # = roq
 fyac("x", "x", "x")
 ```
 
-Complex numbers and allowed; the imaginary unit is denoted by `I`. See the 
+Complex numbers are allowed; the imaginary unit is denoted by `I`. See the 
 [**Yacas** documentation](https://yacas.readthedocs.io/en/latest/) for more
 information.
 
@@ -140,6 +140,10 @@ fyacN("4", "3", "2/5")
 fyacN("x", "3", "2/5")
 fyacN("Sqrt(2)", "2 + 2*I", "3")
 ```
+
+Let us also mention the `substituteSomeRatioOfQsprays` function. This function 
+allows to substitute the variables of a `ratioOfQsprays` fraction of polynomials 
+with some `ratioOfQsprays` objects.
 
 
 ## Querying a `ratioOfQsprays` 

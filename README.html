@@ -601,7 +601,7 @@ body {
 <body>
 
 <h1 id="the-ratioofqsprays-package">The ‘ratioOfQsprays’ package</h1>
-<p>Stéphane Laurent 2024-07-26</p>
+<p>Stéphane Laurent 2024-08-04</p>
 <p><em><strong>Fractions of multivariate polynomials with rational
 coefficients.</strong></em></p>
 <!-- badges: start -->
@@ -622,10 +622,10 @@ package.</p>
 <h2 id="creating-a-ratioofqsprays">Creating a
 <code>ratioOfQsprays</code></h2>
 <p>A <code>ratioOfQsprays</code> object represents a fraction of two
-multivariate polynomial with rational coefficients. Such polynomials are
-represented by <code>qspray</code> objects. The easiest way to create a
-<code>ratioOfQsprays</code> is to introduce the variables of the
-polynomials with the <code>qlone</code> function (from the
+multivariate polynomials with rational coefficients. Such polynomials
+are represented by <code>qspray</code> objects. The easiest way to
+create a <code>ratioOfQsprays</code> is to introduce the variables of
+the polynomials with the <code>qlone</code> function (from the
 <strong>qspray</strong> package), and then to build a
 <code>qspray</code> numerator and a <code>qspray</code> denominator with
 the arithmetic operations. For example:</p>
@@ -713,7 +713,7 @@ function which is evaluated by <strong>Ryacas</strong>:</p>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;(z*y+2*x^2)/(4*x-3*z+1)&quot;</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">fyac</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;x&quot;</span>, <span class="st">&quot;x&quot;</span>)</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;(3*x^2)/(x+1)&quot;</span></span></code></pre></div>
-<p>Complex numbers and allowed; the imaginary unit is denoted by
+<p>Complex numbers are allowed; the imaginary unit is denoted by
 <code>I</code>. See the <a href="https://yacas.readthedocs.io/en/latest/"><strong>Yacas</strong>
 documentation</a> for more information.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fyac</span>(<span class="st">&quot;Sqrt(2)&quot;</span>, <span class="st">&quot;2 + 2*I&quot;</span>, <span class="st">&quot;3&quot;</span>)</span>
@@ -727,6 +727,10 @@ documentation</a> for more information.</p>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="do">## expression((2 * (5 * x^2 + 3))/(20 * x - 1))</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">fyacN</span>(<span class="st">&quot;Sqrt(2)&quot;</span>, <span class="st">&quot;2 + 2*I&quot;</span>, <span class="st">&quot;3&quot;</span>)</span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -4.267767-2.56066i</span></span></code></pre></div>
+<p>Let us also mention the <code>substituteSomeRatioOfQsprays</code>
+function. This function allows to substitute the variables of a
+<code>ratioOfQsprays</code> fraction of polynomials with some
+<code>ratioOfQsprays</code> objects.</p>
 <h2 id="querying-a-ratioofqsprays">Querying a
 <code>ratioOfQsprays</code></h2>
 <p>A couple of functions to query a <code>ratioOfQsprays</code> are

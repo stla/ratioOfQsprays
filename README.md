@@ -1,7 +1,7 @@
 The ‘ratioOfQsprays’ package
 ================
 Stéphane Laurent
-2024-07-26
+2024-08-04
 
 ***Fractions of multivariate polynomials with rational coefficients.***
 
@@ -24,7 +24,7 @@ is a bit familiar with the **qspray** package.
 ## Creating a `ratioOfQsprays`
 
 A `ratioOfQsprays` object represents a fraction of two multivariate
-polynomial with rational coefficients. Such polynomials are represented
+polynomials with rational coefficients. Such polynomials are represented
 by `qspray` objects. The easiest way to create a `ratioOfQsprays` is to
 introduce the variables of the polynomials with the `qlone` function
 (from the **qspray** package), and then to build a `qspray` numerator
@@ -140,7 +140,7 @@ fyac("x", "x", "x")
 ## [1] "(3*x^2)/(x+1)"
 ```
 
-Complex numbers and allowed; the imaginary unit is denoted by `I`. See
+Complex numbers are allowed; the imaginary unit is denoted by `I`. See
 the [**Yacas** documentation](https://yacas.readthedocs.io/en/latest/)
 for more information.
 
@@ -161,6 +161,10 @@ fyacN("x", "3", "2/5")
 fyacN("Sqrt(2)", "2 + 2*I", "3")
 ## [1] -4.267767-2.56066i
 ```
+
+Let us also mention the `substituteSomeRatioOfQsprays` function. This
+function allows to substitute the variables of a `ratioOfQsprays`
+fraction of polynomials with some `ratioOfQsprays` objects.
 
 ## Querying a `ratioOfQsprays`
 
